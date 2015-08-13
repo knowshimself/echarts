@@ -11,7 +11,7 @@
     "dependencies": {
         "zrender": "~2.1.1"
     },
-    "repository": "git://github.com/ecomfe/echarts",
+    "repository": "git://github.com/uooo/echarts",
     "main": "echarts",
     "homepage": "http://echarts.baidu.com"
 }
