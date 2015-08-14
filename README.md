@@ -4,6 +4,7 @@
 
 [![Gitter][gitter-badge]][gitter]
 
+[npm-badge]: https://badge.fury.io/js/echarts.svg
 [npm]: http://badge.fury.io/js/echarts
 
 [gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
