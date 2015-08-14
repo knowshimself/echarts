@@ -24,7 +24,7 @@
 ## Echarts with [webpack](https://github.com/webpack/webpack)
 
 ```sh
-npm install echarts
+npm install echarts@2.2.7-beta5
 ```
 
 ```js
