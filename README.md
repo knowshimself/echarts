@@ -1,6 +1,13 @@
-ECharts
+# ECharts
 
 [![NPM version][npm-badge]][npm]
+
+[![Gitter][gitter-badge]][gitter]
+
+[npm]: http://badge.fury.io/js/echarts
+
+[gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
+[gitter]: https://gitter.im/uooo/echarts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 =======
 百度 (中文) : http://echarts.baidu.com
