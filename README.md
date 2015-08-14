@@ -1,4 +1,7 @@
 ECharts
+
+[![NPM version][npm-badge]][npm]
+
 =======
 百度 (中文) : http://echarts.baidu.com
 
