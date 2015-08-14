@@ -1,8 +1,6 @@
 # ECharts
 
-[![Gitter][gitter-badge]][gitter]
-
-[![NPM version][npm-badge]][npm]
+[![NPM version][npm-badge]][npm] [![Gitter][gitter-badge]][gitter]
 
 [![Dependency Status][deps-badge]][deps]
 [![devDependency Status][dev-deps-badge]][dev-deps]
@@ -11,7 +9,7 @@
 [npm-badge]: https://badge.fury.io/js/echarts.svg
 [npm]: http://badge.fury.io/js/echarts
 
-[gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-badge]: https://img.shields.io/badge/gitter-join%20chat-f81a65.svg?style=flat-square
 [gitter]: https://gitter.im/uooo/echarts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 [deps-badge]: https://david-dm.org/uooo/echarts.svg
@@ -22,6 +20,10 @@
 
 [peer-deps-badge]: https://david-dm.org/uooo/echarts/peer-status.svg
 [peer-deps]: https://david-dm.org/uooo/echarts#info=peerDependencies 
+
+## Installation
+
+
 
 =======
 百度 (中文) : http://echarts.baidu.com
