@@ -1,14 +1,27 @@
 # ECharts
 
+[![Gitter][gitter-badge]][gitter]
+
 [![NPM version][npm-badge]][npm]
 
-[![Gitter][gitter-badge]][gitter]
+[![Dependency Status][deps-badge]][deps]
+[![devDependency Status][dev-deps-badge]][dev-deps]
+[![peerDependency Status][peer-deps-badge]][peer-deps]
 
 [npm-badge]: https://badge.fury.io/js/echarts.svg
 [npm]: http://badge.fury.io/js/echarts
 
 [gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
 [gitter]: https://gitter.im/uooo/echarts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
+[deps-badge]: https://david-dm.org/uooo/echarts.svg
+[deps]: https://david-dm.org/uooo/echarts
+
+[dev-deps-badge]: https://david-dm.org/uooo/echarts/dev-status.svg
+[dev-deps]: https://david-dm.org/uooo/echarts#info=devDependencies
+
+[peer-deps-badge]: https://david-dm.org/uooo/echarts/peer-status.svg
+[peer-deps]: https://david-dm.org/uooo/echarts#info=peerDependencies 
 
 =======
 百度 (中文) : http://echarts.baidu.com
