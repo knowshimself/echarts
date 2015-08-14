@@ -21,9 +21,20 @@
 [peer-deps-badge]: https://david-dm.org/uooo/echarts/peer-status.svg
 [peer-deps]: https://david-dm.org/uooo/echarts#info=peerDependencies 
 
-## Installation
+## Echarts with [webpack](https://github.com/webpack/webpack)
 
+```sh
+npm install echarts
+```
 
+```js
+import echarts from 'echarts/src/echarts';
+import 'echarts/src/chart/wordCloud';
+
+let mychart = echarts.init(dom);
+let charCloudOption = {...};
+mychart.setOption(charCloudOption);
+```
 
 =======
 百度 (中文) : http://echarts.baidu.com
