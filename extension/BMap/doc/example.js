@@ -25,7 +25,9 @@
         });
 
         // 初始化地图
-        var BMapExt = new BMapExtension($('#main')[0], BMap, echarts);
+        var BMapExt = new BMapExtension($('#main')[0], BMap, echarts,{
+            enableMapClick: false
+        });
         var map = BMapExt.getMap();
         var container = BMapExt.getEchartsContainer();
 
@@ -33,6 +35,7 @@
             x: 104.114129,
             y: 37.550339
         };
+
         var point = new BMap.Point(startPoint.x, startPoint.y);
         map.centerAndZoom(point, 5);
         map.enableScrollWheelZoom(true);
@@ -214,6 +217,10 @@
             dataRange: {
                 min : 0,
                 max : 100,
+                range: {
+                    start: 10,
+                    end: 90
+                },
                 x: 'right',
                 calculable : true,
                 color: ['#ff3333', 'orange', 'yellow','lime','aqua'],
@@ -402,7 +409,7 @@
                             {name:'常州',value:10}
                         ]
                     }
-                    
+
                 },
                 {
                     name:'上海',
@@ -539,7 +546,7 @@
                     data:[],
                     markLine : {
                         smooth:true,
-                        symbol: ['none', 'circle'],  
+                        symbol: ['none', 'circle'],
                         symbolSize : 1,
                         itemStyle : {
                             normal: {
@@ -706,6 +713,7 @@
         };
 
         var myChart = BMapExt.initECharts(container);
+        window.onresize = myChart.onresize;
         BMapExt.setOption(option);
     }
 );

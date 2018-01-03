@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="./asset/ico/favicon.png">
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./asset/css/font-awesome.min.css" rel="stylesheet">
     <link href="./asset/css/bootstrap.css" rel="stylesheet">
     <link href="./asset/css/carousel.css" rel="stylesheet">
     <link href="./asset/css/echartsHome.css" rel="stylesheet">
@@ -52,9 +52,14 @@
                                 <li><a href="#Chord">chord</a></li>
                                 <li><a href="#Force">force</a></li>
                                 <li><a href="#Map">map</a></li>
+                                <li><a href="#Heatmap">heatmap</a></li>
                                 <li><a href="#Gauge">gauge</a></li>
                                 <li><a href="#Funnel">funnel</a></li>
                                 <li><a href="#eventRiver">eventRiver</a></li>
+                                <li><a href="#treemap">treemap</a></li>
+                                <li><a href="#treeChart">tree</a></li>
+                                <li><a href="#venn">venn</a></li>
+                                <li><a href="#wordCloud">wordCloud</a></li>
                             </ul>
                             <li><a href="#Import-ECharts">Import ECharts</a></li>
                             <ul>
@@ -69,7 +74,7 @@
                             <ul>
                                 <li><a href="#Option">option</a></li>
                                 <li><a href="#Timeline">timeline</a></li>
-                                <li><a href="#Title">title</a></li>                                
+                                <li><a href="#Title">title</a></li>
                                 <li><a href="#Toolbox">toolbox</a></li>
                                 <li><a href="#Tooltip">tooltip</a></li>
                                 <li><a href="#Legend">legend</a></li>
@@ -95,11 +100,18 @@
                                     <li><a href="#SeriesPie">series (pie) </a></li>
                                     <li><a href="#SeriesRadar">series (radar) </a></li>
                                     <li><a href="#SeriesMap">series (map) </a></li>
+                                    <li><a href="#SeriesHeatmap">series (heatmap) </a></li>
+                                    <li><a href="#SeriesHeatmap">series (map) </a></li>
                                     <li><a href="#SeriesForce">series (force) </a></li>
                                     <li><a href="#SeriesChord">series (chord) </a></li>
                                     <li><a href="#SeriesGauge">series (gauge) </a></li>
                                     <li><a href="#SeriesFunnel">series (funnel) </a></li>
                                     <li><a href="#SeriesEventRiver">series (eventRiver)</a></li>
+                                    <li><a href="#SeriesTreemap">series (treemap)</a></li>
+                                    <li><a href="#SeriesTree">series (tree)</a></li>
+
+                                    <li><a href="#SeriesVenn">series (venn)</a></li>
+                                    <li><a href="#SeriesWordCloud">series (wordCloud)</a></li>
                                     <li><a href="#SeriesData">data</a></li>
                                     <li><a href="#SeriesMarkPoint">markPoint</a></li>
                                     <ul>
@@ -115,6 +127,7 @@
                                 <li><a href="#AreaStyle">areaStyle</a></li>
                                 <li><a href="#TextStyle">textStyle</a></li>
                                 <li><a href="#Loadingoption">loadingOption</a></li>
+                                <li><a href="#NoDataLoadingOption">noDataLoadingOption</a></li>
                                 <li><a href="#BackgroundColor">backgroundColor</a></li>
                                 <li><a href="#Color">color</a></li>
                                 <li><a href="#SymbolList">symbolList</a></li>
@@ -128,6 +141,9 @@
                                 <li><a href="#AddDataAnimation">addDataAnimation</a></li>
                                 <li><a href="#AnimationThreshold">animationThreshold</a></li>
                                 <li><a href="#AnimationDuration">animationDuration</a></li>
+                                <li>
+                                    <a href="#animationDurationUpdate">animationDurationUpdate</a>
+                                </li>
                                 <li><a href="#AnimationEasing">animationEasing</a></li>
                             </ul>
                             <li><a href="#GraphDataStructure">Graph data structure</a></li>
@@ -292,8 +308,36 @@
                             <td> Including World Map, China Map, Map of China Provinces &amp; Cities, and extended maps on GeoJSON format. Supports SVG extension, such as body composition, football pitch, interior space, etc. </td>
                         </tr>
                         <tr>
+                            <td> heatmap </td>
+                            <td> Often used to display data distribution information. </td>
+                        </tr>
+                        <tr>
+                            <td> gauge </td>
+                            <td> Often used to display the key index in a BI system. </td>
+                        </tr>
+                        <tr>
+                            <td> funnel </td>
+                            <td> Often used to display the data change in a data process, like filtered, combined etd, common in BI system.</td>
+                        </tr>
+                        <tr>
                             <td> evnetRiver </td>
                             <td> EventRiver is commonly used to display multiple events with time attribute, the evolution of events can be shown by time sequence.</td>
+                        </tr>
+                        <tr>
+                            <td> treemap </td>
+                            <td> Treemap is commonly used to display a tree structure. And treemaps are very effective when size is the most important feature to be displayed..</td>
+                        </tr>
+                        <tr>
+                            <td> venn </td>
+                            <td> Venn shows all possible logical relations between a finite collection of different sets.</td>
+                        </tr>
+                        <tr>
+                            <td> tree </td>
+                            <td> Used to visualize the hierarchy of tree structure.</td>
+                        </tr>
+                        <tr>
+                            <td> word cloud </td>
+                            <td> A visual representation for text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text</td>
                         </tr>
                     </table>
                     <h3>Chart Types<a name="Chart-Types"> </a></h3>
@@ -344,7 +388,7 @@
                             <td><img src="./asset/img/example/scatter2.png" title="" alt="bubble"/></td>
                         </tr>
                     </table>
-                    
+
                     <h4>single chart type: k (candlestick)<a name="Candlestick"> </a></h4>
                     <table cellspacing="0" class="ADoc_table full">
                         <tr>
@@ -381,7 +425,7 @@
                             <td><img src="./asset/img/example/radar2.png" title="" alt="filled radar"/></td>
                         </tr>
                     </table>
-                    
+
                     <h4>single chart type: chord<a name="Chord"> </a></h4>
                     <table cellspacing="0" class="ADoc_table full">
                         <tr>
@@ -392,7 +436,7 @@
                             <td><img src="./asset/img/example/chord2.png" title="" alt="chord"/></td>
                         </tr>
                     </table>
-                    
+
                     <h4>single chart type: force<a name="Force"> </a></h4>
                     <table cellspacing="0" class="ADoc_table full">
                         <tr>
@@ -404,7 +448,7 @@
                             <td><img src="./asset/img/example/webkit-dep.png" title="" alt="force-directed chart"/></td>
                         </tr>
                     </table>
-                    
+
                     <h4>single chart type: map<a name="Map"> </a></h4>
                     <table cellspacing="0" class="ADoc_table full">
                         <tr>
@@ -426,6 +470,18 @@
                             <td><img src="./asset/img/example/map8.png" title="" alt="Sub-Region Mode"/></td>
                             <td><img src="./asset/img/example/map6.png" title="" alt="Standard GeoJson Extension"/></td>
                             <td><img src="./asset/img/example/map16.png" title="" alt="SVG Extension"/></td>
+                        </tr>
+                    </table>
+
+                    <h4>single chart type: heatmap<a name="Heatmap"> </a></h4>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th colspan="3"> heatmap </th>
+                        </tr>
+                        <tr>
+                            <td><img src="./asset/img/example/heatmap.png" title="" alt="heatmap"/></td>
+                            <td><img src="./asset/img/example/heatmap2.png" title="" alt="heatmap"/></td>
+                            <td><img src="./asset/img/example/heatmap_map.png" title="" alt="heatmap"/></td>
                         </tr>
                     </table>
 
@@ -451,23 +507,65 @@
                             <td><img src="./asset/img/example/funnel3.png" title="" alt="funnel"/></td>
                         </tr>
                     </table>
-                    
+
                     <h4>single chart type: eventRiver<a name="eventRiver"> </a></h4>
                     <table cellspacing="0" class="ADoc_table full">
                         <tr>
                             <th colspan=3> eventRiver </th>
                         </tr>
                         <tr>
-                            <td><img src="./asset/img/example/eventRiver1.png" title="" alt="事件河流图"/></td>
-                            <td><img src="./asset/img/example/eventRiver2.png" title="" alt="事件河流图"/></td>
+                            <td><img src="./asset/img/example/eventRiver1.png" title="" alt="eventRiver"/></td>
+                            <td><img src="./asset/img/example/eventRiver2.png" title="" alt="eventRiver"/></td>
                         </tr>
                     </table>
-                    
+
+                    <h4>single chart type：treemap<a name="treemap"> </a></h4>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th colspan=2> Treemap </th>
+                        </tr>
+                        <tr>
+                            <td><img src="./asset/img/example/treemap.png" title="" alt="Treemap"/></td>
+                            <td><img src="./asset/img/example/treemap1.png" title="" alt="Treemap"/></td>
+                        </tr>
+                    </table>
+
+                    <h4>single chart type：tree<a name="treeChart"> </a></h4>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th colspan=2> tree </th>
+                        </tr>
+                        <tr>
+                            <td><img src="./asset/img/example/tree1.png" title="" alt="tree"/></td>
+                            <td><img src="./asset/img/example/tree2.png" title="" alt="tree"/></td>
+                        </tr>
+                    </table>
+
+                    <h4>single chart type：venn<a name="venn"> </a></h4>
+                    <table cellspacing="0" class="ADoc_table full" style="width:600px;">
+                        <tr>
+                            <th colspan=1> Venn </th>
+                        </tr>
+                        <tr>
+                            <td><img src="./asset/img/example/venn.png" title="" alt="Venn"/></td>
+                        </tr>
+                    </table>
+
+                    <h4>single chart type：wordCloud<a name="wordCloud"> </a></h4>
+                    <table cellspacing="0" class="ADoc_table full" style="width:600px;">
+                        <tr>
+                            <th colspan=1> Venn </th>
+                        </tr>
+                        <tr>
+                            <td><img src="./asset/img/example/wordCloud.png" title="" alt="Venn"/></td>
+                        </tr>
+                    </table>
+
                     <h3>Import ECharts<a name="Import-ECharts"> </a></h3>
                     <p>We offer you various ways to import the ECharts library in your page, so that you can always choose the right one for your project. </p>
-                    
+
                     <h3>modular package import <a name="Import-ECharts1"> </a></h3>
-                    <P>If you are familiar with modular programming, and your project is modular and follows the AMD module specification, then it will be fairly easy to import echarts in your page; Import a module loader, like <a href="https://github.com/ecomfe/esl" target="_blank">esl.js</a>, and configure the packet path to point to src, and you will enjoy the chart’s maximum flexibility, such as load-on-demand. Since ECharts is based on ZRender, you also need to download <a href="https://github.com/ecomfe/zrender" target="_blank">ZRender</a> locally. Reference is made to <a href="example/demo.html#-en" target="_blank">demo</a>. Now you need to configure as follows.</p>
+                    <P>If you are familiar with modular programming, and your project is modular and follows the AMD module specification, then it will be fairly easy to import echarts in your page; Import a module loader, like <a href="https://github.com/ecomfe/esl" target="_blank">esl.js</a>, and configure the packages path to point to src, and you will enjoy the chart’s maximum flexibility, such as load-on-demand. Since ECharts is based on ZRender, you also need to download <a href="https://github.com/ecomfe/zrender" target="_blank">ZRender</a> locally. Reference is made to <a href="example/demo.html#-en" target="_blank">demo</a>. Now you need to configure as follows.</p>
                     <p>Please note: although package import maximizes flexibility in the development phase, it is not intended for going online directly. Reducing the number of documents requested is the most fundamental rule of front-end optimization, so please be sure to compress files when you go on line. </P>
                     <div class="code">
                         <pre>//from echarts example
@@ -487,7 +585,7 @@ require.config({
 });
 </pre>
                     </div>
-                    
+
                     <h3>modular single file import (<b>preferred</b>) <a name="Import-ECharts2"> </a></h3>
                     <P>If you use modular programming, but do not have the packaging environment, or do not want to include a third party library source file to your project, then single file import seems to be a good choice. Like modular package import, you have to be familiar with modular programming. </P>
                     <p>Begin with 2.1.8, we have created a powerful tool for echarts compression: <a href="https://github.com/ecomfe/echarts-optimizer" target="_blank">echarts-optimizer</a>. As you can see below, the build folder has included several single files of different combinations which are generated by <a href="https://github.com/ecomfe/echarts-optimizer" target="_blank">echarts-optimizer</a>, and you are free to choose one of them according to your needs:</p>
@@ -498,18 +596,18 @@ require.config({
                                 <li>echarts.js : The echarts core file which should be import by a &lt;script&gt tag, an AMD loader (<a href="https://github.com/ecomfe/esl" target="_blank">esl.js</a>) has been included in this file.</li>
                                 <li>chart ( folder ) : Via dependency analysis, echarts-optimizer generates a single file for every chart types, you can choose one of them according to your needs:
                                     <ul>
-                                        <li>echarts-line.js : Line ( require echarts/chart/bar as the same time if Magic switch is needed )</li>
-                                        <li>echarts-bar.js : Bar ( require echarts/chart/line as the same time if Magic switch is needed )</li>
-                                        <li>echarts-scatter.js : Scatter</li>
-                                        <li>echarts-k.js : Candlestick</li>
-                                        <li>echarts-pie.js : Pie ( require echarts/chart/funnel as the same time if Magic switch is needed )</li>
-                                        <li>echarts-radar.js : Radar</li>
-                                        <li>echarts-map.js : Map</li>
-                                        <li>echarts-force.js : Force-directed Chart ( require echarts/chart/chord as the same time if Magic switch is needed )</li>
-                                        <li>echarts-chord.js : Chord ( require echarts/chart/force as the same time if Magic switch is needed )</li>
-                                        <li>echarts-funnel.js : Funnel ( require echarts/chart/pie as the same time if Magic switch is needed )</li>
-                                        <li>echarts-gauge.js : Gauge</li>
-                                        <li>echarts-eventRiver.js : EventRiver</li>
+                                        <li>line.js : Line ( require echarts/chart/bar as the same time if Magic switch is needed )</li>
+                                        <li>bar.js : Bar ( require echarts/chart/line as the same time if Magic switch is needed )</li>
+                                        <li>scatter.js : Scatter</li>
+                                        <li>k.js : Candlestick</li>
+                                        <li>pie.js : Pie ( require echarts/chart/funnel as the same time if Magic switch is needed )</li>
+                                        <li>radar.js : Radar</li>
+                                        <li>map.js : Map</li>
+                                        <li>force.js : Force-directed Chart ( require echarts/chart/chord as the same time if Magic switch is needed )</li>
+                                        <li>chord.js : Chord ( require echarts/chart/force as the same time if Magic switch is needed )</li>
+                                        <li>funnel.js : Funnel ( require echarts/chart/pie as the same time if Magic switch is needed )</li>
+                                        <li>gauge.js : Gauge</li>
+                                        <li>eventRiver.js : EventRiver</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -581,6 +679,7 @@ require.config({
                         <li>Configure a ECharts path for the module loader, and link to echarts.js from the current page, see above.</li>
                         <li>Dynamically load ECharts and use callback function to initialize it. (PS: if you want to use ECharts on a page where you've already loaded it, just require('echarts').init(dom).) </li>
                     </ol>
+                    <p>see <a href="./start.html" target="_blank" style="margin-right: 50px;">Getting started »</a></p>
 
                     <h3>plain single file import <a name="Import-ECharts3"> </a></h3>
                     <P>The 1.3.5 release added support for plain import. If your project is not based on modularity, or it’s based on CMD specification (such as using sea.js), then it may not be appropriate for you to include the modular AMD-based ECharts. Therefore it is recommended that you use script plain import. Forget about require, you can directly use two global namespaces - ECharts, ZRender - after script plain import. Reference is made to <a href="example/www2/index.html" target="_blank">ECharts plain import</a>. Note that excanvas judges Canvas support by inserting the body tag into Canvas node, so if you put the script tag of ECharts into the head tag, IE8- browsers would give an error; the solution is to move the script tag into (behind) the body tag.</p>
@@ -606,10 +705,11 @@ require.config({
                         <li>dist/echarts-all.js : a compressed library of all the chart types, including World Map, China Map and Map of China Provinces &amp; Cities.</li>
                         <li>source/echarts-all.js : an uncompressed library of all the chart types, including World Map, China Map and Map of China Provinces &amp; Cities. Available for debugging purposes.</li>
                     </ul>
-                        
+                    <p>see <a href="./start.html" target="_blank" style="margin-right: 50px;">Getting started »</a></p>
+
                     <h3>Custom Build ECharts Single File <a name="Custom-Build-Echarts-Single-File"></a></h3>
                     <p>More detail about echarts-optimizer can be found at <a href="https://github.com/ecomfe/echarts-optimizer/blob/master/README.md" target="_blank">README.md</a></p>
-                    
+
                     <h3>Initialization <a name="Initialization"> </a></h3>
                     <p>After getting echarts interface through require (or in namespace), you can start to initialize chart. echarts interface has only one  init method. When implementing init, pass in a dom node with size (width and height are not necessarily visible, as long as they can be calculated) and then you will get the instances of the chart object. The charting library has multiple instances, which means that you can init multiple charts at the same page on multiple doms, and if you init on the same dom repeatedly, the existing instance will be automatically disposed (1.4.0+ ). init method is illustrated as follows: </p>
                     <table cellspacing="0" class="ADoc_table full">
@@ -621,7 +721,9 @@ require.config({
                         <tr>
                             <td> <b>{ECharts}</b> init </td>
                             <td> <b>{dom}</b> dom, <br/><b>{string | Object =}</b> theme </td>
-                            <td> Initialization interface, returns ECharts instances. Dom is the node for charts. Theme is optional. For built-in themes (currently unavailable), directly pass in name. For custom extended themes, pass in the theme object. </td>
+                            <td> Initialization interface, returns ECharts instances. Dom is the node for charts. Theme is optional. For built-in themes ('macarons', 'infographic'), directly pass in name. For custom extended themes, pass in the theme object. Like this :
+                                <br/>var myCharts = echarts.init(document.getElementById('main'), 'macarons')；
+                            </td>
                         </tr>
                     </table>
                     <p>For available methods of chart instances, see <a href="#Methods">Methods</a>. </p>
@@ -633,7 +735,7 @@ require(
     [
         'echarts',
         'echarts/chart/pie'
-    ], 
+    ],
     function (ec) {
         var myChart = ec.init(document.getElementById('main'));
         myChart.setOption({...});
@@ -672,14 +774,14 @@ require(['echarts'], function (ec){
                             <td><b>{self}</b> setOption</td>
                             <td><b>{Object}</b> option, <br/><b>{boolean=}</b> notMerge</td>
                             <td>Universal interface, controls all the configuration options of chart instances (see <a href="#Option" title="">option</a>). When called multiple times, the option will be merged by default, which makes setOption easily become a universal method to update any attributes. For example, if you only want to change the title text, you only need to: <br/>&nbsp;&nbsp;&nbsp;&nbsp;setOption({title : {text : 'new title'}}); <br/>Of course, you can also stop the option from being merged with the last option by setting the notMerger parameter to true, when data or length changes between each setOption.
-                            <br/><br/>Since 2.0.0, ECharts added support for timeline the component. When option includes timeline (see <a href="#Timeline" title="">timeline</a>), each individual option should be placed into an array named options, such as 
+                            <br/><br/>Since 2.0.0, ECharts added support for timeline the component. When option includes timeline (see <a href="#Timeline" title="">timeline</a>), each individual option should be placed into an array named options, such as
                             <pre>myCharts.setOption({
     timeline : {...},
     options : [
         {                // option1
             title : {...},
             series : [...]
-        },  
+        },
         {...},           // option2
         ...
     ]
@@ -695,7 +797,7 @@ require(['echarts'], function (ec){
                         <tr>
                             <td><b>{self}</b> setSeries</td>
                             <td><b>{Array}</b> series, <br/><b>{boolean=}</b> notMerge</td>
-                            <td>Data interface, the data array generated by data-driven chart. (see <a href="#Series" title="">series</a>), same result as calling setOption({series : {...}}). </td>
+                            <td>Data interface, the data array generated by data-driven chart. (see <a href="#Series" title="">series</a>), same result as calling setOption({series : {...}}, notMerge). </td>
                         </tr>
                         <tr>
                             <td><b>{Object}</b> getSeries</td>
@@ -716,8 +818,8 @@ require(['echarts'], function (ec){
                             <td>Dynamic data interface. <a href="example/dynamicLineBar.html#-en" target="_blank">Try this (Line &amp; Bar) »</a> <a href="example/dynamicScatterK.html#-en" target="_blank">Try this (Scatter &amp; Candlestick) »</a> <a href="example/dynamicPieRadar.html#-en" target="_blank">Try this (Pie &amp; Radar) »</a>
                                 <br/>seriesIdx: series index
                                 <br/>data: adds data
-                                <br/>isHead: whether to insert at the head of the line. Defaults to unspecified. When unspecified or false, insert at the end of the line. 
-                                <br/>dataGrow: whether to increase the length of the data line. Defaults to unspecified. When unspecified or false, remove the data of the target array. 
+                                <br/>isHead: whether to insert at the head of the line. Defaults to unspecified. When unspecified or false, insert at the end of the line.
+                                <br/>dataGrow: whether to increase the length of the data line. Defaults to unspecified. When unspecified or false, remove the data of the target array.
                                 <br/>additionData: whether to add category axis (pie as the legend) data. Other operations are same as isHead and dataGrow.
                                 <br/>When adding multiple sets of data, parameters are:
                                 <br/>params == [[seriesIdx, data, isHead, dataGrow, additionData], [...]]
@@ -760,20 +862,38 @@ require(['echarts'], function (ec){
                             </td>
                             <td>delete a single markLine interface, which includes
                                 <br/>seriesIdx: series index
-                                <br/>markName: [markLine] name
+                                <br/>markName: [markLine] name. The default makeLine name is the starting point's name in the makeLine's data. While the ending point is named too, like the map, both point's name would be joined as the default name like this "nameStart > nameEnd", such as
+                                <br/>[{name:'Beijing', value:100}, {name:'Shanghai'}]
+                                <br/>In this case, markName is "Beijing > notMerge"
                             </td>
                         </tr>
                         <tr>
                             <td><b>{self}</b> on</td>
                             <td><b>{string}</b> eventName, <br/><b>{Function}</b> eventListener</td>
                             <td>event bind, mount all the event naming on require ('echarts/config'). EVENT (echarts.config.EVENT for non-modular) namespace. It is recommended that you use this namespace as the event name to include. Events supported by the current version are:
-                                <br/>REFRESH, RESTORE, RESIZE, CLICK, DBLCLICK, HOVER, 
-                                <br/>DATA_CHANGED, DATA_VIEW_CHANGED, 
-                                <br/>MAGIC_TYPE_CHANGED, TIMELINE_CHANGED, 
-                                <br/>DATA_ZOOM, DATA_RANGE, MAP_ROAM,
-                                <br/>DATA_RANGE_HOVERLINK, LEGEND_HOVERLINK,
-                                <br/>LEGEND_SELECTED, MAP_SELECTED, PIE_SELECTED,
-                                <br/>FORCE_LAYOUT_END
+                                <br/>-----------------------Base Evetn-----------------------
+                                <br/>REFRESH,
+                                <br/>RESTORE,
+                                <br/>RESIZE,
+                                <br/>CLICK,
+                                <br/>DBLCLICK,
+                                <br/>HOVER,
+                                <br/>MOUSEOUT,
+                                <br/>-------------------Interactive Event--------------------
+                                <br/>DATA_CHANGED,
+                                <br/>DATA_VIEW_CHANGED,
+                                <br/>MAGIC_TYPE_CHANGED,
+                                <br/>TIMELINE_CHANGED,
+                                <br/>DATA_ZOOM,
+                                <br/>DATA_RANGE,
+                                <br/>DATA_RANGE_SELECTED,
+                                <br/>DATA_RANGE_HOVERLINK,
+                                <br/>LEGEND_SELECTED,
+                                <br/>LEGEND_HOVERLINK,
+                                <br/>MAP_ROAM,
+                                <br/>MAP_SELECTED,
+                                <br/>PIE_SELECTED,
+                                <br/>FORCE_LAYOUT_END,
                                 <br/><a href="./example/event.html#-en" target="_blank">event debugging » </a>
                             </td>
                         </tr>
@@ -785,7 +905,7 @@ require(['echarts'], function (ec){
                         <tr>
                             <td><b>{self}</b> setTheme</td>
                             <td><b>{string | Object}</b> theme</td>
-                            <td> Set the theme. For built-in themes (not available now), pass in the name directly. For custom extended themes, pass in the theme object. </td>
+                            <td> Set the theme. For built-in themes ('macarons', 'infographic'), pass in the name directly. For custom extended themes, pass in the theme object. </td>
                         </tr>
                         <tr>
                             <td><b>{self}</b> connect</td>
@@ -819,7 +939,7 @@ require(['echarts'], function (ec){
                         <tr>
                             <td><b>{string}</b> getDataURL</td>
                             <td><b>{string=}</b> imgType</td>
-                            <td>Get the current chart's Base64 image dataURL, imgType: image type. Supports png|jpeg. Defaults to png. </td>
+                            <td>Get the current chart's Base64 image dataURL, not supported on IE8-, imgType: image type. Supports png|jpeg. Defaults to png. </td>
                         </tr>
                         <tr>
                             <td><b>{Dom}</b> getImage</td>
@@ -829,7 +949,7 @@ require(['echarts'], function (ec){
                         <tr>
                             <td><b>{self}</b> resize</td>
                             <td><b>{void}</b></td>
-                            <td>ECharts does not bind the resize event, and the internal system do not know whether the size of the display area changes or not. So you can bind the events you need, update the area by calling resize. </td>
+                            <td>ECharts does not bind the resize event, and the internal system do not know whether the size of the display area changes or not. So you can bind the events you need, update the area by calling resize. Like window.onresize = myChart.resize.</td>
                         </tr>
                         <tr>
                             <td><b>{self}</b> refresh</td>
@@ -863,7 +983,7 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr class='bgGreen'>
                             <td> <b>{color}</b> backgroundColor </td>
-                            <td> The background color or gradient for the outer chart area, (see <a href="#BackgroundColor" title="">backgroundColor</a>). Defaults to null, transprent. </td>
+                            <td> The background color or gradient for the outer chart area, (see <a href="#BackgroundColor" title="">backgroundColor</a>). Support rgba and defaults to null, transprent. </td>
                         </tr>
                         <tr class='bgGreen'>
                             <td> <b>{Array}</b> color </td>
@@ -875,24 +995,27 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr class='bgGreen'>
                             <td> <b>{boolean}</b> calculable </td>
-                            <td> Specifies whether the drag-recalculate feature will be enabled. Defaults to false. (See <a href="#calculable" title="">calculable</a>, and other related properties like 
-                                <a href="#CalculableColor" title="">calculableColor</a>, 
-                                <a href="#CalculableHolderColor" title="">calculableHolderColor</a>, 
-                                <a href="#NameConnector" title="">nameConnector</a>, 
-                                <a href="#ValueConnector" title="">valueConnector</a>). 
+                            <td> Specifies whether the drag-recalculate feature will be enabled. Defaults to false. (See <a href="#calculable" title="">calculable</a>, and other related properties like
+                                <a href="#CalculableColor" title="">calculableColor</a>,
+                                <a href="#CalculableHolderColor" title="">calculableHolderColor</a>,
+                                <a href="#NameConnector" title="">nameConnector</a>,
+                                <a href="#ValueConnector" title="">valueConnector</a>).
                             </td>
                         </tr>
                         <tr class='bgGreen'>
                             <td> <b>{boolean}</b> animation </td>
-                            <td> Specifies whether the animation will be enabled. Defaults to true. (See 
-                                <a href="#Animation" title="">animation</a>, and other related properties like 
-                                <a href="#AddDataAnimation" title="">addDataAnimation</a>, 
-                                <a href="#AnimationThreshold" title="">animationThreshold</a>, 
-                                <a href="#AnimationDuration" title="">animationDuration</a>, 
+                            <td> Specifies whether the animation will be enabled. Defaults to true. (See
+                                <a href="#Animation" title="">animation</a>, and other related properties like
+                                <a href="#AddDataAnimation" title="">addDataAnimation</a>,
+                                <a href="#AnimationThreshold" title="">animationThreshold</a>,
+                                <a href="#AnimationDuration" title="">animationDuration</a>,
+                                <a href="#animationDurationUpdate" title="">
+                                    animationDurationUpdate
+                                </a>
                                 <a href="#AnimationEasing" title="">animationEasing</a>).
                             </td>
                         </tr>
-                        
+
                         <tr class='bgRed'>
                             <td> <b>{Object}</b> timeline </td>
                             <td> Timeline (see <a href="#Timeline" title="">timeline</a>), at most one timeline control is allowed in one chart. </td>
@@ -916,7 +1039,7 @@ require(['echarts'], function (ec){
                         <tr class='bgRed'>
                             <td> <b>{Object}</b> dataRange </td>
                             <td> DataRange, (see <a href="#DataRange" title="">dataRange</a>), data range. </td>
-                        </tr>                        
+                        </tr>
                         <tr class='bgRed'>
                             <td> <b>{Object}</b> dataZoom </td>
                             <td> DataZoom, (see <a href="#DataZoom" title="">dataZoom</a>), data zoom. </td>
@@ -942,7 +1065,7 @@ require(['echarts'], function (ec){
                             <td> The data array generated by data-driven chart, (see <a href="#Series" title="">series</a>). Each item in the array stands for a series' options and data. </td>
                         </tr>
                     </table>
-                    
+
 
                     <h4>timeline<a name="Timeline"> </a></h4>
                     <P> timeline, at most one timeline control is allowed in one chart. Try <a href="./example/bar11.html#-en" target="_blank">bar »</a>, <a href="./example/scatter4.html#-en" target="_blank">scatter »</a>, <a href="./example/pie7.html#-en" target="_blank">pie »</a>, <a href="./example/map14.html#-en" target="_blank">map »</a></P>
@@ -956,6 +1079,16 @@ require(['echarts'], function (ec){
                             <td> <b>{boolean}</b> show </td>
                             <td> true </td>
                             <td>Specifies whether to show timeline. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 4 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> type </td>
@@ -1045,7 +1178,11 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> lineStyle </td>
-                            <td> {color: '#666', width: 1, type: 'dashed'} </td>
+                            <td><pre>{
+    color: '#666',
+    width: 1,
+    type: 'dashed'
+}                           </pre></td>
                             <td> Sets the line style of the timeline, (see <a href="#LineStyle" title="">lineStyle</a>). </td>
                         </tr>
                         <tr>
@@ -1064,7 +1201,7 @@ require(['echarts'], function (ec){
                                  <br/>interval: sets interval. Defaults to 'auto'. Valid values are: 'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) | {number}
                                  <br/>rotate: the angle of rotation, defaults to 0 (not rotate). Positive value for counterclockwise rotation, negative value for clockwise rotation. Valid values are: -90 ~ 90
                                  <br/>formatter: interval name formatter: {string} (Template) | {Function}
-                                 <br/>textStyle: text style, (see <a href="#TextStyle" title="">textStyle</a>). 
+                                 <br/>textStyle: text style, (see <a href="#TextStyle" title="">textStyle</a>).
                             </td>
                         </tr>
                         <tr>
@@ -1083,21 +1220,27 @@ require(['echarts'], function (ec){
     }
 }                           </pre></td>
                             <td> timeline checkpoint<br/>
-                                 <br/>symbol: symbol of the checkpoint, defaults to the symbol on timeline. 
-                                 <br/>symbolSize: size of the checkpoint symbol, defaults to the size of symbol on timeline. 
+                                 <br/>symbol: symbol of the checkpoint, defaults to the symbol on timeline.
+                                 <br/>symbolSize: size of the checkpoint symbol, defaults to the size of symbol on timeline.
                                  <br/>color: color of the checkpoint symbol, defaults to the color of the checkpoint. A specific color can be specified; If unspecified, defaults to '#1e90ff'.
-                                 <br/>borderColor: the color of the checkpoint symbol border. 
-                                 <br/>borderWidth: the width of the checkpoint symbol border. 
+                                 <br/>borderColor: the color of the checkpoint symbol border.
+                                 <br/>borderWidth: the width of the checkpoint symbol border.
                                  <br/>label: see above.
                             </td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> controlStyle </td>
                             <td><pre>{
-    normal : { color : '#333'},
-    emphasis : { color : '#1e90ff'}
+    itemSize: 15,
+    itemGap: 5,
+    normal : {
+        color : '#333'
+    },
+    emphasis : {
+        color : '#1e90ff'
+    }
 }                               </pre></td>
-                            <td> the style of timeline controller. Both normal and highlight color can be specified. 
+                            <td> the style of timeline controller. ItemSize, itemGap and both normal and highlight color can be specified.
                             </td>
                         </tr>
                         <tr>
@@ -1131,6 +1274,21 @@ require(['echarts'], function (ec){
                             <th> Property </th>
                             <th> Default </th>
                             <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{boolean}</b> show </td>
+                            <td> true </td>
+                            <td>Specifies whether to show timeline. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 6 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> text </td>
@@ -1177,7 +1335,7 @@ require(['echarts'], function (ec){
                             <td> null </td>
                             <td> horizontal alignment. It is further determined by the x option by default. Valid values are: left' | 'right' | 'center. </td>
                         </tr>
-                        
+
                         <tr>
                             <td> <b>{color}</b> backgroundColor </td>
                             <td> 'rgba(0,0,0,0)' </td>
@@ -1203,18 +1361,24 @@ require(['echarts'], function (ec){
                             <td> 5 </td>
                             <td> The vertical gap between each item in the title/subtitle, in px, defaults to 10. </td>
                         </tr>
-                        
+
                         <tr>
                             <td> <b>{Object}</b> textStyle </td>
-                            <td> {<br/>fontSize: 18, <br/>fontWeight: 'bolder', <br/>color: '#333'<br/>} </td>
+                            <td><pre>{
+    fontSize: 18,
+    fontWeight: 'bolder',
+    color: '#333'
+}                           </pre></td>
                             <td> the style of title text, (see <a href="#TextStyle" title="">textStyle</a>). </td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> subtextStyle </td>
-                            <td> {color: '#aaa'} </td>
+                            <td><pre>{
+    color: '#aaa'
+}                           </pre> </td>
                             <td> the style of subtitle text, (see <a href="#TextStyle" title="">textStyle</a>). </td>
                         </tr>
-                        
+
                     </table>
                     <p><img src="./asset/img/doc/title.png" title="" alt="title"/></P>
 
@@ -1231,6 +1395,16 @@ require(['echarts'], function (ec){
                             <td> <b>{boolean}</b> show </td>
                             <td> false </td>
                             <td> Specifies whether to show toolbox. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 6 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> orient </td>
@@ -1363,24 +1537,24 @@ require(['echarts'], function (ec){
         show : false,
         title : '保存为图片',
         type : 'png',
-        lang : ['点击保存'] 
+        lang : ['点击保存']
     }
-} 
+}
                               </pre></td>
                             <td> Currently toolbox supports all the features listed below. For custom features, <a href="example/toolbox.html#-en" target="_blank"> try this »</a>
                             <p><img src="./asset/img/doc/toolbox.png" title="" alt="toolbox"/></P>
                             <ul>
                                 <li>
-                                    mark: markLine icons. In the picture above, the first, second, and third icons from the left respectively represent markLine switch, undo markLine, and clear markLine. You can set more properties. 
+                                    mark: markLine icons. In the picture above, the first, second, and third icons from the left respectively represent markLine switch, undo markLine, and clear markLine. You can set more properties.
                                     <ul>
                                         <li>lineStyle (see <a href="#LineStyle" title="">lineStyle</a>) can be passed in to set styles for markLine. </li>
                                     </ul>
                                 </li><br/>
                                 <li>
-                                    dataZoom: dataZoom icons. Automatically synchronized with the dataZoom control. In the picture above, the fourth and fifth icons from the left respectively represent data zoom and data zoom reset. 
+                                    dataZoom: dataZoom icons. Automatically synchronized with the dataZoom control. In the picture above, the fourth and fifth icons from the left respectively represent data zoom and data zoom reset.
                                 </li><br/>
                                 <li>
-                                    dataView: dataView icon. In the picture above, the third icon from the right represents dataView, where You can set more properties.  
+                                    dataView: dataView icon. In the picture above, the third icon from the right represents dataView, where You can set more properties.
                                     <ul>
                                         <li><b>{boolean=}</b> readOnly: dataView is set to read-only by default. It can be edited when readOnly is false. </li>
                                         <li><b>{Function=}</b> optionToContent: custom display content of dataView. </li>
@@ -1389,17 +1563,17 @@ require(['echarts'], function (ec){
                                     </ul>
                                 </li><br/>
                                 <li>
-                                    magicType: magicType icons. So far magicType supports switch between bar and line, stack and tile. In the picture above, the sixth, seventh, eighth and ninth icons from the left respectively represent switch to stack, tile, line, bar, force, chord, pie and funnel. 
+                                    magicType: magicType icons. So far magicType supports switch between bar and line, stack and tile. In the picture above, the sixth, seventh, eighth and ninth icons from the left respectively represent switch to stack, tile, line, bar, force, chord, pie and funnel.
                                     <ul>
                                         <li><b>{Array}</b> type ['line', 'bar', 'stack', 'tiled', 'force', 'chord', 'pie', 'funnel'] </li>
                                         <li><b>{Object=}</b> option. Series' option can be dynamically changed at the time of magic switch.</li>
                                     </ul>
                                 </li><br/>
                                 <li>
-                                    restore: restore icon. In the picture above, the second icon from the right represents restore the chart. 
+                                    restore: restore icon. In the picture above, the second icon from the right represents restore the chart.
                                 </li><br/>
                                 <li>
-                                    saveAsImage: saveAsImage icon. In the picture above, the first icon from the right represents save as image(not supported on IE8-), where You can set more properties. 
+                                    saveAsImage: saveAsImage icon. In the picture above, the first icon from the right represents save as image(not supported on IE8-), where You can set more properties.
                                     <ul>
                                         <li><b>{string=}</b> type: the default type to save image is 'png', change it to 'jpeg'. </li>
                                         <li><b>{string=}</b> name: specifies name of the image. If unspecified, use the chart title. If there is no title, defaults to “ECharts”. </li>
@@ -1411,7 +1585,7 @@ require(['echarts'], function (ec){
                             </td>
                         </tr>
                     </table>
-                    
+
 
                     <h4>tooltip<a name="Tooltip"> </a></h4>
                     <P> Tooltip, a small "hover box" with detailed information about the item being hovered over. <a href="example/tooltip.html#-en" target="_blank">Try this »</a></P>
@@ -1425,6 +1599,16 @@ require(['echarts'], function (ec){
                             <td> <b>{boolean}</b> show </td>
                             <td> true </td>
                             <td>Specifies whether to show tooltip. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 1 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 8 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{boolean}</b> showContent </td>
@@ -1468,6 +1652,11 @@ require(['echarts'], function (ec){
                             <td> The duration in seconds of the animated transition. If you want the tooltip to follow the mouse as it moves across a point or chart, setting showDelay to 0 is the key, but setting transitionDuration to 0 can also make a difference in interactive experiences. </td>
                         </tr>
                         <tr>
+                            <td> <b>{boolean}</b> enterable </td>
+                            <td> false </td>
+                            <td> Specifies whether to let the mouse go into the tip dom, default to false. Let it be true if you need interaction like link | button etc. </td>
+                        </tr>
+                        <tr>
                             <td> <b>{color}</b> backgroundColor </td>
                             <td> 'rgba(0,0,0,0.7)' </td>
                             <td> The background color for the tooltip. Defaults to a black color (opacity to 30%). </td>
@@ -1494,13 +1683,24 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> axisPointer </td>
-                            <td> {<br/>
-                                type: 'line',<br/>
-                                lineStyle: {<br/>&nbsp;&nbsp;color: '#48b',<br/>&nbsp;&nbsp;width: 2,<br/>&nbsp;&nbsp;type: 'solid'<br/>},<br/>
-                                crossStyle: {<br/>&nbsp;&nbsp;color: '#1e90ff',<br/>&nbsp;&nbsp;width: 1,<br/>&nbsp;&nbsp;type: 'dashed'<br/>},<br/>
-                                shadowStyle: {<br/>&nbsp;&nbsp;size: 'auto',<br/>&nbsp;&nbsp;color: 'rgba(150,150,150,0.3)'<br/>}<br/>
-                                } 
-                            </td>
+                            <td><pre>{
+    type: 'line',
+    lineStyle: {
+        color: '#48b',
+        width: 2,
+        type: 'solid'
+    },
+    crossStyle: {
+        color: '#1e90ff',
+        width: 1,
+        type: 'dashed'
+    },
+    shadowStyle: {
+        color: 'rgba(150,150,150,0.3)',
+        width: 'auto',
+        type: 'default'
+    }
+}                           </pre></td>
                             <td> axis pointer, triggered by axis. Default type is line. Valid types are: 'line' | 'cross' | 'shadow' | 'none'. Each type has its corresponding style, see below.
                                  <br/>lineStyle: style for line pointer, (see <a href="#LineStyle" title="">lineStyle</a>),
                                  <br/>crossStyle: style for crosshairs pointer, (see <a href="#LineStyle" title="">lineStyle</a>),
@@ -1529,10 +1729,10 @@ require(['echarts'], function (ec){
                                         <li><b>scatter &amp; bubble</b>:  a (series name), b (data name), c (value array), d(null)</li>
                                         <li><b>map</b>: a (series name), b (area name), c(merged value), d(null)</li>
                                         <li><b>pie</b>, <b>radar</b>, <b>gauge</b>, <b>funnel</b>: a (series name), b (data item name)，c(value), d (pie: percent | radar: indicator name) </li>
-                                        <li><b>force, chord</b> : 
+                                        <li><b>force, chord</b> :
                                             <ul>
                                                 <li>node : a (series name)，b (node name)，c (node value), d (node index), e</li>
-                                                <li>link : a (series name)，b (link name, default sourceName-targetName)，c(link weight), d(name or index of source node), e(name or index of target node)</li>
+                                                <li>link : a (series name)，b (link name, default bigEndNodeName-smallEndNodeName)，c(link.value), d(name or index of big end node), e(name or index of small end node)</li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -1540,11 +1740,11 @@ require(['echarts'], function (ec){
                             </ul>
                         </li>
                         <li>
-                            <b>{Function}</b>, the list of parameters passed in is as follows: 
+                            <b>{Function}</b>, the list of parameters passed in is [params, ticket, callback], detail as follows:
                             <ul>
                                 <li>&lt;Array&gt; params : array content and template varaibles are the same<pre>[
     {
-        
+
         seriesIndex: 0,
         seriesName: 'Sales',
         name: 'Monday',
@@ -1592,6 +1792,16 @@ require(['echarts'], function (ec){
                             <td> <b>{boolean}</b> show </td>
                             <td> true </td>
                             <td>Specifies whether to show. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 4 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> orient </td>
@@ -1689,6 +1899,16 @@ require(['echarts'], function (ec){
                             <td>Specifies whether to show. Valid values are: true (show) | false (hide). </td>
                         </tr>
                         <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 4 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
+                        </tr>
+                        <tr>
                             <td> <b>{string}</b> orient </td>
                             <td> 'vertical' </td>
                             <td> layout manner. Defaults to vertical. Valid values are: 'horizontal' | 'vertical'  </td>
@@ -1741,12 +1961,12 @@ require(['echarts'], function (ec){
                         <tr>
                             <td> <b>{number}</b> min </td>
                             <td> null </td>
-                            <td> The specified minimum value, such as 0. Defaults to null. Required parameter. </td>
+                            <td> The specified minimum value, such as 0. Defaults to null. Required parameter. Only when splitList is used, min can be ignored.</td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> max </td>
                             <td> null </td>
-                            <td> The specified maximum value, such as 100. Defaults to null. Required parameter. </td>
+                            <td> The specified maximum value, such as 100. Defaults to null. Required parameter. Only when splitList is used, max can be ignored.</td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> precision </td>
@@ -1759,9 +1979,39 @@ require(['echarts'], function (ec){
                             <td> the number of segments. Defaults to 5. Linear gradient when set to 0. When calculable is true, it is equally split into 100 parts by default. </td>
                         </tr>
                         <tr>
+                            <td> <b>{Array.&lt;Object&gt;}</b> splitList </td>
+                            <td> null </td>
+                            <td>
+                                Customizing that how to split dataRange. When splitList is specified, splitNumber is ignored. <br />
+                                splitList is an Array, which can not be empty. Each item of the Array is Object like: <br />
+                                { <br />
+                                &nbsp;&nbsp;start: 10 &nbsp;&nbsp;&nbsp; The start of the domain of this item. <br />
+                                &nbsp;&nbsp;end: 30 &nbsp;&nbsp;&nbsp; The end of the domain of this item. <br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'start' and 'end' can be set to the same value, <br />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; in which case this item is coresponding to the single value rather than an interval. <br />
+                                &nbsp;&nbsp;label: '10 to 30' &nbsp;&nbsp;&nbsp; text label of this item. If ignoring this attribute, Text label will be auto generated.  <br />
+                                &nbsp;&nbsp;color: '#333' &nbsp;&nbsp;&nbsp; Color of this item. If ignoring attribute, color can be auto generated.  <br />
+                                } <br />
+                                example: <a href="./example/dataRange2.html" target="_blank">this 》</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> range </td>
+                            <td> null </td>
+                            <td>
+                                This option is used to set the initial selected range of dataRange. This option works when "calculable" is true. <br />
+                                The value of this option likes: {start: 10, end: 50}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{boolean | string}</b> selectedMode </td>
+                            <td> true </td>
+                            <td> selection mode. Enable dataRange switch by default. Can be one of: single, multiple </td>
+                        </tr>
+                        <tr>
                             <td> <b>{boolean}</b> calculable </td>
                             <td> false </td>
-                            <td> Specifies whether the scale roaming feature will be enabled. When enabled, ignore splitNumber, dataRange shows as linear gradient. </td>
+                            <td> Specifies whether the scale roaming feature will be enabled. When enabled, ignore splitNumber and splitList, dataRange shows as linear gradient. </td>
                         </tr>
                         <tr>
                             <td> <b>{boolean}</b> hoverLink </td>
@@ -1781,7 +2031,7 @@ require(['echarts'], function (ec){
                         <tr>
                             <td> <b>{string | Function}</b> formatter </td>
                             <td> null </td>
-                            <td> content formatter：<b>{string}</b> (Template) | <b>{Function}</b>, the template's variables are {value}' and '{value2}', which stand for start value ​​and end value. There are two function parameters, whose meanings are the same as template variables. <a href="example/dataRange.html#-en" target="_blank">Try this »</a></td>
+                            <td> content formatter：<b>{string}</b> (Template) | <b>{Function}</b>, the template's variables are {value}' and '{value2}', which stand for start value ​​and end value. There are two function parameters, whose meanings are the same as template variables. One parameter '{value}' only when calculable is true. <a href="example/dataRange.html#-en" target="_blank">Try this »</a></td>
                         </tr>
                         <tr>
                             <td> <b>{Array}</b> text </td>
@@ -1803,6 +2053,16 @@ require(['echarts'], function (ec){
                             <th> Property </th>
                             <th> Default </th>
                             <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 4 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{boolean}</b> show </td>
@@ -1841,8 +2101,8 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{color}</b> dataBackgroundColor </td>
-                            <td> '#ccc' </td>
-                            <td> The color of the dataZoom's background. </td>
+                            <td> '#eee' </td>
+                            <td> The color of the dataZoom's background. Only the first series would be rendered as data background.</td>
                         </tr>
                         <tr>
                             <td> <b>{color}</b> fillerColor </td>
@@ -1853,6 +2113,11 @@ require(['echarts'], function (ec){
                             <td> <b>{color}</b> handleColor </td>
                             <td> 'rgba(70,130,180,0.8)' </td>
                             <td> The color of the control handle. </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> handleSize </td>
+                            <td> 8</td>
+                            <td> The size of the control handle.  </td>
                         </tr>
                         <tr>
                             <td> <b>{Array | number}</b> xAxisIndex </td>
@@ -1904,6 +2169,16 @@ require(['echarts'], function (ec){
                             <td> <b>{boolean}</b> show </td>
                             <td> true </td>
                             <td>Specifies whether to show. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 4 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{string | number}</b> x </td>
@@ -1967,7 +2242,7 @@ require(['echarts'], function (ec){
                         </tr>
                     </table>
                     <p><img src="./asset/img/doc/roamController.png" title="" alt="roamController"/></P>
-                    
+
                     <h4>grid<a name="Grid"> </a></h4>
                     <P> A network of regularly spaced lines on a Cartesian coordinate system. </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -1975,6 +2250,16 @@ require(['echarts'], function (ec){
                             <th> Property </th>
                             <th> Default </th>
                             <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 0 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{number | string}</b> x </td>
@@ -1999,13 +2284,13 @@ require(['echarts'], function (ec){
                         <tr>
                             <td> <b>{number}</b> width </td>
                             <td> adaptive </td>
-                            <td> Width of the grid (without axes), defaults to the total width - x - x2, in px, ignore x2 after specifying width. See the image below. 
+                            <td> Width of the grid (without axes), defaults to the total width - x - x2, in px, ignore x2 after specifying width. See the image below.
                                  <br/>Can also be set in percent (string), such as '50%' (half the width of the display area). </td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> height </td>
                             <td> adaptive </td>
-                            <td> Height of the grid (without axes), defaults to the total height - x - x2, in px, ignore x2 after specifying height. See the image below.
+                            <td> Height of the grid (without axes), defaults to the total height - y - y2, in px, ignore y2 after specifying height. See the image below.
                                  <br/>Can also be set in percent (string), such as '50%' (half the height of the display area). </td>
                         </tr>
                         <tr>
@@ -2051,7 +2336,7 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{string}</b> type </td>
-                            <td> 'category' | 'value' | 'time' </td>
+                            <td> 'category' | 'value' | 'time' | 'log' </td>
                             <td> universal </td>
                             <td> type of the coordinate axis. By default, x-axis is 'category', y-axis is 'value'. </td>
                         </tr>
@@ -2060,6 +2345,18 @@ require(['echarts'], function (ec){
                             <td> true </td>
                             <td> universal </td>
                             <td>Specifies whether to show axis. Valid values are: true (show) | false (hide). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> universal </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 0 </td>
+                            <td> universal </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> position </td>
@@ -2122,34 +2419,46 @@ require(['echarts'], function (ec){
                             <td> Number of segments, defaults to auto split along with the min/max.</td>
                         </tr>
                         <tr>
+                            <td> <b>{Object}</b> logPositive </td>
+                            <td> null </td>
+                            <td> value </td>
+                            <td> This option works when axis.type === 'log'. If set to false, negative value is supported. It is self-adapting by default, which means that if all of the data is negative, logPositive will be set to false, otherwise true. </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> logLabelBase </td>
+                            <td> null </td>
+                            <td> value </td>
+                            <td> This option works when axis.type === 'log'. If specified, axisLabel is drawn as exponent style. For example, when logLabelBase = 4, axisLabel is drawn like 4², 4³. If not specified, axisLabel is drawn like 1,000,000 as usual. </td>
+                        </tr>
+                        <tr>
                             <td> <b>{Object}</b> axisLine </td>
-                            <td> {show : true} </td>
+                            <td> varying </td>
                             <td> universal </td>
-                            <td> Axis line. Defaults to show. The property "show" specifies whether to show axisLine or not. The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for axisLine. </td>
+                            <td> Axis line. Default to show. See below.</td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> axisTick </td>
                             <td> varying </td>
                             <td> universal </td>
-                            <td> Axis tick. Defaults to hide. The property "show" specifies whether to show axisTick or not. The property "length" controls line length for axisTick. The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for axisTick. </td>
+                            <td> Axis tick. Defaults to hide. See below.</td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> axisLabel </td>
-                            <td> {show : true} </td>
+                            <td> varying </td>
                             <td> universal </td>
-                            <td> Axis text label, see<a href="#AxisAxislabel" title="">axis.axisLabel</a>. </td>
+                            <td> Axis text label. See below.</td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> splitLine </td>
-                            <td> {show : true} </td>
+                            <td> varying </td>
                             <td> universal </td>
-                            <td> Split line. Defaults to show. The property "show" specifies whether to show splitLine or not. The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for splitLine. </td>
+                            <td> Split line. Defaults to show. See below.</td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> splitArea </td>
-                            <td> {show : false} </td>
+                            <td> varying </td>
                             <td> universal </td>
-                            <td> Split area. Defaults to hide. The property "show" specifies whether to show splitArea or not. The property "areaStyle" (see <a href="#AreaStyle" title="">areaStyle</a>) controls area style for splitArea. </td>
+                            <td> Split area. Defaults to hide. See below.</td>
                         </tr>
                         <tr>
                             <td> <b>{Array}</b> data </td>
@@ -2210,7 +2519,11 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> lineStyle </td>
-                            <td> {color: '#48b', width: 2, type: 'solid'} </td>
+                            <td> <pre>{
+    color: '#48b',
+    width: 2,
+    type: 'solid'
+}                           </pre> </td>
                             <td> both </td>
                             <td> controls the line style, (see <a href="#LineStyle" title="">lineStyle</a>). </td>
                         </tr>
@@ -2232,11 +2545,14 @@ require(['echarts'], function (ec){
                             <td> Specifies whether to show axisTick. Defaults to false. The following properties will be set by default values When it is true. </td>
                         </tr>
                         <tr>
-                            <td> <b>{string | number}</b> interval </td>
+                            <td> <b>{string | number | function}</b> interval </td>
                             <td> 'auto' </td>
                             <td> category axis </td>
-                            <td> specifies the interval between axisTicks. Defaults to 'auto'. Valid values are: 
-                                 <br/>'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) | <b>{number}</b>(specified by the user). </td>
+                            <td> specifies the interval between axisTicks. Defaults to 'auto'. Valid values are:
+                                 <br/>'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) |
+                                 <br/><b>{number}</b>(specified by the user).
+                                 <br/><b>{function}</b>callback, paramater is [index，data[index]], return true to show and false to hide
+                            </td>
                         </tr>
                         <tr>
                             <td> <b>{boolean}</b> onGap </td>
@@ -2258,7 +2574,10 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> lineStyle </td>
-                            <td> {color: '#333', width: 1} </td>
+                            <td> <pre>{
+    color: '#333',
+    width: 1
+}                           </pres></td>
                             <td> both </td>
                             <td> controls the line style, (see<a href="#LineStyle" title="">lineStyle</a>). </td>
                         </tr>
@@ -2280,10 +2599,14 @@ require(['echarts'], function (ec){
                             <td> Specifies whether to show axisLabel. Defaults to true, which is a prerequisite for the following properties. </td>
                         </tr>
                         <tr>
-                            <td> <b>{string | number}</b> interval </td>
+                            <td> <b>{string | number | function}</b> interval </td>
                             <td> 'auto' </td>
                             <td> category axis </td>
-                            <td> specifies the interval between axisLabels. Defaults to 'auto'. Valid values are: 'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) | <b>{number}</b>(specified by the user). </td>
+                            <td> specifies the interval between axisLabels. Defaults to 'auto'. Valid values are:
+                                <br/>'auto' (automatically hide those that cannot be displayed) | 0 (unhide all) |
+                                <br/><b>{number}</b>(specified by the user).
+                                <br/><b>{function}</b>callback, paramater is [index，data[index]], return true to show and false to hide
+                           </td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> rotate </td>
@@ -2311,7 +2634,9 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> textStyle </td>
-                            <td> {color: '#333'} </td>
+                            <td><pre>{
+    color: '#333'
+}                           </pre> </td>
                             <td> universal </td>
                             <td> text style (see <a href="#TextStyle" title="">textStyle</a>). If the axis is value or time axis, color accepts method callback to achieve custom color definition, support <a href="https://github.com/ecomfe/echarts/issues/226" target="_blank">#226 »</a> </td>
                         </tr>
@@ -2362,7 +2687,11 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> lineStyle </td>
-                            <td> {color: ['#ccc'], width: 1, type: 'solid'} </td>
+                            <td><pre>{
+    color: ['#ccc'],
+    width: 1,
+    type: 'solid'
+}                           </pre></td>
                             <td> universal </td>
                             <td> controls the line style ,(see <a href="#LineStyle" title="">lineStyle</a>). </td>
                         </tr>
@@ -2391,7 +2720,12 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> areaStyle </td>
-                            <td> {color: ['rgba(250,250,250,0.3)','rgba(200,200,200,0.3)']} </td>
+                            <td><pre>{
+    color: [
+        'rgba(250,250,250,0.3)',
+        'rgba(200,200,200,0.3)'
+    ]
+}                           </pre> </td>
                             <td> universal </td>
                             <td> the property "areaStyle" (see <a href="#AreaStyle" title="">areaStyle</a>), controls area style, the color array will be changed at intervals. </td>
                         </tr>
@@ -2427,6 +2761,16 @@ require(['echarts'], function (ec){
                             <th> Description </th>
                         </tr>
                         <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 0 </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
+                        </tr>
+                        <tr>
                             <td> <b>{Array}</b> center </td>
                             <td> ['50%', '50%'] </td>
                             <td> coordinate of the center, in pixels or percent. The formula for calculating percent: min(width, height) * 50%. </td>
@@ -2448,8 +2792,13 @@ require(['echarts'], function (ec){
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> name </td>
-                            <td> {<br/> show:true, <br/>formatter:null,<br/>textStyle:{color:#333}<br/>}
-                            </td>
+                            <td><pre>{
+    show: true,
+    formatter: null,
+    textStyle: {
+        color:#333
+    }
+}                           </pre></td>
                             <td> name of coordinate axis. </td>
                         </tr>
                         <tr>
@@ -2515,6 +2864,27 @@ indicator : [
                             <th> Description </th>
                         </tr>
                         <tr>
+                            <td> <b>{number}</b> zlevel </td>
+                            <td> 0 </td>
+                            <td> universal </td>
+                            <td> The first grade cascading control. Every zlevel will be allocated to a independent canvas, charts and components with the same zlevel will be rendered in the same canvas. The higher zlevel the closer to the top. More canvas dom will need more memory and performance, so never set too many zlevel. Most of the time, the second grade cascading control 'z' is recommended.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> z </td>
+                            <td> 2 </td>
+                            <td> universal </td>
+                            <td> The second grade cascading control, In the same canvas (zlevel), the higher z the closer to the top.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string}</b> type </td>
+                            <td> null </td>
+                            <td> universal </td>
+                            <td> chart type. Required parameter. If null or unsupported type, the data of this series will not be shown. Valid values are:
+                                <br/>'line' | 'bar' | 'scatter' | 'candlestick'
+                                <br/> 'pie' | 'radar' | 'chord' | 'force' | 'map'
+                            </td>
+                        </tr>
+                        <tr>
                             <td> <b>{string}</b> name </td>
                             <td> null </td>
                             <td> universal </td>
@@ -2525,15 +2895,6 @@ indicator : [
                             <td> null </td>
                             <td> universal </td>
                             <td> style of the tooltip. Applicable to this series only. If unspecified, use option.tooltip (See <a href="#Tooltip" title="">tooltip</a>), a small "hover box" with detailed information about the item being hovered over. </td>
-                        </tr>
-                        <tr>
-                            <td> <b>{string}</b> type </td>
-                            <td> null </td>
-                            <td> universal </td>
-                            <td> chart type. Required parameter. If null or unsupported type, the data of this series will not be shown. Valid values are: 
-                                <br/>'line' | 'bar' | 'scatter' | 'candlestick'
-                                <br/> 'pie' | 'radar' | 'chord' | 'force' | 'map'
-                            </td>
                         </tr>
                         <tr>
                             <td> <b>{boolean}</b> clickable </td>
@@ -2631,16 +2992,16 @@ indicator : [
                             <td> A predefined shape or symbol for the marker. The default symbol is automatically selected from (When all symbols are used, new symbols are pulled from the start again. Set it to'none' if you don't want to show the symbol): <br/>
                                 'circle' | 'rectangle' | 'triangle' | 'diamond' |<br/>
                                 'emptyCircle' | 'emptyRectangle' | 'emptyTriangle' | 'emptyDiamond'
-                                <br/>Other possible values are 'heart', 'droplet', 'pin', 'arrow' and 'star'. Although They are not included in the regular eight symbols above, you can use them at both series and data level. In addition, you can use 'star' + n (n>=3) to get N-pointed star, like 'star6' for six-pointed star. 
+                                <br/>Other possible values are 'heart', 'droplet', 'pin', 'arrow' and 'star'. Although They are not included in the regular eight symbols above, you can use them at both series and data level. In addition, you can use 'star' + n (n>=3) to get N-pointed star, like 'star6' for six-pointed star.
                                 <br/>Since 1.3.5, ECharts added support for setting custom image as symbol. The URL to an image can be given on this form:'image://' + 'URL', such as 'image://../asset/ico/favicon.png'.
                                 <br/>See <a href="./example/line.html#-en" target="_blank">example 》</a>
                             </td>
                         </tr>
                         <tr>
-                            <td> <b>{number | Function} </b>symbolSize </td>
+                            <td> <b>{number | Array | Function} </b>symbolSize </td>
                             <td> 2 | 4</td>
                             <td> line (2), scatter(4) </td>
-                            <td> size of the symbol. When "calculable" is enabled, it's recommended to increase symbolSize for better interactive experience. When implementing a bubble chart, symbolSize should be a Function, and the bubble size depends on the return value of the method, the parameter passed in is the current data item (value array). </td>
+                            <td> size of the symbol. It is usually a number. But if you use an image as symbol. To prevent stretching of image caused by same width and height, you can use an array as symbolSize which first element is width and the second is height. When "calculable" is enabled, it's recommended to increase symbolSize for better interactive experience. When implementing a bubble chart, symbolSize should be a Function, and the bubble size depends on the return value of the method, the parameter passed in is the current data item (value array). </td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> symbolRotate </td>
@@ -2658,7 +3019,14 @@ indicator : [
                             <td> <b>{boolean}</b> smooth </td>
                             <td> false </td>
                             <td> line  </td>
-                            <td> smoothed line. 
+                            <td> smoothed line, while smooth is true, lineStyle.type can not be dashed.
+                        </tr>
+                        <tr>
+                            <td> <b>{boolean}</b> dataFilter </td>
+                            <td> 'nearst' </td>
+                            <td> line </td>
+                            <td> ECharts will optimize for the situation when data number is much larger than viewport width. It will filter the data showed in one pixel width. And this option is for data filtering strategy.<br />
+                            Options: 'nearest', 'min', 'max', 'average'.</td>
                         </tr>
                         <tr>
                             <td> <b>{boolean}</b> large </td>
@@ -2754,7 +3122,7 @@ indicator : [
                             <td> same as <a href="#SeriesCartesian" title="">series (Cartesian). </a></td>
                         </tr>
                         <tr>
-                            <td> <b>{number | Function} </b>symbolSize </td>
+                            <td> <b>{number | Array | Function} </b>symbolSize </td>
                             <td> 2 </td>
                             <td> same as <a href="#SeriesCartesian" title="">series (Cartesian). </a></td>
                         </tr>
@@ -2848,6 +3216,46 @@ indicator : [
                             <td> <b>{Object}</b> geoCoord </td>
                             <td> null </td>
                             <td> Specifies the location of the name text of a region by absolute latitude and longitude. For example, {'Islands':[113.95, 22.26]}: the name of Hong Kong's Islands District is located at 22.26°N and 113.95°E. </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> heatmap </td>
+                            <td> null </td>
+                            <td> Heatmap layer of map. Same with <a href="#SeriesHeatmap">series (heatmap)</a></td>
+                        </tr>
+                    </table>
+
+                    <h5>series (heatmap)<a name="SeriesHeatmap"> </a></h5>
+                    <P> Here is the data array generated by data-driven chart. Each item in the array stands for a series' options and data. </P>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th> Property </th>
+                            <th> Default </th>
+                            <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> blurSize </td>
+                            <td> 30 </td>
+                            <td> Blur size of a data point.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> gradientColors </td>
+                            <td> ['blue', 'cyan', 'lime', 'yellow', 'red'] </td>
+                            <td> It could be an array of offset and color like [{ offset: 0.2, color: 'blue' }, { offset 0.8, color: 'cyan' }] or an array of color strings like ['blue', 'cyan', 'lime', 'yellow', 'red'], with which the color will transform evenly.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> minAlpha </td>
+                            <td> 0.05 </td>
+                            <td> If the unified value is less than minAlpha, it will be set to minAlpha to ensure small data value can also be visible on the chart.</a></td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> valueScale </td>
+                            <td> 1 </td>
+                            <td> All data values will multiply this value.</a></td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> opacity </td>
+                            <td> 1 </td>
+                            <td> Opacity of the heatmap. </a></td>
                         </tr>
                     </table>
 
@@ -2943,7 +3351,7 @@ indicator : [
                             <td> as <a href="#SeriesCartesian" title="">series (Cartesian)</a></td>
                         </tr>
                         <tr>
-                            <td> <b>{number}</b> symbolSize </td>
+                            <td> <b>{number | Array}</b> symbolSize </td>
                             <td></td>
                             <td> size of the node. </td>
                         </tr>
@@ -3079,25 +3487,6 @@ indicator : [
                             <td> false </td>
                             <td> Specifies whether it is displayed in clockwise direction. </td>
                         </tr>
-                        <tr>
-                            <td> <b>{Array}</b> matrix </td>
-                            <td>[[]]</td>
-                            <td> 关系数据，用二维数组表示，项 [i][j] 的数值表示 i 到 j 的关系数据 </td>
-                        </tr>
-                        <tr>
-                            <td> <b>{Array}</b> nodes </td>
-                            <td> [] </td>
-                            <td> 和弦图的顶点数据, 每一项：
-                                <table cellspacing="0" class="ADoc_table full">
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> <b>{Array}</b> links </td>
-                            <td> [] </td>
-                            <td> 和弦图的边数据, 每一项
-                            </td>
-                        </tr>
                     </table>
 
                     <h5>series (gauge)<a name="SeriesGauge"> </a></h5>
@@ -3116,7 +3505,7 @@ indicator : [
                         <tr>
                             <td> <b>{number | Array}</b> radius </td>
                             <td> [0, '75%'] </td>
-                            <td> radius, in pixels or in percent. The formula for calculating percent: min(width, height) / 2 * 75%.  
+                            <td> radius, in pixels or in percent. The formula for calculating percent: min(width, height) / 2 * 75%.
                                  <br/> If the array [inner radius, outer radius] is passed in, it wil become a doughnut. </td>
                         </tr>
                         <tr>
@@ -3140,14 +3529,9 @@ indicator : [
                             <td> The specified maximum value. </td>
                         </tr>
                         <tr>
-                            <td> <b>{number}</b> precision </td>
-                            <td> 0 </td>
-                            <td> Decimal precision. Defaults to 0 (no decimal point). </td>
-                        </tr>
-                        <tr>
                             <td> <b>{number}</b> splitNumber </td>
                             <td> 10 </td>
-                            <td> The number of segments. Defaults to 5. Linear gradients when set to 0. when calculable is true, it is equally split into 100 parts by default. </td>
+                            <td> The number of segments. Defaults to 10. </td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> axisLine </td>
@@ -3158,33 +3542,33 @@ indicator : [
             [0.2, '#228b22'],
             [0.8, '#48b'],
             [1, '#ff4500']
-        ], 
+        ],
         width: 30
     }
 }                           </pre> </td>
                             <td> axis line. Defaults to show.
                                 <br/><br/>The property "show" specifies whether to show axisLine or not.
-                                <br/><br/>The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for axisLine. 
-                                <br/><br/>What makes this particular lineStyle.color  different is that it is a two-dimensional array that can be used to divide the gauge axis into several parts,  
-                                <br/><br/>and designate a specific color to each part on this form: [[percent, color value], [...]]. 
+                                <br/><br/>The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for axisLine.
+                                <br/><br/>What makes this particular lineStyle.color  different is that it is a two-dimensional array that can be used to divide the gauge axis into several parts,
+                                <br/><br/>and designate a specific color to each part on this form: [[percent, color value], [...]].
                             </td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> axisTick </td>
                             <td><pre>{
-    show: true, 
-    splitNumber: 5, 
-    length :8, 
+    show: true,
+    splitNumber: 5,
+    length :8,
     lineStyle: {
         color: '#eee',
         width: 1,
         type: 'solid'
     }
 }                           </pre> </td>
-                            <td> axis tick. Defaults to hide. 
+                            <td> axis tick. Defaults to hide.
                                 <br/><br/>The property "show" specifies whether to show axisTick or not;
                                 <br/><br/>The property "lineStyle"(see <a href="#LineStyle" title="">lineStyle</a>) controls line style for axisTick;
-                                <br/><br/>The property "splitNumber" controls the number of segments; 
+                                <br/><br/>The property "splitNumber" controls the number of segments;
                                 <br/><br/>The property "length" controls line length for axisTick.
                             </td>
                         </tr>
@@ -3206,17 +3590,17 @@ indicator : [
                             <td> <b>{Object}</b> splitLine </td>
                             <td><pre>{
     show: true,
-    length :30, 
-    lineStyle: { 
+    length :30,
+    lineStyle: {
         color: '#eee',
         width: 2,
         type: 'solid'
     }
 }                           </pre> </td>
-                            <td> split line. Defaults to show. 
+                            <td> split line. Defaults to show.
                                 <br/><br/>The property "show" specifies whether to show splitLine or not.
                                 <br/><br/>The property "length" controls line length for splitLine.
-                                <br/><br/>The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for splitLine. 
+                                <br/><br/>The property "lineStyle" (see <a href="#LineStyle" title="">lineStyle</a>) controls line style for splitLine.
                             </td>
                         </tr>
                         <tr>
@@ -3227,9 +3611,9 @@ indicator : [
     color : 'auto'
 }                           </pre> </td>
                             <td>  pointer style
-                                <br/>The property "length" controls line length for pointer. If in percent, it is relative to the outer radius of the gauge. 
-                                <br/>The property "width" controls the widest point of the pointer. 
-                                <br/>The property "color" controls the color of the pointer. 
+                                <br/>The property "length" controls line length for pointer. If in percent, it is relative to the outer radius of the gauge.
+                                <br/>The property "width" controls the widest point of the pointer.
+                                <br/>The property "color" controls the color of the pointer.
                             </td>
                         </tr>
                         <tr>
@@ -3244,8 +3628,8 @@ indicator : [
 }                           </pre> </td>
                             <td> gauge title
                                 <br/><br/>The property "show" specifies whether to show gauge title or not.
-                                <br/><br/>The property "offsetCenter" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge. 
-                                <br/><br/>The property "lineStyle" (see <a href="#TextStyle" title="">textStyle</a>) controls line style for gauge title. 
+                                <br/><br/>The property "offsetCenter" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge.
+                                <br/><br/>The property "lineStyle" (see <a href="#TextStyle" title="">textStyle</a>) controls line style for gauge title.
                             </td>
                         </tr>
                         <tr>
@@ -3273,7 +3657,7 @@ indicator : [
                                 <br/>The property "height" controls the height of the detail.
                                 <br/>The property "offsetCenter" is used to locate title. Offset to the center coordinates if the array is x-axis. If in percent, it is relative to the outer radius of the gauge;
                                 <br/>The property "formatter" controls tooltip formatting;
-                                <br/>The property "lineStyle" (see <a href="#TextStyle" title="">textStyle</a>) controls line style for tooltip. 
+                                <br/>The property "lineStyle" (see <a href="#TextStyle" title="">textStyle</a>) controls line style for tooltip.
                             </td>
                         </tr>
                         <tr>
@@ -3319,7 +3703,7 @@ indicator : [
                         <tr>
                             <td> <b>{number | string}</b> height </td>
                             <td> null </td>
-                            <td> The total height, defaults to the drawing area's total height - x - x2, in px, ignore x2 after specifying height. Can also be set in percent (string), such as '50%' (half the height of the display area). </td>
+                            <td> The total height, defaults to the drawing area's total height - y - y2, in px, ignore y2 after specifying height. Can also be set in percent (string), such as '50%' (half the height of the display area). </td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> funnelAlign </td>
@@ -3382,7 +3766,7 @@ indicator : [
                             <td> Specifies the weight of this event's series. </td>
                         </tr>
                         <tr>
-                            <td> <b>{Array}</b> eventList </td>
+                            <td> <b>{Array}</b> data </td>
                             <td> [] </td>
                             <td> Event list, every item in the array is an object {}, as:
                                 <table cellspacing="0" class="ADoc_table full">
@@ -3454,6 +3838,326 @@ indicator : [
                         </tr>
                     </table>
 
+                    <h5>series ( treemap )<a name="SeriesTreemap"> </a></h5>
+                    <P> Here is the data array generated by data-driven chart. Each item in the array stands for a series' options and data.</P>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th> Property </th>
+                            <th> Default </th>
+                            <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> center </td>
+                            <td> ['50%', '50%']</td>
+                            <td> coordinate of the center, in pixels or percent.</td>
+                        </tr> 
+                        <tr>
+                            <td> <b>{Array}</b> size </td>
+                            <td> ['80%', '80%']</td>
+                            <td> size of the chart, in pixels or percent.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string}</b> root</td>
+                            <td> ''</td>
+                            <td> Name of root node </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> itemStyle </td>
+                            <td> {} </td>
+                            <td>see <a href="#ItemStyle" title="">itemStyle</a>
+                                peculiar properties of treemap
+                                <table cellspacing="0" class="ADoc_table full">
+                                    <tr>
+                                        <th> Property </th>
+                                        <th> Default </th>
+                                        <th> Description </th>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{Object}</b> breadcrumb </td>
+                                        <td> <pre>
+{
+    show: true,
+    textStyle: {}
+} </pre>
+                                        </td>
+                                        <td> bread crumb
+                                            <table cellspacing="0" class="ADoc_table full">
+                                                <tr>
+                                                    <th> Property </th>
+                                                    <th> Default </th>
+                                                    <th> Description </th>
+                                                </tr>
+                                                <tr>
+                                                    <td> <b>{Boolean}</b> show </td>
+                                                    <td> true </td>
+                                                    <td> shown or not  </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> <b>{Object}</b> textStyle </td>
+                                                    <td> null </td>
+                                                    <td>see <a href="#TextStyle" title="">textStyle</a> </td>
+                                                </tr>
+                                                
+                                                </tr>
+                                            </table>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{number}</b> childBorderWidth </td>
+                                        <td> 1 </td>
+                                        <td> width of borders of sub rectangles </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{string}</b> childBorderColor </td>
+                                        <td> '' </td>
+                                        <td>
+                                            color of borders of sub rectangles 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> data </td>
+                            <td> [] </td>
+                            <td>  data list, every item in the array is an object {}, as:
+                                <table cellspacing="0" class="ADoc_table full">
+                                    <tr>
+                                        <th> Property </th>
+                                        <th> Default </th>
+                                        <th> Description </th>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{string}</b> name </td>
+                                        <td> null </td>
+                                        <td> name </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{Number}</b> value </td>
+                                        <td> null </td>
+                                        <td> value </td>
+                                    </tr>
+                                    <tr>
+                                        <td> {Array} children </td>
+                                        <td> []</td>
+                                        <td> children，same properties like parent's </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{Object}</b> itemStyle </td>
+                                        <td> {} </td>
+                                        <td>
+                                            see
+                                            <a href="#ItemStyle" title="">
+                                                itemStyle
+                                            </a>
+                                            , highest weight
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h5>series（tree）<a name="SeriesTree"> </a></h5>
+                    <P> Here is the data array generated by data-driven chart. Each item in the array stands for a series' options and data.</P>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th> Property </th>
+                            <th> Default </th>
+                            <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> rootLocation </td>
+                            <td> 
+                                varying             
+                            </td>
+                            <td> coordinate of the location of the root, in pixels, percent or keywords.
+                                <pre>
+{
+    x: 'center' | 'left' | 'right' | 'x%' | {number},
+    y: 'center' | 'top' | 'bottom' | 'y%' | {number}
+}</pre>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <td> <b>{number}</b> layerPadding </td>
+                            <td> 100</td>
+                            <td> padding of layers</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> nodePadding </td>
+                            <td> 30</td>
+                            <td> padding of brothers</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string}</b> orient </td>
+                            <td> 'vertical'</td>
+                            <td> direction of the tree, 'vertical' | 'horizontal' | 'radial'</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string}</b> direction </td>
+                            <td> ''</td>
+                            <td> to inverse the direction of the tree, can be: 'inverse'</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{boolean | string}</b> roam </td>
+                            <td> false </td>
+                            <td> Specifies whether the wheel zoom and drag roam will be enabled. Default to false (boolean), can be true (boolean) and 'scale' (string) for just enable the zoom(in/out), 'move' (string) for just enable the move.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string}</b> symbol </td>
+                            <td> 'circle' </td>
+                            <td> see <a href="#SeriesCartesian" title="">series (Cartesian) </a></td>
+                        </tr>
+                        <tr>
+                            <td> {number|Array} symbolSize </td>
+                            <td> 20</td>
+                            <td> size of nodes </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> itemStyle </td>
+                            <td> {} </td>
+                            <td>参见<a href="#ItemStyle" title="">itemStyle</a></td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> data </td>
+                            <td> [] </td>
+                            <td> only one item，is Object {}，has properties：
+                                <table cellspacing="0" class="ADoc_table full">
+                                    <tr>
+                                        <th> Property </th>
+                                        <th> Default </th>
+                                        <th> Description </th>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{string}</b> name </td>
+                                        <td> null </td>
+                                        <td> name </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{number}</b> value </td>
+                                        <td> null </td>
+                                        <td> value </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{string}</b> symbol </td>
+                                        <td> 'circle' </td>
+                                        <td> see <a href="#SeriesCartesian" title="">series (Cartesian)</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td> {number|Array} symbolSize </td>
+                                        <td> 20</td>
+                                        <td> size of the node </td>
+                                    </tr>
+                                    <tr>
+                                        <td> {Array} children </td>
+                                        <td> []</td>
+                                        <td> children nodes，same properties like parent's </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{Object}</b> itemStyle </td>
+                                        <td> {} </td>
+                                        <td>
+                                            see 
+                                            <a href="#ItemStyle" title="">
+                                                itemStyle
+                                            </a>
+                                            , highest weight
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h5>series (venn) <a name="SeriesVenn"> </a></h5>
+                    <P>  Here is the data array generated by data-driven chart. Each item in the array stands for a series' options and data.</P>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th> Property </th>
+                            <th> Default </th>
+                            <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> itemStyle </td>
+                            <td> {} </td>
+                            <td>see <a href="#ItemStyle" title="">itemStyle</a></td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> data </td>
+                            <td> [] </td>
+                            <td> data list, contains 3 items, the first and second represent two collections, the third one is the intersection. Every item in the array is an object {}, as:
+                                <table cellspacing="0" class="ADoc_table full">
+                                    <tr>
+                                        <th> Property </th>
+                                        <th> Default </th>
+                                        <th> Description </th>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{string}</b> name </td>
+                                        <td> null </td>
+                                        <td> name </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{Number}</b> value </td>
+                                        <td> null </td>
+                                        <td> value </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <b>{Object}</b> itemStyle </td>
+                                        <td> {} </td>
+                                        <td>
+                                            see
+                                            <a href="#ItemStyle" title="">
+                                                itemStyle
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h5>series（wordCloud）<a name="SeriesWordCloud"> </a></h5>
+                    <P>  Here is the data array generated by data-driven chart. Each item in the array stands for a series' options and data.</P>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th> Property </th>
+                            <th> Default </th>
+                            <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> center </td>
+                            <td> <pre> ['50%', '50%'] </pre></td>
+                            <td>Center of the word cloud. Can be relatively percent or absolutely pixel.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> size </td>
+                            <td> <pre> ['40%', '40%'] </pre></td>
+                            <td>Center of the word cloud. Can be relatively percent or absolutely pixel.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Array}</b> textRotation </td>
+                            <td> <pre>[0, 90]</pre> </td>
+                            <td> List of optional text rotation. In default it has two options: horizontal(0) and vertical(90).</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> autoSize </td>
+                            <td>
+                            <pre>{ 
+    enable: true,
+    minSize: 12
+} </pre> </td>
+                            <td> If enable text size auto calculation. It is recommand to enable to have a better result.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> itemStyle </td>
+                            <td> {} </td>
+                            <td>参见<a href="#ItemStyle" title="">itemStyle</a></td>
+                        </tr>
+                    </table>
+
                     <h5>series.data<a name="SeriesData"> </a></h5>
                     <P> Data array in the series. In line and column, length of the array is equal to the length of category axis text label array <a href="#AxisData" title="">axis.data</a>, and there is one-to-one correspondence between them. The array item is usually value, such as: </P>
                     <div class="code">
@@ -3475,7 +4179,7 @@ indicator : [
     ..., 10, 23
 ]
 </pre>
-                    </div>                        
+                    </div>
                     <P> In scatter &amp; bubble, value configuration is quite special. Both its x-axis and y-axis can be value axis, and you need to specify bubble size in the bubble chart. Hence the configuration for scatter: </P>
                     <div class="code">
                         <pre>[
@@ -3525,7 +4229,7 @@ indicator : [
 ]
 </pre>
                     </div>
-                    
+
                     <h5>series.markPoint<a name="SeriesMarkPoint"> </a></h5>
                     <P> markPoint in the series</P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -3535,12 +4239,17 @@ indicator : [
                             <th> Description </th>
                         </tr>
                         <tr>
+                            <td> <b>{boolean}</b> clickable </td>
+                            <td> true </td>
+                            <td> Specifies data graphic clickable or not, default to true, recommend to false when you do not have a click event handler.</td>
+                        </tr>
+                        <tr>
                             <td> <b>{string}</b> symbol </td>
                             <td> 'pin' </td>
                             <td> the symbol of markPoint, same as series' <a href="#Series">symbol</a>. </td>
                         </tr>
                         <tr>
-                            <td> <b>{number | Function} </b> symbolSize </td>
+                            <td> <b>{number | Array | Function} </b> symbolSize </td>
                             <td> 10 </td>
                             <td> the size of markPoint symbol, same as series' <a href="#Series">symbolSize</a>. </td>
                         </tr>
@@ -3556,21 +4265,24 @@ indicator : [
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> effect </td>
-                            <td> {
-                                <br/>show: false,
-                                <br/>loop: true,
-                                <br/>period: 15,
-                                <br/>scaleSize : 2,
-                                <br/>color : null,
-                                <br/>shadowColor : null,
-                                <br/>shadowBlur : 0
-                                <br/>}
-                            </td>
+                            <td><pre>{
+    show: false,
+    type: 'scale',
+    loop: true,
+    period: 15,
+    scaleSize : 2,
+    bounceDistance: 10,
+    color : null,
+    shadowColor : null,
+    shadowBlur : 0
+}                           </pre></td>
                             <td> glow effect for markPoint symbol:
-                                <br/>show: specifies whether to show glow effect or not. Defaults to false. 
+                                <br/>show: specifies whether to show glow effect or not. Defaults to false.
+                                <br/>type effect type, default to 'scale', can be 'bounce'.
                                 <br/>loop: specifies whether to play the animation in a loop. Defaults to true.
                                 <br/>period: animation period. No units. The larger the value, the slower. Defaults to 15.
-                                <br/>scaleSize: magnification. Based on markPoint symbolSize.
+                                <br/>scaleSize: magnification. Based on markPoint symbolSize, available when type is scale.
+                                <br/>bounceDistance bouncing distance, in px, available when type is bounce.
                                 <br/>color: color of the glow. The default value is pulled from the markPoint itemStyle array.
                                 <br/>shadowColor: color of the shadow. The default value is pulled from the color array.
                                 <br/>shadowBlur: blur degree of shadow. Defaults to 0.
@@ -3583,17 +4295,12 @@ indicator : [
                             <td> style for markPoint symbol, same as series' <a href="#Series">itemStyle</a>. </td>
                         </tr>
                         <tr>
-                            <td> <b>{Object}</b> geoCoord </td>
-                            <td> {} </td>
-                            <td> applicable to maps only. Specifies the location of the the markPoint symbol, same as series' <a href="#Series">geoCoord</a>. </td>
-                        </tr>
-                        <tr>
                             <td> <b>{Array}</b> data </td>
                             <td> [] </td>
                             <td> data of markPoint symbol, see below. </td>
                         </tr>
                     </table>
-                    
+
                     <h5>series.markPoint.data<a name="SeriesMarkPointData"> </a></h5>
                     <P> markPoint data array. The most direct data items can directly specify markPoint position (x, y) and the relevant name and value. It's basically like this in pie, radar, force, and chord: </P>
                     <div class="code">
@@ -3606,9 +4313,9 @@ indicator : [
                     <P> In Cartesian charts like line, bar, candlestick, and scatter, directly specifying the location is not the only choice you've got. If you want to locate markPoint by Cartesian system, you can make it via xAxis, yAxis. These two values ​​will, in accordance with the specific axis type and parameters passed in, make automatic convertions as follows: </P>
                     <div class="code">
                         <pre>data : [
-    {name: 'markPoint1', value: 100, xAxis: 1, yAxis: 20},      // When xAxis is the category axis, value 1 will be understood as the index of the category axis. 
-    {name: 'markPoint2', value: 100, xAxis: 'Wednesday', yAxis: 20}, // When xAxis is the category axis, String 'Wednesday' will be understood as matching the category axis text. 
-    {name: 'markPoint3', value: 200, xAxis: 10, yAxis: 20},     // When xAxis/yAxis is the value axis, whatever passed in will be understood as a value and be conversed to location. 
+    {name: 'markPoint1', value: 100, xAxis: 1, yAxis: 20},      // When xAxis is the category axis, value 1 will be understood as the index of the category axis.
+    {name: 'markPoint2', value: 100, xAxis: 'Wednesday', yAxis: 20}, // When xAxis is the category axis, String 'Wednesday' will be understood as matching the category axis text.
+    {name: 'markPoint3', value: 200, xAxis: 10, yAxis: 20},     // When xAxis/yAxis is the value axis, whatever passed in will be understood as a value and be conversed to location.
     ...
 ]</pre>
                     </div>
@@ -3643,6 +4350,11 @@ geoCoord : {
                             <th> Description </th>
                         </tr>
                         <tr>
+                            <td> <b>{boolean}</b> clickable </td>
+                            <td> true </td>
+                            <td> Specifies data graphic clickable or not, default to true, recommend to false when you do not have a click event handler.</td>
+                        </tr>
+                        <tr>
                             <td> <b>{Array | string}</b> symbol </td>
                             <td> ['circle', 'arrow'] </td>
                             <td> symbols of the start and end of markLine. If the two are the same, string can be directly passed in. Same as series' <a href="#Series">symbol</a>. </td>
@@ -3658,24 +4370,64 @@ geoCoord : {
                             <td> angles by which the start and end markLine symbols rotate, same as series' <a href="#Series">symbolRotate</a>. </td>
                         </tr>
                         <tr>
-                            <td> <b>{Object}</b> effect </td>
-                            <td> {
-                                <br/>show: false,
-                                <br/>loop: true,
-                                <br/>period: 15,
-                                <br/>scaleSize : 2,
-                                <br/>color : null,
-                                <br/>shadowColor : null,
-                                <br/>shadowBlur : null
-                                <br/>}
+                            <td> <b>boolean</b> large</td>
+                            <td> false </td>
+                            <td>
+                                If enable optimization for large scale markline. Large scale means line number >= 2k.
+                                <br />Optimization will batch lines drawing. Lines of series will force to have same style. And symbols of two end of line will be ignore.
                             </td>
-                            <td> glow effect for markLine symbol: 
-                                <br/>show: specifies whether to show. Defaults to false.  
-                                <br/>loop: specifies whether to play the animation in a loop. Defaults to true. 
-                                <br/>period: animation period. No units. The larger the value, the slower. Defaults to 15. 
+                        </tr>
+                        <tr>
+                            <td> <b>{boolean}</b> smooth </td>
+                            <td> false </td>
+                            <td> smoothed line, while smooth is true, lineStyle.type can not be dashed.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> smoothness </td>
+                            <td> 0.2 </td>
+                            <td> Line smoothness. Only available when smooth is true</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> precision </td>
+                            <td> 2 </td>
+                            <td> precision, use for the average markLine.</td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> bundling </td>
+                            <td>
+<pre>{
+    enable: false,
+    maxTurningAngle: 45
+}</pre>
+                            </td>
+                            <td>
+                                Edge Bundling
+                                <br />
+                                <br />enable: If enable edge bundling.
+                                <br />maxTurningAngle: Max turning angle of bundled edge, ranges from 0 degree to 90 degree.
+                                <br />
+                                <br />Tip：Edge bundling use algorithm from "Multilevel Agglomerative Edge Bundling for Visualizing Large Graphs"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> effect </td>
+                            <td><pre>{
+    show: false,
+    loop: true,
+    period: 15,
+    scaleSize : 2,
+    color : null,
+    shadowColor : null,
+    shadowBlur : null
+}                           </pre></td>
+                            <td> glow effect for markLine symbol:
+                                <br />
+                                <br/>show: specifies whether to show. Defaults to false.
+                                <br/>loop: specifies whether to play the animation in a loop. Defaults to true.
+                                <br/>period: animation period. No units. The larger the value, the slower. Defaults to 15.
                                 <br/>scaleSize: magnification. Based on markLine lineWidth.
-                                <br/>color: color of the glow. The default value is pulled from the markLine itemStyle array.  
-                                <br/>shadowColor: color of the shadow. The default value is pulled from the color array. 
+                                <br/>color: color of the glow. The default value is pulled from the markLine itemStyle array.
+                                <br/>shadowColor: color of the shadow. The default value is pulled from the color array.
                                 <br/>shadowBlur: blur degree of shadow. The default value is based on scaleSize.
                                 <br/><a href="./example/map11.html#-en" target="_blank">Baidu Migration (Simulation) » </a>
                             </td>
@@ -3686,27 +4438,22 @@ geoCoord : {
                             <td> style for markLine symbol, same as series' <a href="#Series">itemStyle</a> </td>
                         </tr>
                         <tr>
-                            <td> <b>{Object}</b> geoCoord </td>
-                            <td> {} </td>
-                            <td> applicable to maps only. Specifies the location of the the markLine symbol, same as series' <a href="#Series">geoCoord</a> </td>
-                        </tr>
-                        <tr>
                             <td> <b>{Array}</b> data </td>
                             <td> [] </td>
                             <td> data of markLine symbol, see below. </td>
                         </tr>
                     </table>
-                    
+
                     <h5>series.markLine.data<a name="SeriesMarkLineData"> </a></h5>
                     <P> markLine data array. The most direct data items can directly specify the start and end position of markLine (x, y) and its relevant name and value. It's basically like this in pie, radar, force and chord: </P>
                     <div class="code">
                        <pre>data : [
     [
-        {name: 'start of markLine1', value: 100, x: 50, y: 20}, 
+        {name: 'start of markLine1', value: 100, x: 50, y: 20},
         {name: 'end of markLine1', x: 150, y: 120}
     ],
     [
-        {name: 'start of markLine2', value: 200, x: 30, y: 80}, 
+        {name: 'start of markLine2', value: 200, x: 30, y: 80},
         {name: 'end of markLine2', x: 270, y: 190}
     ],
     ...
@@ -3717,10 +4464,10 @@ geoCoord : {
                         <pre>data : [
     [
         {name: 'start of markLine1', value: 100, xAxis: 1, yAxis: 20},      // When xAxis is the category axis, value 1 will be understood as the index of the category axis. By xAxis: -1 | MAXNUMBER, markLine can reach the edge of the grid.
-        {name: 'end of markLine1', xAxis: 'Wednesday', yAxis: 20},          // When xAxis is the category axis, String 'Wednesday' will be understood as matching the category axis text. 
+        {name: 'end of markLine1', xAxis: 'Wednesday', yAxis: 20},          // When xAxis is the category axis, String 'Wednesday' will be understood as matching the category axis text.
     ],
     [
-        {name: 'start of markLine2', value: 200, xAxis: 10, yAxis: 20},     // When xAxis/yAxis is the value axis, whatever passed in will be understood as a value and be conversed to location. 
+        {name: 'start of markLine2', value: 200, xAxis: 10, yAxis: 20},     // When xAxis/yAxis is the value axis, whatever passed in will be understood as a value and be conversed to location.
         {name: 'end of markLine2', xAxis: 270, yAxis: 190}
     ],
     ...
@@ -3732,15 +4479,15 @@ geoCoord : {
     {type : 'max', name: 'custom name'},    // horizontal or vertical line of the maximum value
     {type : 'min', name: 'custom name'},    // horizontal or vertical line of the minimum value
     {type : 'average', name: 'custom name'},// horizontal or vertical line of the average value
-    
+
     // the line from minimum value to maximum value
     [
         {type : 'min', name: 'custom name'},
         {type : 'max', name: 'custom name'}
     ],
-    
-    // in scatter, there are two value axes. By default the special point is calculated through the y-axis value, you can specify x-axis special point via Index: 0. 
-    {type : 'max', name: 'custom name', valueIndex:0} 
+
+    // in scatter, there are two value axes. By default the special point is calculated through the y-axis value, you can specify x-axis special point via Index: 0.
+    {type : 'max', name: 'custom name', valueIndex:0}
 ]</pre>
                     <P> markLines are quite special and yet most commonly used in maps. In addition to direct location, if you want it to be based on geographic coordinates, and zoom with the map's scale roaming, you need to provide a geoCoord for markLine, as follows. </P>
                     <div class="code">
@@ -3794,7 +4541,7 @@ geoCoord : {
                         <tr>
                             <td> <b>{Object}</b> lineStyle </td>
                             <td> varying according to chart types </td>
-                            <td> line, candlestick, map, markLine</td>
+                            <td> line, candlestick, markLine</td>
                             <td> line style, see <a href="#LineStyle" title="">lineStyle</a>.</td>
                         </tr>
                         <tr>
@@ -3824,13 +4571,13 @@ geoCoord : {
                         <tr>
                             <td> <b>{string}</b> borderColor </td>
                             <td> varying </td>
-                            <td> line (symbol), scatter (symbole), pie, markPoint</td>
+                            <td> line (symbol), scatter (symbole), pie, map, markPoint</td>
                             <td> color of border. </td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> borderWidth </td>
                             <td> varying </td>
-                            <td> line (symbol), scatter (symbole), pie, markPoint</td>
+                            <td> line (symbol), scatter (symbole), pie, map, markPoint</td>
                             <td> width of column border, in px. </td>
                         </tr>
                         <tr>
@@ -3853,16 +4600,21 @@ geoCoord : {
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> label </td>
-                            <td> {show: true,  position:'outer'} </td>
+                            <td><pre>{
+    show: true,
+    position:'outer'
+}                           </pre></td>
                             <td> line, column, candlestick, scatter, pie, map, force, markPoint, markLine</td>
-                            <td> In pie, displayed on the outside by default. labelLine.length controls the label's distance from the pie. In map, the location of labels cannot be specified. 
-                                 <br/> position can be specified in line, column, candlestick, scatter. See below.
+                            <td> In pie, displayed on the outside by default. labelLine.length controls the label's distance from the pie.
+                                <br/>In funnel, displayed on the right by default. labelLine.length controls the label's distance from the funnel.
+                                <br/>In map, the location of labels cannot be specified.
+                                <br/> position can be specified in line, column, candlestick, scatter. See below.
                             </td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> labelLine </td>
                             <td> {show: true} </td>
-                            <td> pie </td>
+                            <td> pie, funnel </td>
                             <td> the visual guide of labels in pie. Defaults to show. </td>
                         </tr>
                     </table>
@@ -3881,8 +4633,9 @@ geoCoord : {
                         <tr>
                             <td> <b>{string}</b> position </td>
                             <td> 'outer' | null</td>
-                            <td> the position to show label. Cannot be specified in maps. 
+                            <td> the position to show label. Cannot be specified in maps.
                                  <br/>In pie, valid values are: 'outer' | 'inner';
+                                 <br/>In funnel, valid value are: 'inner' | 'left' | 'right' (default)，
                                  <br/>In line, column, candlestick and scatter, the default value is 'top' (for vertical layout) or 'right' (for horizontal layout). Can also be one of: 'inside' | 'left' | 'bottom';
                                  <br/>In column, other possible values are: 'insideLeft' | 'insideRight' | 'insideTop' | 'insideBottom'.
                             </td>
@@ -3895,7 +4648,9 @@ geoCoord : {
                         <tr>
                             <td> <b>{number}</b> distance </td>
                             <td> 10 </td>
-                            <td> applicable to chord. Label's distance from chord after it rotates automatically. </td>
+                            <td> In chord, Label's distance from chord after it rotates automatically.
+                              <br/> In pie, this distance means the factor of label distance and pie radius(In ring chart, is sum of inner and outer radius), default to <b>0.5</b>.
+                            </td>
                         </tr>
                         <tr>
                             <td> <b>{string | Function}</b> formatter </td>
@@ -3906,6 +4661,16 @@ geoCoord : {
                             <td> <b>{Object}</b> textStyle </td>
                             <td> null </td>
                             <td> style for label text, (see <a href="#TextStyle" title="">textStyle</a>). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Number}</b> x </td>
+                            <td> varying </td>
+                            <td> only in treemap，x-coordinate in px of text </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Number}</b> y </td>
+                            <td> varying </td>
+                            <td> only in treemap，y-coordinate in px of text </td>
                         </tr>
                     </table>
                     <P> labelLine property is the object. It includes:</P>
@@ -3918,12 +4683,12 @@ geoCoord : {
                         <tr>
                             <td> <b>{boolean}</b> show </td>
                             <td> true </td>
-                            <td> Specifies whether to show pie's labelLine. Valid values are: true (show) | false (hide). </td>
+                            <td> Specifies whether to show labelLine. Valid values are: true (show) | false (hide). </td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> length </td>
                             <td> 40 </td>
-                            <td> length of the line. Starts from the outer edge. Can be negative. </td>
+                            <td> length of the line. Starts from the outer edge. Can be negative. In funnel, length can be 'auto'</td>
                         </tr>
                         <tr>
                             <td> <b>{Object}</b> lineStyle </td>
@@ -3960,14 +4725,14 @@ geoCoord : {
                     <p>high customizability: </p>
                     <p>
                         line <a href="example/line.html#-en" target="_blank">try this »</a>,
-                        column <a href="example/bar.html#-en" target="_blank">try this »</a>, 
-                        candlestick <a href="example/k.html#-en" target="_blank">try this »</a>, 
-                        scatter <a href="example/scatter.html#-en" target="_blank">try this »</a>, 
+                        column <a href="example/bar.html#-en" target="_blank">try this »</a>,
+                        candlestick <a href="example/k.html#-en" target="_blank">try this »</a>,
+                        scatter <a href="example/scatter.html#-en" target="_blank">try this »</a>,
                         pie <a href="example/pie.html#-en" target="_blank">try this »</a>，
-                        chord <a href="example/chord.html#-en" target="_blank">try this »</a>, 
-                        force <a href="example/force1.html#-en" target="_blank">try this »</a>, 
-                        map <a href="example/map.html#-en" target="_blank">try this »</a>, 
-                        gauge <a href="example/gauge.html#-en" target="_blank">try this »</a>, 
+                        chord <a href="example/chord.html#-en" target="_blank">try this »</a>,
+                        force <a href="example/force1.html#-en" target="_blank">try this »</a>,
+                        map <a href="example/map.html#-en" target="_blank">try this »</a>,
+                        gauge <a href="example/gauge.html#-en" target="_blank">try this »</a>,
                         funnel <a href="example/funnel.html#-en" target="_blank">try this »</a>
                     </p>
 
@@ -3987,7 +4752,7 @@ geoCoord : {
                         <tr>
                             <td> <b>{string}</b> type </td>
                             <td> 'solid' </td>
-                            <td> line style. Valid values are: 'solid' | 'dotted' | 'dashed' </td>
+                            <td> line style. Valid values are: 'solid' | 'dotted' | 'dashed', and can be 'curve' | 'broken' in tree structures. </td>
                         </tr>
                         <tr>
                             <td> <b>{number}</b> width </td>
@@ -4105,12 +4870,12 @@ geoCoord : {
                             <td> line style, can be: 'curve' | 'line' </td>
                         </tr>
                         <tr>
-                            <td> <b>{color}</b> borderColor</td>
+                            <td> <b>{color}</b> color</td>
                             <td> '#5182ab' </td>
                             <td> color of the line </td>
                         </tr>
                         <tr>
-                            <td> <b>{number}</b> borderWidth </td>
+                            <td> <b>{number}</b> width</td>
                             <td> 1 </td>
                             <td> width of the line </td>
                         </tr>
@@ -4176,7 +4941,7 @@ geoCoord : {
                         </tr>
                         <tr>
                             <td> <b>{string}</b> text </td>
-                            <td> 'Loading...' </td>
+                            <td> '数据读取中...' </td>
                             <td> The loading text that appears when the chart is set into the loading state. \n' represents a line feed. </td>
                         </tr>
                         <tr>
@@ -4211,32 +4976,77 @@ geoCoord : {
                         </tr>
                     </table>
 
+                    <h4>noDataLoadingOption<a name="NoDataLoadingOption"> </a></h4>
+                    <P> The loading options for none data control the appearance of the loading screen that covers the plot area on chart operations. <a href="example/loading.html#-en" target="_blank">Try this »</a></P>
+                    <table cellspacing="0" class="ADoc_table full">
+                        <tr>
+                            <th> Property </th>
+                            <th> Default </th>
+                            <th> Description </th>
+                        </tr>
+                        <tr>
+                            <td> <b>{string}</b> text </td>
+                            <td> '暂无数据' </td>
+                            <td> The loading text that appears when the chart is set into the loading state. \n' represents a line feed. </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string | number}</b> x </td>
+                            <td> 'center' </td>
+                            <td> horizontal position. Defaults to center. Valid values are: 'center' | 'left' | 'right' | <b>{number}</b>(x-coordinate, in px). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string | number}</b> y </td>
+                            <td> 'center' </td>
+                            <td> vertical position. Defaults to center. Valid values are: 'center' | 'bottom' | 'top' | <b>{number}</b>(y-coordinate, in px). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> textStyle </td>
+                            <td> null </td>
+                            <td> style for the loading text, (see <a href="#TextStyle" title="">textStyle</a>). </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{string | Function}</b> effect </td>
+                            <td> 'bubble' </td>
+                            <td> loading effect. Valid values are: 'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'. Supports external loading. </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{Object}</b> effectOption </td>
+                            <td> null </td>
+                            <td> option for loading effect, see zrender. </td>
+                        </tr>
+                        <tr>
+                            <td> <b>{number}</b> progress </td>
+                            <td> null </td>
+                            <td> Specifies the current progress [0~1]. Applicable to specific effects. </td>
+                        </tr>
+                    </table>
+
                     <h4>backgroundColor<a name="BackgroundColor"> </a></h4>
                     <P>
                         <b>{color}</b> Null. The background color or gradient for the outer chart area. Defaults to null. Same as 'rgba(0,0,0,0)'.
                     </P>
-                    
+
                     <h4>color<a name="Color"> </a></h4>
                     <P>
                         <b>{Array}</b> [
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed', 
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0', 
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#1e90ff', '#ff6347', '#7b68ee', '#00fa9a', '#ffd700', 
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#1e90ff', '#ff6347', '#7b68ee', '#00fa9a', '#ffd700',
                         <br/>&nbsp;&nbsp;&nbsp;&nbsp;'#6b8e23', '#ff00ff', '#3cb371', '#b8860b', '#30e0e0'
-                        <br/>], An array containing the default colors. When all colors are used, new colors are pulled from the start again. 
+                        <br/>], An array containing the default colors. When all colors are used, new colors are pulled from the start again.
                     </P>
-                    
+
                     <h4>symbolList<a name="SymbolList"> </a></h4>
                     <P>
                         <b>{Array}</b> [
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'circle', 'rectangle', 'triangle', 'diamond', 
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;'circle', 'rectangle', 'triangle', 'diamond',
                         <br/>&nbsp;&nbsp;&nbsp;&nbsp;'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'
-                        <br/>], An array containing the default symbols. When all symbols are used, new symbols are pulled from the start again. 
+                        <br/>], An array containing the default symbols. When all symbols are used, new symbols are pulled from the start again.
                     </P>
-                                
+
                     <h4>renderAsImage<a name="RenderAsImage"> </a></h4>
                     <P> {boolean | string} false, supports render as image in non-IE8- browsers, can be set to true or specify image formats (png | jpeg). After rendered as image, the instance is still available (such as  setOption, resize, etc.), but its various interactions will become invalid. </P>
-                    
+
                     <h4>calculable<a name="Calculable"> </a></h4>
                     <P> <b>{boolean}</b> false, specifies whether the drag-recalculate feature will be enabled, defaults to false. </P>
 
@@ -4257,12 +5067,15 @@ geoCoord : {
 
                     <h4>addDataAnimation<a name="AddDataAnimation"> </a></h4>
                     <P> <b>{boolean}</b> true, specifies whether the dynamic data interface animation will be enabled, defaults to true. It is suggested to disable animation in IE8-. </P>
-                    
+
                     <h4>animationThreshold<a name="AnimationThreshold"> </a></h4>
                     <P> <b>{number}</b> 2500, threshold of animated elements. No animation if the graphic elements generated are over 2500. It is suggested to disable animation in IE8-. </P>
 
                     <h4>animationDuration<a name="AnimationDuration"> </a></h4>
-                    <P> <b>{number}</b> 2000, duration of the animation, in ms. Supports multi-level control. </P>
+                    <P> <b>{number}</b> 2000, duration of the enter animation, in ms. </P>
+
+                    <h4>animationDurationUpdate<a name="animationDurationUpdate"> </a></h4>
+                    <P> <b>{number}</b> 500，duration of the update animation, in ms.</P>
 
                     <h4>animationEasing<a name="AnimationEasing"> </a></h4>
                     <P> <b>{string}</b> 'BounceOut', easing effect of the main element. Supports multi-level control. See <a href="http://ecomfe.github.io/zrender/doc/doc.html#animation.easing" target="_blank">zrender.animation.easing</a>. Possible values are: <br/>
@@ -4300,14 +5113,14 @@ geoCoord : {
                             <td> See <a href="#SeriesCartesian" title="">series (Cartesian)</a></td>
                         </tr>
                         <tr>
-                            <td> {number} symbolSize </td>
+                            <td> {number | Array} symbolSize </td>
                             <td></td>
                             <td> Size of symbol </td>
                         </tr>
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> 详见 <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> see <a href="#ItemStyle">itemStyle</a>. Notice that itemStyle in thecategory of force has no nodeStyle under the normal(emphasis) option. Instead itemStyle.normal(emphasis).color|borderWidth|borderColor will be used</td>
                         </tr>
                     </table>
 
@@ -4344,7 +5157,7 @@ geoCoord : {
                             <td> See <a href="#SeriesCartesian" title="">series (Cartesian)</a></td>
                         </tr>
                         <tr>
-                            <td> {number} symbolSize </td>
+                            <td> {number | Array} symbolSize </td>
                             <td></td>
                             <td> Size of symbol </td>
                         </tr>
@@ -4356,7 +5169,7 @@ geoCoord : {
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> see <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> see <a href="#ItemStyle">itemStyle</a>. Notice that itemStyle in a single node of force has no nodeStyle under the normal(emphasis) option. Instead itemStyle.normal(emphasis).color|borderWidth|borderColor will be used</td>
                         </tr>
                     </table>
 
@@ -4385,7 +5198,7 @@ geoCoord : {
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> see <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> see <a href="#LinkStyle">linkStyle</a> </td>
                         </tr>
                     </table>
                     <h5>matrix<a name="GraphMatrix"></a></h5>
@@ -4401,10 +5214,10 @@ geoCoord : {
                     <p><img src="./asset/img/doc/multiControl.jpg" title="" alt="multi-level control"/></P>
 
                     <h3>Appendix: Map Extension<a name="Appendix-Map-Extension"> </a></h3>
-                    <p>BMap which is base on map.baidu.com, see 
-                        <a href="../extension/BMap/doc/doc.html" target="_blank">doc</a>, 
-                        <a href="../extension/BMap/doc/BMap.html" target="_blank">example1</a>, 
-                        <a href="../extension/BMap/doc/example.html" target="_blank">example2</a>, 
+                    <p>BMap which is base on map.baidu.com, see
+                        <a href="../extension/BMap/doc/doc.html" target="_blank">doc</a>,
+                        <a href="../extension/BMap/doc/BMap.html" target="_blank">example1</a>,
+                        <a href="../extension/BMap/doc/example.html" target="_blank">example2</a>,
                         by <a href="http://weibo.com/wind108369" target="_blank">Ji Yang</a>.
                     </p>
                     <p>Supports extended map on <a href='http://www.oschina.net/translate/geojson-spec?cmp' target="_blank">GeoJson</a> format. Try <a href="./example/map6.html#-en" target="_blank">HK 》</a> <a href="./example/map7.html#-en" target="_blank">USA 》</a></p>
@@ -4414,14 +5227,14 @@ geoCoord : {
 
 // step2: name your map type in require('echarts/util/mapData/params'), like HK.
 
-// step3: implement the getGeoJson interface method, return the geoJson data file in the target region via callback. 
+// step3: implement the getGeoJson interface method, return the geoJson data file in the target region via callback.
 require('echarts/util/mapData/params').params.HK = {
     getGeoJson: function (callback) {
         $.getJSON('geoJson/HK_geo.json',callback);
     }
 }
 
-// step3*: In most cases, data maps do not need any special projection algorithm. ECharts uses a simplified projection algorithm, thus some regions may need to be manually adjusted. Through specialArea, you can specify the latitude and longitude coordinates and interval size of some regions, such as: 
+// step3*: In most cases, data maps do not need any special projection algorithm. ECharts uses a simplified projection algorithm, thus some regions may need to be manually adjusted. Through specialArea, you can specify the latitude and longitude coordinates and interval size of some regions, such as:
 require('echarts/util/mapData/params').params.USA = {
     getGeoJson: function (callback) {
         $.getJSON('geoJson/USA_geo.json', callback);
@@ -4429,12 +5242,12 @@ require('echarts/util/mapData/params').params.USA = {
     specialArea : {
         Alaska : {              // Move Alaska to the bottom left of the American main continent
             left : -131,        // Starting point of placement: 13 degrees west longitude
-            top : 31,           // Starting point of placement: 31 degrees north latitude 
+            top : 31,           // Starting point of placement: 31 degrees north latitude
             width : 15,         // Size, width and height of the interval are no more than 15 degrees
             height : 15
         },
         Hawaii : {
-            left : -112,        // Hawaii 
+            left : -112,        // Hawaii
             top : 29,
             width : 5,
             height : 5
@@ -4448,7 +5261,7 @@ require('echarts/util/mapData/params').params.USA = {
     }
 }
 
-// step4: Echarts already has this map type, you can use it in the option. 
+// step4: Echarts already has this map type, you can use it in the option.
 option.series = [
         {
             type: 'map',
@@ -4461,10 +5274,10 @@ option.series = [
                     <h3>Appendix: Component and Chart Instances<a name="Appendix-Component-and-Chart-Instances"> </a></h3>
                     <p>In order to enhance features and customizability, ECharts team made ​​a difficult decision: open interface instances of components and charts. All these components and charts interfaces are mounted on instances got by init(eg: myChart), and stored in chart and component respectively. For example, you can obtain the current map instance via myChart.chart.map, and read and call all the properties and methods inside it. </p>
                     <p><b style="color:red">【Important】</b>Please note: ECharts interfaces are designed on a data-driven basis, not designed for open purposes. It is true that you are allowed to access to it unlimitedly, or even rewrite it dynamically, but it's also true that these actions may affect the chart's performance or compatibility when the version is upgraded. So we only listed the following methods and properties as the reference (or limit). We will do our best to ensure the stability and backward compatibility of these methods or properties, and we promise to release a notice on changelog should there be any incompatible update. However, if you use any method or property that is not listed below, you will not get the guarantee. Sorry for the trouble. </p>
-                    
+
                     <h4>Appendix: Component Instances<a name="Appendix-Component-Instances"> </a></h3>
                     <p>The components of ECharts include: timeline, title, legend, dataRange, toolbox, tooltip, dataZoom, grid, xAxis, yAxis, polar. </p>
-                    
+
                     <h4>timeline<a name="TimelineInterface"> </a></h4>
                     <P>timeline. At most one timeline is allowed in one chart. Methods and properties available are:</P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4485,7 +5298,7 @@ option.series = [
                                 <br/>parameters: <b>{number=}</b> index， <b>{boolean=}</b> autoPlay, (see below).
                                 <br/>Return value: <b>{number}</b> currentIndex, index to the position of the options array that is currently playing.
                                 <br/>index: specifies the index to the position of the options array that needs to be played. If unspecified, start to play from the current index.
-                                <br/>autoPlay: specifies whether to play automatically. If unspecified, play automatically. 
+                                <br/>autoPlay: specifies whether to play automatically. If unspecified, play automatically.
                             </td>
                         </tr>
                         <tr>
@@ -4493,7 +5306,7 @@ option.series = [
                             <td> stop</td>
                             <td> pause
                                 <br/>parameters: null
-                                <br/>Return value: <b>{number}</b> currendIndex, index to the position of the options array that is currently playing. 
+                                <br/>Return value: <b>{number}</b> currendIndex, index to the position of the options array that is currently playing.
                             </td>
                         </tr>
 
@@ -4502,7 +5315,7 @@ option.series = [
                             <td> next</td>
                             <td> next
                                 <br/>parameters: null
-                                <br/>Return value: <b>{number}</b> currendIndex index to the position of the options array that is currently playing. 
+                                <br/>Return value: <b>{number}</b> currendIndex index to the position of the options array that is currently playing.
                             </td>
                         </tr>
 
@@ -4511,7 +5324,7 @@ option.series = [
                             <td> last</td>
                             <td> last
                                 <br/>parameters: null
-                                <br/> Return value: <b>{number}</b> currendIndex, index to the position of the options array that is currently playing. 
+                                <br/> Return value: <b>{number}</b> currendIndex, index to the position of the options array that is currently playing.
                             </td>
                         </tr>
                     </table>
@@ -4543,7 +5356,7 @@ option.series = [
                             <td> hide the tooltip. <br/>parameters: null<br/> Return value: null</td>
                         </tr>
                     </table>
-                    
+
                     <h4>legend<a name="LegendInterface"> </a></h4>
                     <P> Legend, At most one legend is allowed in one chart. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4585,7 +5398,7 @@ option.series = [
                                  <br/>Parameters: <b>{string}</b> name, <b>{boolean}</b> status <br/> Return value: null</td>
                         </tr>
                     </table>
-                    
+
                     <h4>dataRange<a name="DataRangeInterface"> </a></h4>
                     <P> dataRange, at most one dataRange control is allowed in one chart. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4627,7 +5440,7 @@ option.series = [
                         </tr>
                     </table>
                     <p><img src="./asset/img/doc/dataZoom.png" title="" alt="数据区域缩放"/></P>
-                    
+
                     <h4>grid<a name="GridInterface"> </a></h4>
                     <P>grid. Methods and properties available are:</P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4678,7 +5491,7 @@ option.series = [
                         </tr>
                     </table>
                     <p><img src="./asset/img/doc/grid.jpg" title="" alt="grid"/></P>
-                    
+
                     <h4>xAxis/yAxis<a name="AxisInterface"> </a></h4>
                     <P>horizontal/vertical axis. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4693,7 +5506,7 @@ option.series = [
                             <td> Gets the axis instance of the index passed in. There are at most four axes (to the side, or up, or down) in a Cartesian chart. Axes can be either category axis or value axis. For the axis instance and available axis methods, see the section below. <br/>Parameters: <b>{number}</b> 0/1 (axis index)<br/> Return value: {categoryAxis | valueAxis}, specifies the axis instance of the index. It can be either category axis or value axis. </td>
                         </tr>
                     </table>
-                    
+
                     <h4>categoryAxis<a name="CategoryAxisInterface"> </a></h4>
                     <P>category axis. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4728,7 +5541,7 @@ option.series = [
                             <td> calculates the category axis data index according to the category axis name. <br/>Parameters: <b>{string}</b> name <br/> Return value: <b>{number}</b>Index. If there are category values with the same name, return the value that is matched first. </td>
                         </tr>
                     </table>
-                    
+
                     <h4>valueAxis<a name="ValueAxisInterface"> </a></h4>
                     <P>value axis. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4753,7 +5566,7 @@ option.series = [
                             <td> returns the extremes of the current axis. <br/>Parameters: null，<br/> Return value: <b>{Object}</b> {min:{number}, max:{number}}</td>
                         </tr>
                     </table>
-                    
+
                     <h4>polar<a name="PolarInterface"> </a></h4>
                     <P>polar coordinates. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4773,10 +5586,10 @@ option.series = [
                             <td>Gets the coordinates corresponding to some value in each indicator, in px. <br/>Parameters: <b>{number}</b> polarIndex, <b>{number}</b> indicatorIndex, <b>{number}</b> value <br/> Return value: <b>{Array}</b> [x, y] coordinate value</td>
                         </tr>
                     </table>
-                    
+
                     <h4>Appendix: Chart Instances<a name="Appendix-Chart-Instances"> </a></h3>
                     <p>Chart types supported in ECharts include: line, bar, scatter, candlestick, pie, radar, chord, force, map. </p>
-                    
+
                     <h4>map<a name="MapInterface"> </a></h4>
                     <P>map. Methods and properties available are: </P>
                     <table cellspacing="0" class="ADoc_table full">
@@ -4801,7 +5614,7 @@ option.series = [
                             <td> Converts plane coordinates to geographic coordinates, in px. <br/>Parameters: <b>{string}</b> mapType (map type), <b>{Array}</b> [x, y] (plane coordinates) <br/> Return value: <b>{Array}</b> [ew,ns] (geographic coordinates). </td>
                         </tr>
                     </table>
-                    
+
                     <h3>Appendix: an Intuitive Example<a name="Appendix-an-Intuitive-Example"> </a></h3>
                     <p>For more examples, click <a href="example-en.html" target="_blank">example</a>. Use this <a href="example/demo.html#-en" target="_blank">demo</a> or <a href="example/www/index.html" target="_blank">ECharts single file import</a> as your template. </p>
                     <div class="code" style="margin-bottom: 25px;">
@@ -4823,7 +5636,7 @@ myChart.hideLoading();
 var option = {
     legend: {                                   // legend configuration
         padding: 5,                             // The inner padding of the legend, in px, defaults to 5. Can be set as array - [top, right, bottom, left].
-        itemGap: 10,                            // The pixel gap between each item in the legend. It is horizontal in a legend with horizontal layout, and vertical in a legend with vertical layout. 
+        itemGap: 10,                            // The pixel gap between each item in the legend. It is horizontal in a legend with horizontal layout, and vertical in a legend with vertical layout.
         data: ['ios', 'android']
     },
     tooltip: {                                  // tooltip configuration
@@ -4838,8 +5651,8 @@ var option = {
     yAxis: [                                    // The vertical axis in Cartesian coordinates
         {
             type: 'value',                      // Axis type. yAxis is value axis by default. As for category axis, please refer to the 'xAxis' chapter.
-            boundaryGap: [0.1, 0.1],            // Blank border on each side of the coordinate axis. Value in the array represents percentage. 
-            splitNumber: 4                      // Applicable to value axis. The number of segments. Defaults to 5. 
+            boundaryGap: [0.1, 0.1],            // Blank border on each side of the coordinate axis. Value in the array represents percentage.
+            splitNumber: 4                      // Applicable to value axis. The number of segments. Defaults to 5.
         }
     ],
     series: [
@@ -4883,7 +5696,7 @@ myChart.dispose();
 
     <!-- FOOTER -->
     <footer id="footer"></footer>
-    
+
     <script src="./asset/js/jquery.min.js"></script>
     <script type="text/javascript" src="./asset/js/echartsHome.js"></script>
     <script src="./asset/js/bootstrap.min.js"></script>

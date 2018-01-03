@@ -7,6 +7,7 @@
  */
 define(function (require) {
     var zrUtil = require('zrender/tool/util');
+    var curveTool = require('zrender/tool/curve');
     
     /**
      * 折线型动画
@@ -59,11 +60,21 @@ define(function (require) {
         }
 
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
                 { pointList: newPointList }
             )
+            .during(function () {
+                // Updating bezier points
+                if (newShape.updateControlPoints) {
+                    newShape.updateControlPoints(newShape.style);
+                }
+            })
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -133,6 +144,7 @@ define(function (require) {
                 .start(easing);
         }
         
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
@@ -143,6 +155,9 @@ define(function (require) {
                     height: newHeight
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -164,14 +179,18 @@ define(function (require) {
         var newY = newShape.style.y;
         newShape.style.y = oldShape.style.y;
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
                 { y: newY }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
-    
+
     /**
      * 环型动画
      * 
@@ -187,6 +206,8 @@ define(function (require) {
         var r0 = newShape.style.r0;
         var r = newShape.style.r;
         
+        newShape.__animating = true;
+
         if (newShape._animationAdd != 'r') {
             newShape.style.r0 = 0;
             newShape.style.r = 0;
@@ -201,10 +222,13 @@ define(function (require) {
                         r : r
                     }
                 )
+                .done(function() {
+                    newShape.__animating = false;
+                })
                 .start(easing);
             zr.animate(newShape.id, '')
                 .when(
-                    Math.round(duration / 3 * 2),
+                    duration,
                     { rotation : [0, x, y] }
                 )
                 .start(easing);
@@ -220,6 +244,9 @@ define(function (require) {
                         r0 : r0
                     }
                 )
+                .done(function() {
+                    newShape.__animating = false;
+                })
                 .start(easing);
         }
     }
@@ -257,6 +284,7 @@ define(function (require) {
         );
         
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
@@ -265,6 +293,9 @@ define(function (require) {
                     endAngle : endAngle
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -298,6 +329,7 @@ define(function (require) {
         );
         
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
@@ -306,6 +338,9 @@ define(function (require) {
                     y : y
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -325,6 +360,7 @@ define(function (require) {
         
         newShape.scale = [0.1, 0.1, x, y];
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, '')
             .when(
                 duration,
@@ -332,6 +368,9 @@ define(function (require) {
                     scale : [1, 1, x, y]
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -369,6 +408,7 @@ define(function (require) {
         }
         
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
@@ -379,6 +419,9 @@ define(function (require) {
                     target1 : target1
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -403,6 +446,7 @@ define(function (require) {
         var angle = newShape.style.angle;
         newShape.style.angle = oldShape.style.angle;
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
@@ -410,6 +454,9 @@ define(function (require) {
                     angle : angle
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -434,12 +481,16 @@ define(function (require) {
             var y = newShape._y || 0;
             newShape.scale = [0.01, 0.01, x, y];
             zr.addShape(newShape);
+            newShape.__animating = true;
             zr.animate(newShape.id, '')
                 .delay(delay)
                 .when(
                     duration,
                     {scale : [1, 1, x, y]}
                 )
+                .done(function() {
+                    newShape.__animating = false;
+                })
                 .start(easing || 'QuinticOut');
         }
         else {              // mod
@@ -479,6 +530,7 @@ define(function (require) {
         );
 
         zr.addShape(newShape);
+        newShape.__animating = true;
         zr.animate(newShape.id, 'style')
             .when(
                 duration,
@@ -489,6 +541,9 @@ define(function (require) {
                     yEnd: yEnd
                 }
             )
+            .done(function() {
+                newShape.__animating = false;
+            })
             .start(easing);
     }
     
@@ -502,52 +557,53 @@ define(function (require) {
      * @param {tring} easing
      */
     function markline(zr, oldShape, newShape, duration, easing) {
-        if (!newShape.style.smooth) {
-            newShape.style.pointList = !oldShape
-                ? [
-                    [newShape.style.xStart, newShape.style.yStart],
-                    [newShape.style.xStart, newShape.style.yStart]
-                ]
-                : oldShape.style.pointList;
-            zr.addShape(newShape);
-            zr.animate(newShape.id, 'style')
-                .when(
-                    duration,
-                    {
-                        pointList : [
-                            [
-                                newShape.style.xStart,
-                                newShape.style.yStart
-                            ],
-                            [
-                                newShape._x || 0, newShape._y || 0
-                            ]
-                        ]
-                    }
-                )
-                .start(easing || 'QuinticOut');
+        easing = easing || 'QuinticOut';
+        newShape.__animating = true;
+        zr.addShape(newShape);
+        var newShapeStyle = newShape.style;
+
+        var animationDone = function () {
+            newShape.__animating = false;
+        };
+        var x0 = newShapeStyle.xStart;
+        var y0 = newShapeStyle.yStart;
+        var x2 = newShapeStyle.xEnd;
+        var y2 = newShapeStyle.yEnd;
+        if (newShapeStyle.curveness > 0) {
+            newShape.updatePoints(newShapeStyle);
+            var obj = { p: 0 };
+            var x1 = newShapeStyle.cpX1;
+            var y1 = newShapeStyle.cpY1;
+            var newXArr = [];
+            var newYArr = [];
+            var subdivide = curveTool.quadraticSubdivide;
+            zr.animation.animate(obj)
+                .when(duration, { p: 1 })
+                .during(function () {
+                    // Calculate subdivided curve
+                    subdivide(x0, x1, x2, obj.p, newXArr);
+                    subdivide(y0, y1, y2, obj.p, newYArr);
+                    newShapeStyle.cpX1 = newXArr[1];
+                    newShapeStyle.cpY1 = newYArr[1];
+                    newShapeStyle.xEnd = newXArr[2];
+                    newShapeStyle.yEnd = newYArr[2];
+                    zr.modShape(newShape);
+                })
+                .done(animationDone)
+                .start(easing);
         }
         else {
-            // 曲线动画
-            if (!oldShape) {
-                // 新增
-                newShape.style.pointListLength = 1;
-                zr.addShape(newShape);
-                newShape.style.pointList = newShape.style.pointList 
-                                           || newShape.getPointList(newShape.style);
-                zr.animate(newShape.id, 'style')
-                    .when(
-                        duration,
-                        {
-                            pointListLength : newShape.style.pointList.length
-                        }
-                    )
-                    .start(easing || 'QuinticOut');
-            }
-            else {
-                // 过渡
-                zr.addShape(newShape);
-            }
+            zr.animate(newShape.id, 'style')
+                .when(0, {
+                    xEnd: x0,
+                    yEnd: y0
+                })
+                .when(duration, {
+                    xEnd: x2,
+                    yEnd: y2
+                })
+                .done(animationDone)
+                .start(easing);
         }
     }
 

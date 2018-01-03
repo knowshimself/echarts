@@ -9,7 +9,6 @@
 define(function (require) {
     'use strict';
     
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     
     // 图形依赖
@@ -21,6 +20,98 @@ define(function (require) {
     var BezierCurveShape = require('zrender/shape/BezierCurve');
     
     var ecConfig = require('../config');
+    // 和弦图默认参数
+    ecConfig.chord = {
+        zlevel: 0,                  // 一级层叠
+        z: 2,                       // 二级层叠
+        clickable: true,
+        radius: ['65%', '75%'],
+        center: ['50%', '50%'],
+        padding: 2,
+        sort: 'none',       // can be 'none', 'ascending', 'descending'
+        sortSub: 'none',    // can be 'none', 'ascending', 'descending'
+        startAngle: 90,
+        clockWise: true,
+        ribbonType: true,
+        
+        /***************** 下面的配置项在 ribbonType 为 false 时有效 */
+        // 同force类似
+        minRadius: 10,
+        maxRadius: 20,
+        symbol: 'circle',
+        /***************** 上面的配置项在 ribbonType 为 false 时有效 */
+
+        /***************** 下面的配置项在 ribbonType 为 true 时有效 */
+        showScale: false,
+        showScaleText: false,
+        /***************** 上面的配置项在 ribbonType 为 true 时有效 */
+
+        // 分类里如果有样式会覆盖节点默认样式
+        // categories: [{
+            // itemStyle
+            // symbol
+            // symbolSize
+            // name
+        // }],
+
+        itemStyle: {
+            normal: {
+                borderWidth: 0,
+                borderColor: '#000',
+                label: {
+                    show: true,
+                    rotate: false,
+                    distance: 5
+                    // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
+                },
+                chordStyle: {
+                    /** ribbonType = false 时有效 */
+                    width: 1,
+                    color: 'black',
+                    /** ribbonType = true 时有效 */
+                    borderWidth: 1,
+                    borderColor: '#999',
+                    opacity: 0.5
+                }
+            },
+            emphasis: {
+                borderWidth: 0,
+                borderColor: '#000',
+                chordStyle: {
+                    /** ribbonType = false 时有效 */
+                    width: 1,
+                    color: 'black',
+                    /** ribbonType = true 时有效 */
+                    borderWidth: 1,
+                    borderColor: '#999'
+                }
+            }
+        }
+        /****** 使用 Data-matrix 表示数据 */
+        // data: [],
+        // Source data matrix
+        /**
+         *         target
+         *    -1--2--3--4--5-
+         *  1| x  x  x  x  x
+         *  2| x  x  x  x  x
+         *  3| x  x  x  x  x  source
+         *  4| x  x  x  x  x
+         *  5| x  x  x  x  x
+         *
+         *  Relation ship from source to target
+         *  https://github.com/mbostock/d3/wiki/Chord-Layout#wiki-chord
+         *  
+         *  Row based
+         */
+        // matrix: [],
+
+        /****** 使用 node-links 表示数据 */
+        // 参考 force
+        // nodes: [],
+        // links: []
+    };
+
     var ecData = require('../util/ecData');
     var zrUtil = require('zrender/tool/util');
     var vec2 = require('zrender/tool/vector');
@@ -28,10 +119,8 @@ define(function (require) {
     var ChordLayout = require('../layout/Chord');
     
     function Chord(ecTheme, messageCenter, zr, option, myChart) {
-        // 基类
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         // 图表基类
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         this.scaleLineLength = 4;
 
@@ -126,22 +215,34 @@ define(function (require) {
             var nodeFilter = function (n) {
                 return n.layout.size > 0;
             };
+            var createEdgeFilter = function (graph) {
+                return function (e) {
+                    return graph.getEdge(e.node2, e.node1);
+                };
+            };
             for (var i = 0; i < series.length; i++) {
                 var serie = series[i];
 
                 if (this.selectedMap[serie.name]) {
                     var graph;
-                    if (serie.data && serie.matrix) {
+                    // matrix 表示边
+                    if (serie.matrix) {
                         graph = this._getSerieGraphFromDataMatrix(
                             serie, mainSerie
                         );
-                    } else if (serie.nodes && serie.links) {
+                    }
+                    // links 表示边
+                    else if (serie.links) {
                         graph = this._getSerieGraphFromNodeLinks(
                             serie, mainSerie
                         );
                     }
                     // 过滤输出为0的节点
                     graph.filterNode(nodeFilter, this);
+                    if (serie.ribbonType) {
+                        graph.filterEdge(createEdgeFilter(graph));
+                    }
+
                     graphs.push(graph);
 
                     graph.__serie = serie;
@@ -447,7 +548,8 @@ define(function (require) {
                 var startAngle = node.layout.startAngle / Math.PI * 180 * sign;
                 var endAngle = node.layout.endAngle / Math.PI * 180 * sign;
                 var sector = new SectorShape({
-                    zlevel: this.getZlevelBase(),
+                    zlevel: serie.zlevel,
+                    z : serie.z,
                     style: {
                         x: center[0],
                         y: center[1],
@@ -525,8 +627,8 @@ define(function (require) {
                     color = category ? this.getColor(category.name) : this.getColor(node.id);
                 }
                 var iconShape = new IconShape({
-                    zlevel: this.getZlevelBase(),
-                    z: 1,
+                    zlevel: serie.zlevel,
+                    z: serie.z + 1,
                     style: {
                         x: - node.layout.size,
                         y: - node.layout.size,
@@ -564,9 +666,9 @@ define(function (require) {
         },
 
         _buildLabels: function (serie, serieIdx, graph, mainSerie) {
-            var labelColor = this.query(
-                mainSerie, 'itemStyle.normal.label.color'
-            );
+            // var labelColor = this.query(
+                // mainSerie, 'itemStyle.normal.label.color'
+            // );
             var rotateLabel = this.query(
                 mainSerie, 'itemStyle.normal.label.rotate'
             );
@@ -602,12 +704,12 @@ define(function (require) {
                 vec2.add(start, start, center);
 
                 var labelShape = {
-                    zlevel: this.getZlevelBase() + 1,
+                    zlevel: serie.zlevel,
+                    z: serie.z + 1,
                     hoverable: false,
                     style: {
                         text: node.data.label == null ? node.id : node.data.label,
-                        textAlign: isRightSide ? 'left' : 'right',
-                        color: labelColor || '#000000'
+                        textAlign: isRightSide ? 'left' : 'right'
                     }
                 };
                 if (rotateLabel) {
@@ -625,10 +727,12 @@ define(function (require) {
                     labelShape.style.x = start[0];
                     labelShape.style.y = start[1];
                 }
-                labelShape.style.textColor = this.deepQuery(
+
+                // zrender/Text并没有textColor属性，ctx fillStyle使用的是color
+                labelShape.style.color = this.deepQuery(
                     [node.data, mainSerie],
                     'itemStyle.normal.label.textStyle.color'
-                ) || '#fff';
+                ) || '#000000';
                 labelShape.style.textFont = this.getFont(this.deepQuery(
                     [node.data, mainSerie],
                     'itemStyle.normal.label.textStyle'
@@ -683,7 +787,8 @@ define(function (require) {
                     serie, edge.data, 'emphasis'
                 );
                 var ribbon = new RibbonShape({
-                    zlevel: this.getZlevelBase(),
+                    zlevel: serie.zlevel,
+                    z: serie.z,
                     style: {
                         x: center[0],
                         y: center[1],
@@ -711,18 +816,26 @@ define(function (require) {
                         strokeColor: this.deepQuery(queryTargetEmphasis, 'borderColor')
                     }
                 });
-
+                var node1, node2;
+                // 从大端到小端
+                if (edge.layout.weight <= other.layout.weight) {
+                    node1 = other.node1;
+                    node2 = other.node2;
+                } else {
+                    node1 = edge.node1;
+                    node2 = edge.node2;
+                }
                 ecData.pack(
                     ribbon,
                     serie,
                     serieIdx,
                     edge.data,
                     edge.rawIndex == null ? idx : edge.rawIndex,
-                    edge.data.name || (edge.node1.id + '-' + edge.node2.id),
+                    edge.data.name || (node1.id + '-' + node2.id),
                     // special
-                    edge.node1.id,
+                    node1.id,
                     // special2
-                    edge.node2.id
+                    node2.id
                 );
 
                 this.shapeList.push(ribbon);
@@ -746,8 +859,8 @@ define(function (require) {
                 );
 
                 var curveShape = new BezierCurveShape({
-                    zlevel: this.getZlevelBase(),
-                    z: 0,
+                    zlevel: serie.zlevel,
+                    z: serie.z,
                     style: {
                         xStart: shape1.position[0],
                         yStart: shape1.position[1],
@@ -852,7 +965,8 @@ define(function (require) {
                     var end = vec2.scale([], v, radius[1] + this.scaleLineLength);
                     vec2.add(end, end, center);
                     var scaleShape = new LineShape({
-                        zlevel: this.getZlevelBase() - 1,
+                        zlevel: serie.zlevel,
+                        z: serie.z - 1,
                         hoverable: false,
                         style: {
                             xStart: start[0],
@@ -892,7 +1006,8 @@ define(function (require) {
                                      || theta >= 270;
 
                     var textShape = new TextShape({
-                        zlevel: this.getZlevelBase() - 1,
+                        zlevel: serie.zlevel,
+                        z: serie.z - 1,
                         hoverable: false,
                         style: {
                             x: isRightSide 
@@ -960,18 +1075,21 @@ define(function (require) {
         reformOption : function (opt) {
             var _merge = zrUtil.merge;
             opt = _merge(
-                      opt || {},
-                      this.ecTheme.chord
+                      _merge(
+                          opt || {},
+                          this.ecTheme.chord
+                      ),
+                      ecConfig.chord
                   );
-            opt.itemStyle.normal.label.textStyle = _merge(
-                opt.itemStyle.normal.label.textStyle || {},
-                this.ecTheme.textStyle
+            opt.itemStyle.normal.label.textStyle = this.getTextStyle(
+                opt.itemStyle.normal.label.textStyle
             );
+            this.z = opt.z;
+            this.zlevel = opt.zlevel;
         }
     };
     
     zrUtil.inherits(Chord, ChartBase);
-    zrUtil.inherits(Chord, ComponentBase);
     
     // 图表注册
     require('../chart').define('chord', Chord);

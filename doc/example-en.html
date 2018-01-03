@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="./asset/ico/favicon.png">
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./asset/css/font-awesome.min.css" rel="stylesheet">
     <link href="./asset/css/bootstrap.css" rel="stylesheet">
     <link href="./asset/css/carousel.css" rel="stylesheet">
     <link href="./asset/css/echartsHome.css" rel="stylesheet">
@@ -73,8 +73,8 @@
         }
         #chartsTypeNav ul li {
             transition: background-color 0.3s;
-            -moz-transition: background-color 0.3s; 
-            -webkit-transition: background-color 0.3s; 
+            -moz-transition: background-color 0.3s;
+            -webkit-transition: background-color 0.3s;
             -o-transition: background-color 0.3s;
             padding-left:10px;
         }
@@ -92,7 +92,7 @@
                     <ul style="padding:5px 0;">
                         <li><i class="ec-icon ec-icon-line"></i> <a href="#line"><abbr title="Line & Area">Line</abbr></a></li>
                         <li><i class="ec-icon ec-icon-bar"></i> <a href="#bar"><abbr title="Column & Bar">Bar</abbr></a></li>
-                        <li><i class="ec-icon ec-icon-scatter"></i> <a href="#scatter"><abbr title="Scatter & Bubble">Scatter</abbr></a></li> 
+                        <li><i class="ec-icon ec-icon-scatter"></i> <a href="#scatter"><abbr title="Scatter & Bubble">Scatter</abbr></a></li>
                         <li><i class="ec-icon ec-icon-k"></i> <a href="#k">Candlestick</a></li>
                         <li><i class="ec-icon ec-icon-pie"></i> <a href="#pie"><abbr title="Pie & Doughnut">Pie</abbr></a></li>
                         <li><i class="ec-icon ec-icon-radar"></i> <a href="#radar">Radar</a></li>
@@ -102,6 +102,11 @@
                         <li><i class="ec-icon ec-icon-gauge"></i> <a href="#gauge">Gauges</a></li>
                         <li><i class="ec-icon ec-icon-funnel"></i> <a href="#funnel">Funnels</a></li>
                         <li><i class="ec-icon ec-icon-eventRiver"></i> <a href="#eventRiver">EventRiver</a></li>
+                        <li><i class="ec-icon ec-icon-heatmap"></i> <a href="#heatmap">Heatmap</a></li>
+                        <li><i class="ec-icon ec-icon-venn"></i> <a href="#venn">Venn</a></li>
+                        <li><i class="ec-icon ec-icon-treemap"></i> <a href="#treemap">Treemap</a></li>
+                        <li><i class="ec-icon ec-icon-tree"></i> <a href="#tree">Tree</a></li>
+                        <li><i class="ec-icon ec-icon-wordCloud"></i> <a href="#wordCloud">WordCloud</a></li>
                         <li><i class="ec-icon ec-icon-mix"></i> <a href="#mix">Combinations</a></li>
                         <li><i class="ec-icon ec-icon-component"></i> <a href="#component">Components</a></li>
                         <li><i class="ec-icon ec-icon-other"></i> <a href="#other">Others</a></li>
@@ -145,12 +150,20 @@
                               <span><strong>Irregular Line</strong><br/>two value axis</span></a>
                             </li><!--/li-->
                             <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/line8.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Irregular Line</strong><br/>time axis</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
                               <a href="example/line6.html"><img src="asset/img/example/cache.png">
                               <span><strong>Area</strong><br/>reversed value axis</span></a>
                             </li><!--/li-->
                             <li data-thumb="asset/img/example/cache.png">
                               <a href="example/line.html"><img src="asset/img/example/cache.png">
                               <span><strong>Line</strong><br/>multilevel control, customizable</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/line9.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Logarithmic Axis</strong></a>
                             </li><!--/li-->
                           </ul>
                         </div>
@@ -524,6 +537,10 @@
                                   <a href="example/map.html"><img src="asset/img/example/cache.png">
                                   <span><strong>Map</strong><br/>multilevel control, customizable</span></a>
                                 </li><!--/li-->
+                                <li data-thumb="asset/img/example/cache.png">
+                                  <a href="example/dataRange2.html"><img src="asset/img/example/cache.png">
+                                  <span><strong>Data Range</strong><br/>Customized split list</span></a>
+                                </li><!--/li-->
                             </ul>
                         </div>
                     </div>
@@ -591,6 +608,27 @@
                     </div>
                 </div>
                 <div>
+                    <h3>Heatmap<a name="heatmap"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/heatmap.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Heatmap</strong><br/>Customizable</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                               <a href="example/heatmap2.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Heatmap</strong></span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                               <a href="example/heatmap_map.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Heatmap</strong><br/>Used with map</span></a>
+                            </li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
                     <h3>EventRiver<a name="eventRiver"> </a></h3>
                     <div class="section">
                         <div class="thumb4">
@@ -602,6 +640,74 @@
                             <li data-thumb="asset/img/example/cache.png">
                                <a href="example/eventRiver2.html"><img src="asset/img/example/cache.png">
                               <span><strong>EventRiver</strong><br/>customizable</span></a>
+                            </li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Venn<a name="venn"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/venn.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Venn</strong><br/>customizable</span></a>
+                            </li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Treemap<a name="treemap"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/treemap.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Treemap</strong><br/>Basic example</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/treemap1.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Treemap</strong><br/>Drill down</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/treemap2.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Treemap</strong><br/>customizable</span></a>
+                            </li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Tree<a name="tree"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/tree.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Tree</strong><br/>Basic example</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/tree2.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Tree</strong><br/>China province</span></a>
+                            </li><!--/li-->
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/tree1.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Tree</strong><br/>Customizable</span></a>
+                            </li><!--/li-->
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Word Cloud<a name="wordCloud"> </a></h3>
+                    <div class="section">
+                        <div class="thumb4">
+                          <ul class="slides">
+                            <li data-thumb="asset/img/example/cache.png">
+                              <a href="example/wordCloud.html"><img src="asset/img/example/cache.png">
+                              <span><strong>Word Cloud</strong></a>
                             </li><!--/li-->
                           </ul>
                         </div>
@@ -635,6 +741,10 @@
                                 <li data-thumb="asset/img/example/cache.png">
                                   <a href="example/mix10.html"><img src="asset/img/example/cache.png">
                                   <span><strong>Candlestick + Line</strong><br/>double value axes, multi-series</span></a>
+                                </li><!--/li-->
+                                <li data-thumb="asset/img/example/cache.png">
+                                  <a href="example/mix12.html"><img src="asset/img/example/cache.png">
+                                  <span><strong>Line + Pie</strong><br/>tendency and percentage, more efficient</span></a>
                                 </li><!--/li-->
                                 <li data-thumb="asset/img/example/cache.png">
                                   <a href="example/mix3.html"><img src="asset/img/example/cache.png">
@@ -741,6 +851,7 @@
                         <li><a href="example/topic/24-population-china/index.html" target="_blank">China's population flow (1987 - 2011)</a> by Meng Lixin(Tencent), Wang Feiyu(Securities Times), Yan Dong (Shijue.me), <a href="http://weibo.com/kenerlinfeng" target="_blank">Lin Feng</a>(Baidu)</li>
                         <li><a href="http://hijiangtao.github.io/variety-show-hot-spot-vis/" target="_blank">TV show visual evaluation system</a> by <a href="http://hijiangtao.github.io/variety-show-hot-spot-vis/about/" target="_blank">Data.BIT</a> (Beijing Institute of Technology)</li>
                         <li><a href="http://echarts.baidu.com/doc/example/topic/sino-japanese-war-1895/index.html" target="_blank">120th anniversary of the sino-japanese war</a> by <a href="http://weibo.com/u/3798120772" target="_blank">Fu Jianhai</a> (CSDN open source camp)</li>
+                        <li><a href="http://www.thinkgis.cn/public/sina/" target="_blank">2014 Sina Weibo POI Data Visualization</a> by <a href="http://www.weibo.com/u/1707284737" target="_blank">ThinkingGIS </a></li>
                     </ul>
                 </div>
             </div>
@@ -755,7 +866,7 @@
     <script type="text/javascript" src="./asset/js/echartsHome.js"></script>
     <script src="./asset/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-    $(window).load(function (){
+    $(function (){
       var section = $('[class=section]');
       function loadImage(i) {
           setTimeout(function (){
@@ -780,7 +891,7 @@
       for (var i = 0, l = section.length; i < l; i++) {
           loadImage(i);
       }
-      
+
     var chartsTypeNav = document.getElementById('chartsTypeNav');
     function _scroll() {
         var navHeight = chartsTypeNav.offsetHeight;
@@ -799,7 +910,7 @@
             // 未见footer
             chartsTypeNav.style.marginTop = 'auto';
         }
-        
+
         var len = offsetList.length;
         if (scrollHeight > offsetList[len - 3].offsetTop) {
                 navDom[len - 2].style.backgroundColor = '#3E98C5';
@@ -824,7 +935,7 @@
         offsetList = [];
         $('h3').each(function(idx, dom){
             offsetList[idx] = {
-                name : dom.childNodes[1].name, 
+                name : dom.childNodes[1].name,
                 offsetTop : dom.childNodes[1].offsetTop
             };
         });
@@ -834,7 +945,7 @@
         })
         setTimeout(_scroll, 500);
     }
-    
+
     function scroll2Pos (idx) {
         return function() {
             $("body,html").animate(

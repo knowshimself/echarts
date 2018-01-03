@@ -1,6 +1,5 @@
 define('echarts/chart/scatter', [
     'require',
-    '../component/base',
     './base',
     '../util/shape/Symbol',
     '../component/axis',
@@ -12,7 +11,6 @@ define('echarts/chart/scatter', [
     'zrender/tool/color',
     '../chart'
 ], function (require) {
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var SymbolShape = require('../util/shape/Symbol');
     require('../component/axis');
@@ -20,11 +18,25 @@ define('echarts/chart/scatter', [
     require('../component/dataZoom');
     require('../component/dataRange');
     var ecConfig = require('../config');
+    ecConfig.scatter = {
+        zlevel: 0,
+        z: 2,
+        clickable: true,
+        legendHoverLink: true,
+        xAxisIndex: 0,
+        yAxisIndex: 0,
+        symbolSize: 4,
+        large: false,
+        largeThreshold: 2000,
+        itemStyle: {
+            normal: { label: { show: false } },
+            emphasis: { label: { show: false } }
+        }
+    };
     var zrUtil = require('zrender/tool/util');
     var zrColor = require('zrender/tool/color');
     function Scatter(ecTheme, messageCenter, zr, option, myChart) {
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         this.refresh(option);
     }
     Scatter.prototype = {
@@ -111,7 +123,7 @@ define('echarts/chart/scatter', [
                 pointList[seriesIndex] = [];
                 for (var i = 0, l = serie.data.length; i < l; i++) {
                     data = serie.data[i];
-                    value = data != null ? data.value != null ? data.value : data : '-';
+                    value = this.getDataFromOption(data, '-');
                     if (value === '-' || value.length < 2) {
                         continue;
                     }
@@ -174,7 +186,7 @@ define('echarts/chart/scatter', [
             var gridXend = this.component.grid.getXend();
             var gridY = this.component.grid.getY();
             var gridYend = this.component.grid.getYend();
-            xMarkMap.average0 = (xMarkMap.sum0 / xMarkMap.counter0).toFixed(2) - 0;
+            xMarkMap.average0 = xMarkMap.sum0 / xMarkMap.counter0;
             var x = xAxis.getCoord(xMarkMap.average0);
             xMarkMap.averageLine0 = [
                 [
@@ -206,7 +218,7 @@ define('echarts/chart/scatter', [
                     gridY
                 ]
             ];
-            xMarkMap.average1 = (xMarkMap.sum1 / xMarkMap.counter1).toFixed(2) - 0;
+            xMarkMap.average1 = xMarkMap.sum1 / xMarkMap.counter1;
             var y = yAxis.getCoord(xMarkMap.average1);
             xMarkMap.averageLine1 = [
                 [
@@ -250,7 +262,7 @@ define('echarts/chart/scatter', [
                 serie = series[seriesIndex];
                 seriesPL = pointList[seriesIndex];
                 if (serie.large && serie.data.length > serie.largeThreshold) {
-                    this.shapeList.push(this._getLargeSymbol(seriesPL, this.getItemStyleColor(this.query(serie, 'itemStyle.normal.color'), seriesIndex, -1) || this._sIndex2ColorMap[seriesIndex]));
+                    this.shapeList.push(this._getLargeSymbol(serie, seriesPL, this.getItemStyleColor(this.query(serie, 'itemStyle.normal.color'), seriesIndex, -1) || this._sIndex2ColorMap[seriesIndex]));
                     continue;
                 }
                 for (var i = 0, l = seriesPL.length; i < l; i++) {
@@ -275,13 +287,15 @@ define('echarts/chart/scatter', [
                 rangColor = this._sIndex2ColorMap[seriesIndex];
             }
             var itemShape = this.getSymbolShape(serie, seriesIndex, data, dataIndex, name, x, y, this._sIndex2ShapeMap[seriesIndex], rangColor, 'rgba(0,0,0,0)', 'vertical');
-            itemShape.zlevel = this._zlevelBase;
+            itemShape.zlevel = serie.zlevel;
+            itemShape.z = serie.z;
             itemShape._main = true;
             return itemShape;
         },
-        _getLargeSymbol: function (pointList, nColor) {
+        _getLargeSymbol: function (serie, pointList, nColor) {
             return new SymbolShape({
-                zlevel: this._zlevelBase,
+                zlevel: serie.zlevel,
+                z: serie.z,
                 _main: true,
                 hoverable: false,
                 style: {
@@ -331,7 +345,6 @@ define('echarts/chart/scatter', [
         }
     };
     zrUtil.inherits(Scatter, ChartBase);
-    zrUtil.inherits(Scatter, ComponentBase);
     require('../chart').define('scatter', Scatter);
     return Scatter;
 });define('echarts/component/dataRange', [
@@ -352,15 +365,38 @@ define('echarts/chart/scatter', [
     var RectangleShape = require('zrender/shape/Rectangle');
     var HandlePolygonShape = require('../util/shape/HandlePolygon');
     var ecConfig = require('../config');
+    ecConfig.dataRange = {
+        zlevel: 0,
+        z: 4,
+        show: true,
+        orient: 'vertical',
+        x: 'left',
+        y: 'bottom',
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: '#ccc',
+        borderWidth: 0,
+        padding: 5,
+        itemGap: 10,
+        itemWidth: 20,
+        itemHeight: 14,
+        precision: 0,
+        splitNumber: 5,
+        splitList: null,
+        calculable: false,
+        selectedMode: true,
+        hoverLink: true,
+        realtime: true,
+        color: [
+            '#006edd',
+            '#e0ffff'
+        ],
+        textStyle: { color: '#333' }
+    };
     var zrUtil = require('zrender/tool/util');
     var zrEvent = require('zrender/tool/event');
     var zrArea = require('zrender/tool/area');
     var zrColor = require('zrender/tool/color');
     function DataRange(ecTheme, messageCenter, zr, option, myChart) {
-        if (typeof this.query(option, 'dataRange.min') == 'undefined' || typeof this.query(option, 'dataRange.max') == 'undefined') {
-            console.error('option.dataRange.min or option.dataRange.max has not been defined.');
-            return;
-        }
         Base.call(this, ecTheme, messageCenter, zr, option, myChart);
         var self = this;
         self._ondrift = function (dx, dy) {
@@ -389,7 +425,7 @@ define('echarts/chart/scatter', [
         _buildShape: function () {
             this._itemGroupLocation = this._getItemGroupLocation();
             this._buildBackground();
-            if (this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable) {
+            if (this._isContinuity()) {
                 this._buildGradient();
             } else {
                 this._buildItem();
@@ -439,11 +475,15 @@ define('echarts/chart/scatter', [
                 itemShape = this._getItemShape(lastX, lastY, itemWidth, itemHeight, this._selectedMap[i] ? color : '#ccc');
                 itemShape._idx = i;
                 itemShape.onmousemove = this._dispatchHoverLink;
-                itemShape.onclick = this._dataRangeSelected;
+                if (this.dataRangeOption.selectedMode) {
+                    itemShape.clickable = true;
+                    itemShape.onclick = this._dataRangeSelected;
+                }
                 this.shapeList.push(new RectangleShape(itemShape));
                 if (needValueText) {
                     textShape = {
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase(),
                         style: {
                             x: lastX + itemWidth + 5,
                             y: lastY,
@@ -452,15 +492,18 @@ define('echarts/chart/scatter', [
                             textFont: font,
                             textBaseline: 'top'
                         },
-                        highlightStyle: { brushType: 'fill' },
-                        clickable: true
+                        highlightStyle: { brushType: 'fill' }
                     };
                     if (this.dataRangeOption.orient == 'vertical' && this.dataRangeOption.x == 'right') {
                         textShape.style.x -= itemWidth + 10;
                         textShape.style.textAlign = 'right';
                     }
                     textShape._idx = i;
-                    textShape.onclick = this._dataRangeSelected;
+                    textShape.onmousemove = this._dispatchHoverLink;
+                    if (this.dataRangeOption.selectedMode) {
+                        textShape.clickable = true;
+                        textShape.onclick = this._dataRangeSelected;
+                    }
                     this.shapeList.push(new TextShape(textShape));
                 }
                 if (this.dataRangeOption.orient == 'horizontal') {
@@ -492,6 +535,7 @@ define('echarts/chart/scatter', [
             var itemWidth = this.dataRangeOption.itemWidth;
             var itemHeight = this.dataRangeOption.itemHeight;
             var textHeight = zrArea.getTextHeight('国', font);
+            var mSize = 10;
             var needValueText = true;
             if (this.dataRangeOption.text) {
                 needValueText = false;
@@ -518,30 +562,32 @@ define('echarts/chart/scatter', [
             }
             if (this.dataRangeOption.orient == 'horizontal') {
                 itemShape = {
-                    zlevel: this._zlevelBase,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     style: {
                         x: lastX,
                         y: lastY,
-                        width: itemWidth * 10,
+                        width: itemWidth * mSize,
                         height: itemHeight,
-                        color: zrColor.getLinearGradient(lastX, lastY, lastX + itemWidth * 10, lastY, colorList)
+                        color: zrColor.getLinearGradient(lastX, lastY, lastX + itemWidth * mSize, lastY, colorList)
                     },
                     hoverable: false
                 };
-                lastX += itemWidth * 10 + this._textGap;
+                lastX += itemWidth * mSize + this._textGap;
             } else {
                 itemShape = {
-                    zlevel: this._zlevelBase,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     style: {
                         x: lastX,
                         y: lastY,
                         width: itemWidth,
-                        height: itemHeight * 10,
-                        color: zrColor.getLinearGradient(lastX, lastY, lastX, lastY + itemHeight * 10, colorList)
+                        height: itemHeight * mSize,
+                        color: zrColor.getLinearGradient(lastX, lastY, lastX, lastY + itemHeight * mSize, colorList)
                     },
                     hoverable: false
                 };
-                lastY += itemHeight * 10 + this._textGap;
+                lastY += itemHeight * mSize + this._textGap;
             }
             this.shapeList.push(new RectangleShape(itemShape));
             this._calculableLocation = itemShape.style;
@@ -655,7 +701,8 @@ define('echarts/chart/scatter', [
         },
         _buildFiller: function () {
             this._fillerShape = {
-                zlevel: this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 style: {
                     x: this._calculableLocation.x,
                     y: this._calculableLocation.y,
@@ -948,6 +995,7 @@ define('echarts/chart/scatter', [
                     text: this._textFormat(this.dataRangeOption.max),
                     textX: textXStart,
                     textY: textYStart,
+                    textFont: font,
                     color: this.getColor(this.dataRangeOption.max),
                     rect: coverRectStart,
                     x: pointListStart[0][0],
@@ -966,6 +1014,7 @@ define('echarts/chart/scatter', [
                     text: this._textFormat(this.dataRangeOption.min),
                     textX: textXEnd,
                     textY: textYEnd,
+                    textFont: font,
                     color: this.getColor(this.dataRangeOption.min),
                     rect: coverRectEnd,
                     x: pointListEnd[0][0],
@@ -978,7 +1027,8 @@ define('echarts/chart/scatter', [
                 strokeColor: this._endShape.style.color,
                 lineWidth: 1
             };
-            this._startShape.zlevel = this._endShape.zlevel = this._zlevelBase + 1;
+            this._startShape.zlevel = this._endShape.zlevel = this.getZlevelBase();
+            this._startShape.z = this._endShape.z = this.getZBase() + 1;
             this._startShape.draggable = this._endShape.draggable = true;
             this._startShape.ondrift = this._endShape.ondrift = this._ondrift;
             this._startShape.ondragend = this._endShape.ondragend = this._ondragend;
@@ -1000,7 +1050,8 @@ define('echarts/chart/scatter', [
             var width = this._calculableLocation.width;
             var height = this._calculableLocation.height;
             this._startMask = {
-                zlevel: this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 style: {
                     x: x,
                     y: y,
@@ -1011,7 +1062,8 @@ define('echarts/chart/scatter', [
                 hoverable: false
             };
             this._endMask = {
-                zlevel: this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 style: {
                     x: this.dataRangeOption.orient == 'horizontal' ? x + width : x,
                     y: this.dataRangeOption.orient == 'horizontal' ? y : y + height,
@@ -1029,7 +1081,8 @@ define('echarts/chart/scatter', [
         _buildBackground: function () {
             var padding = this.reformCssArray(this.dataRangeOption.padding);
             this.shapeList.push(new RectangleShape({
-                zlevel: this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 hoverable: false,
                 style: {
                     x: this._itemGroupLocation.x - padding[3],
@@ -1053,9 +1106,10 @@ define('echarts/chart/scatter', [
             var totalHeight = 0;
             var font = this.getFont(this.dataRangeOption.textStyle);
             var textHeight = zrArea.getTextHeight('国', font);
+            var mSize = 10;
             if (this.dataRangeOption.orient == 'horizontal') {
-                if (this.dataRangeOption.text || this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable) {
-                    totalWidth = (this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable ? itemWidth * 10 + itemGap : dataLength * (itemWidth + itemGap)) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[0] != 'undefined' ? zrArea.getTextWidth(this.dataRangeOption.text[0], font) + this._textGap : 0) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[1] != 'undefined' ? zrArea.getTextWidth(this.dataRangeOption.text[1], font) + this._textGap : 0);
+                if (this.dataRangeOption.text || this._isContinuity()) {
+                    totalWidth = (this._isContinuity() ? itemWidth * mSize + itemGap : dataLength * (itemWidth + itemGap)) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[0] != 'undefined' ? zrArea.getTextWidth(this.dataRangeOption.text[0], font) + this._textGap : 0) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[1] != 'undefined' ? zrArea.getTextWidth(this.dataRangeOption.text[1], font) + this._textGap : 0);
                 } else {
                     itemWidth += 5;
                     for (var i = 0; i < dataLength; i++) {
@@ -1066,8 +1120,8 @@ define('echarts/chart/scatter', [
                 totalHeight = Math.max(textHeight, itemHeight);
             } else {
                 var maxWidth;
-                if (this.dataRangeOption.text || this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable) {
-                    totalHeight = (this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable ? itemHeight * 10 + itemGap : dataLength * (itemHeight + itemGap)) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[0] != 'undefined' ? this._textGap + textHeight : 0) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[1] != 'undefined' ? this._textGap + textHeight : 0);
+                if (this.dataRangeOption.text || this._isContinuity()) {
+                    totalHeight = (this._isContinuity() ? itemHeight * mSize + itemGap : dataLength * (itemHeight + itemGap)) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[0] != 'undefined' ? this._textGap + textHeight : 0) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[1] != 'undefined' ? this._textGap + textHeight : 0);
                     maxWidth = Math.max(zrArea.getTextWidth(this.dataRangeOption.text && this.dataRangeOption.text[0] || '', font), zrArea.getTextWidth(this.dataRangeOption.text && this.dataRangeOption.text[1] || '', font));
                     totalWidth = Math.max(itemWidth, maxWidth);
                 } else {
@@ -1143,7 +1197,8 @@ define('echarts/chart/scatter', [
         },
         _getTextShape: function (x, y, text) {
             return {
-                zlevel: this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 style: {
                     x: this.dataRangeOption.orient == 'horizontal' ? x : this._itemGroupLocation.x + this._itemGroupLocation.width / 2,
                     y: this.dataRangeOption.orient == 'horizontal' ? this._itemGroupLocation.y + this._itemGroupLocation.height / 2 : y,
@@ -1158,7 +1213,8 @@ define('echarts/chart/scatter', [
         },
         _getItemShape: function (x, y, width, height, color) {
             return {
-                zlevel: this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 style: {
                     x: x,
                     y: y + 1,
@@ -1169,8 +1225,7 @@ define('echarts/chart/scatter', [
                 highlightStyle: {
                     strokeColor: color,
                     lineWidth: 1
-                },
-                clickable: true
+                }
             };
         },
         __ondrift: function (shape, dx, dy) {
@@ -1201,7 +1256,7 @@ define('echarts/chart/scatter', [
                 this._syncFillerShape(shape);
             }
             if (this.dataRangeOption.realtime) {
-                this._syncData();
+                this._dispatchDataRange();
             }
             return true;
         },
@@ -1212,16 +1267,10 @@ define('echarts/chart/scatter', [
             if (!this.isDragend || !param.target) {
                 return;
             }
-            !this.dataRangeOption.realtime && this._syncData();
             status.dragOut = true;
             status.dragIn = true;
             if (!this.dataRangeOption.realtime) {
-                this.messageCenter.dispatch(ecConfig.EVENT.DATA_RANGE, null, {
-                    range: {
-                        start: this._range.end,
-                        end: this._range.start
-                    }
-                }, this.myChart);
+                this._dispatchDataRange();
             }
             status.needRefresh = false;
             this.isDragend = false;
@@ -1229,8 +1278,16 @@ define('echarts/chart/scatter', [
         },
         _syncShapeFromRange: function () {
             var range = this.dataRangeOption.range || {};
-            this._range.end = typeof this._range.end != 'undefined' ? this._range.end : typeof range.start != 'undefined' ? range.start : 0;
-            this._range.start = typeof this._range.start != 'undefined' ? this._range.start : typeof range.end != 'undefined' ? range.end : 100;
+            var optRangeStart = range.start;
+            var optRangeEnd = range.end;
+            if (optRangeEnd < optRangeStart) {
+                optRangeStart = [
+                    optRangeEnd,
+                    optRangeEnd = optRangeStart
+                ][0];
+            }
+            this._range.end = optRangeStart != null ? optRangeStart : this._range.end != null ? this._range.end : 0;
+            this._range.start = optRangeEnd != null ? optRangeEnd : this._range.start != null ? this._range.start : 100;
             if (this._range.start != 100 || this._range.end !== 0) {
                 if (this.dataRangeOption.orient == 'horizontal') {
                     var width = this._fillerShape.style.width;
@@ -1331,21 +1388,39 @@ define('echarts/chart/scatter', [
             this.zr.modShape(this._startMask.id);
             this.zr.modShape(this._endMask.id);
             this.zr.modShape(this._fillerShape.id);
-            this.zr.refresh();
+            this.zr.refreshNextFrame();
         },
-        _syncData: function () {
-            if (this.dataRangeOption.realtime) {
-                this.messageCenter.dispatch(ecConfig.EVENT.DATA_RANGE, null, {
-                    range: {
-                        start: this._range.end,
-                        end: this._range.start
-                    }
-                }, this.myChart);
-            }
+        _dispatchDataRange: function () {
+            this.messageCenter.dispatch(ecConfig.EVENT.DATA_RANGE, null, {
+                range: {
+                    start: this._range.end,
+                    end: this._range.start
+                }
+            }, this.myChart);
         },
         __dataRangeSelected: function (param) {
+            if (this.dataRangeOption.selectedMode === 'single') {
+                for (var k in this._selectedMap) {
+                    this._selectedMap[k] = false;
+                }
+            }
             var idx = param.target._idx;
             this._selectedMap[idx] = !this._selectedMap[idx];
+            var valueMax;
+            var valueMin;
+            if (this._useCustomizedSplit()) {
+                valueMax = this._splitList[idx].max;
+                valueMin = this._splitList[idx].min;
+            } else {
+                valueMax = (this._colorList.length - idx) * this._gap + this.dataRangeOption.min;
+                valueMin = valueMax - this._gap;
+            }
+            this.messageCenter.dispatch(ecConfig.EVENT.DATA_RANGE_SELECTED, param.event, {
+                selected: this._selectedMap,
+                target: idx,
+                valueMax: valueMax,
+                valueMin: valueMin
+            }, this.myChart);
             this.messageCenter.dispatch(ecConfig.EVENT.REFRESH, null, null, this.myChart);
         },
         __dispatchHoverLink: function (param) {
@@ -1361,6 +1436,10 @@ define('echarts/chart/scatter', [
                 }
                 valueMin = curValue - totalValue * 0.05;
                 valueMax = curValue + totalValue * 0.05;
+            } else if (this._useCustomizedSplit()) {
+                var idx = param.target._idx;
+                valueMax = this._splitList[idx].max;
+                valueMin = this._splitList[idx].min;
             } else {
                 var idx = param.target._idx;
                 valueMax = (this._colorList.length - idx) * this._gap + this.dataRangeOption.min;
@@ -1370,12 +1449,11 @@ define('echarts/chart/scatter', [
                 valueMin: valueMin,
                 valueMax: valueMax
             }, this.myChart);
-            return;
         },
         __onhoverlink: function (param) {
             if (this.dataRangeOption.show && this.dataRangeOption.hoverLink && this._indicatorShape && param && param.seriesIndex != null && param.dataIndex != null) {
                 var curValue = param.value;
-                if (isNaN(curValue)) {
+                if (curValue === '' || isNaN(curValue)) {
                     return;
                 }
                 if (curValue < this.dataRangeOption.min) {
@@ -1394,46 +1472,69 @@ define('echarts/chart/scatter', [
                         (this.dataRangeOption.max - curValue) / (this.dataRangeOption.max - this.dataRangeOption.min) * this._calculableLocation.height
                     ];
                 }
-                this._indicatorShape.style.text = param.value;
+                this._indicatorShape.style.text = this._textFormat(param.value);
                 this._indicatorShape.style.color = this.getColor(curValue);
                 this.zr.addHoverShape(this._indicatorShape);
             }
         },
         _textFormat: function (valueStart, valueEnd) {
-            valueStart = valueStart.toFixed(this.dataRangeOption.precision);
-            valueEnd = typeof valueEnd != 'undefined' ? valueEnd.toFixed(this.dataRangeOption.precision) : '';
-            if (this.dataRangeOption.formatter) {
-                if (typeof this.dataRangeOption.formatter == 'string') {
-                    return this.dataRangeOption.formatter.replace('{value}', valueStart).replace('{value2}', valueEnd);
-                } else if (typeof this.dataRangeOption.formatter == 'function') {
-                    return this.dataRangeOption.formatter.call(this.myChart, valueStart, valueEnd);
+            var dataRangeOption = this.dataRangeOption;
+            if (valueStart !== -Number.MAX_VALUE) {
+                valueStart = (+valueStart).toFixed(dataRangeOption.precision);
+            }
+            if (valueEnd != null && valueEnd !== Number.MAX_VALUE) {
+                valueEnd = (+valueEnd).toFixed(dataRangeOption.precision);
+            }
+            if (dataRangeOption.formatter) {
+                if (typeof dataRangeOption.formatter == 'string') {
+                    return dataRangeOption.formatter.replace('{value}', valueStart === -Number.MAX_VALUE ? 'min' : valueStart).replace('{value2}', valueEnd === Number.MAX_VALUE ? 'max' : valueEnd);
+                } else if (typeof dataRangeOption.formatter == 'function') {
+                    return dataRangeOption.formatter.call(this.myChart, valueStart, valueEnd);
                 }
             }
-            if (valueEnd !== '') {
-                return valueStart + ' - ' + valueEnd;
+            if (valueEnd == null) {
+                return valueStart;
+            } else {
+                if (valueStart === -Number.MAX_VALUE) {
+                    return '< ' + valueEnd;
+                } else if (valueEnd === Number.MAX_VALUE) {
+                    return '> ' + valueStart;
+                } else {
+                    return valueStart + ' - ' + valueEnd;
+                }
             }
-            return valueStart;
         },
-        refresh: function (newOption) {
-            if (newOption) {
-                this.option = newOption;
-                this.option.dataRange = this.reformOption(this.option.dataRange);
-                this.dataRangeOption = this.option.dataRange;
-                if (!this.myChart.canvasSupported) {
-                    this.dataRangeOption.realtime = false;
+        _isContinuity: function () {
+            var dataRangeOption = this.dataRangeOption;
+            return !(dataRangeOption.splitList ? dataRangeOption.splitList.length > 0 : dataRangeOption.splitNumber > 0) || dataRangeOption.calculable;
+        },
+        _useCustomizedSplit: function () {
+            var dataRangeOption = this.dataRangeOption;
+            return dataRangeOption.splitList && dataRangeOption.splitList.length > 0;
+        },
+        _buildColorList: function (splitNumber) {
+            this._colorList = zrColor.getGradientColors(this.dataRangeOption.color, Math.max((splitNumber - this.dataRangeOption.color.length) / (this.dataRangeOption.color.length - 1), 0) + 1);
+            if (this._colorList.length > splitNumber) {
+                var len = this._colorList.length;
+                var newColorList = [this._colorList[0]];
+                var step = len / (splitNumber - 1);
+                for (var i = 1; i < splitNumber - 1; i++) {
+                    newColorList.push(this._colorList[Math.floor(i * step)]);
                 }
-                var splitNumber = this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable ? 100 : this.dataRangeOption.splitNumber;
-                this._colorList = zrColor.getGradientColors(this.dataRangeOption.color, Math.max((splitNumber - this.dataRangeOption.color.length) / (this.dataRangeOption.color.length - 1), 0) + 1);
-                if (this._colorList.length > splitNumber) {
-                    var len = this._colorList.length;
-                    var newColorList = [this._colorList[0]];
-                    var step = len / (splitNumber - 1);
-                    for (var i = 1; i < splitNumber - 1; i++) {
-                        newColorList.push(this._colorList[Math.floor(i * step)]);
+                newColorList.push(this._colorList[len - 1]);
+                this._colorList = newColorList;
+            }
+            if (this._useCustomizedSplit()) {
+                var splitList = this._splitList;
+                for (var i = 0, len = splitList.length; i < len; i++) {
+                    if (splitList[i].color) {
+                        this._colorList[i] = splitList[i].color;
                     }
-                    newColorList.push(this._colorList[len - 1]);
-                    this._colorList = newColorList;
                 }
+            }
+        },
+        _buildGap: function (splitNumber) {
+            if (!this._useCustomizedSplit()) {
                 var precision = this.dataRangeOption.precision;
                 this._gap = (this.dataRangeOption.max - this.dataRangeOption.min) / splitNumber;
                 while (this._gap.toFixed(precision) - 0 != this._gap && precision < 5) {
@@ -1441,11 +1542,81 @@ define('echarts/chart/scatter', [
                 }
                 this.dataRangeOption.precision = precision;
                 this._gap = ((this.dataRangeOption.max - this.dataRangeOption.min) / splitNumber).toFixed(precision) - 0;
-                this._valueTextList = [];
-                for (var i = 0; i < splitNumber; i++) {
-                    this._selectedMap[i] = true;
-                    this._valueTextList.unshift(this._textFormat(i * this._gap + this.dataRangeOption.min, (i + 1) * this._gap + this.dataRangeOption.min));
+            }
+        },
+        _buildDataList: function (splitNumber) {
+            var valueTextList = this._valueTextList = [];
+            var dataRangeOption = this.dataRangeOption;
+            var useCustomizedSplit = this._useCustomizedSplit();
+            for (var i = 0; i < splitNumber; i++) {
+                this._selectedMap[i] = true;
+                var text = '';
+                if (useCustomizedSplit) {
+                    var splitListItem = this._splitList[splitNumber - 1 - i];
+                    if (splitListItem.label != null) {
+                        text = splitListItem.label;
+                    } else if (splitListItem.single != null) {
+                        text = this._textFormat(splitListItem.single);
+                    } else {
+                        text = this._textFormat(splitListItem.min, splitListItem.max);
+                    }
+                } else {
+                    text = this._textFormat(i * this._gap + dataRangeOption.min, (i + 1) * this._gap + dataRangeOption.min);
                 }
+                valueTextList.unshift(text);
+            }
+        },
+        _buildSplitList: function () {
+            if (!this._useCustomizedSplit()) {
+                return;
+            }
+            var splitList = this.dataRangeOption.splitList;
+            var splitRangeList = this._splitList = [];
+            for (var i = 0, len = splitList.length; i < len; i++) {
+                var splitListItem = splitList[i];
+                if (!splitListItem || splitListItem.start == null && splitListItem.end == null) {
+                    throw new Error('Empty item exists in splitList!');
+                }
+                var reformedItem = {
+                    label: splitListItem.label,
+                    color: splitListItem.color
+                };
+                reformedItem.min = splitListItem.start;
+                reformedItem.max = splitListItem.end;
+                if (reformedItem.min > reformedItem.max) {
+                    reformedItem.min = [
+                        reformedItem.max,
+                        reformedItem.max = reformedItem.min
+                    ][0];
+                }
+                if (reformedItem.min === reformedItem.max) {
+                    reformedItem.single = reformedItem.max;
+                }
+                if (reformedItem.min == null) {
+                    reformedItem.min = -Number.MAX_VALUE;
+                }
+                if (reformedItem.max == null) {
+                    reformedItem.max = Number.MAX_VALUE;
+                }
+                splitRangeList.push(reformedItem);
+            }
+        },
+        refresh: function (newOption) {
+            if (newOption) {
+                this.option = newOption;
+                this.option.dataRange = this.reformOption(this.option.dataRange);
+                var dataRangeOption = this.dataRangeOption = this.option.dataRange;
+                if (!this._useCustomizedSplit() && (dataRangeOption.min == null || dataRangeOption.max == null)) {
+                    throw new Error('option.dataRange.min or option.dataRange.max has not been defined.');
+                }
+                if (!this.myChart.canvasSupported) {
+                    dataRangeOption.realtime = false;
+                }
+                var splitNumber = this._isContinuity() ? 100 : this._useCustomizedSplit() ? dataRangeOption.splitList.length : dataRangeOption.splitNumber;
+                this._buildSplitList();
+                this._buildColorList(splitNumber);
+                this._buildGap(splitNumber);
+                this._buildDataList(splitNumber);
             }
             this.clear();
             this._buildShape();
@@ -1454,22 +1625,33 @@ define('echarts/chart/scatter', [
             if (isNaN(value)) {
                 return null;
             }
-            if (this.dataRangeOption.min == this.dataRangeOption.max) {
-                return this._colorList[0];
-            }
-            if (value < this.dataRangeOption.min) {
-                value = this.dataRangeOption.min;
-            } else if (value > this.dataRangeOption.max) {
-                value = this.dataRangeOption.max;
-            }
-            if (this.dataRangeOption.calculable) {
-                if (value - (this._gap * this._range.start + this.dataRangeOption.min) > 0.00005 || value - (this._gap * this._range.end + this.dataRangeOption.min) < -0.00005) {
-                    return null;
+            var idx;
+            if (!this._useCustomizedSplit()) {
+                if (this.dataRangeOption.min == this.dataRangeOption.max) {
+                    return this._colorList[0];
                 }
-            }
-            var idx = this._colorList.length - Math.ceil((value - this.dataRangeOption.min) / (this.dataRangeOption.max - this.dataRangeOption.min) * this._colorList.length);
-            if (idx == this._colorList.length) {
-                idx--;
+                if (value < this.dataRangeOption.min) {
+                    value = this.dataRangeOption.min;
+                } else if (value > this.dataRangeOption.max) {
+                    value = this.dataRangeOption.max;
+                }
+                if (this.dataRangeOption.calculable) {
+                    if (value - (this._gap * this._range.start + this.dataRangeOption.min) > 0.00005 || value - (this._gap * this._range.end + this.dataRangeOption.min) < -0.00005) {
+                        return null;
+                    }
+                }
+                idx = this._colorList.length - Math.ceil((value - this.dataRangeOption.min) / (this.dataRangeOption.max - this.dataRangeOption.min) * this._colorList.length);
+                if (idx == this._colorList.length) {
+                    idx--;
+                }
+            } else {
+                var splitRangeList = this._splitList;
+                for (var i = 0, len = splitRangeList.length; i < len; i++) {
+                    if (splitRangeList[i].min <= value && splitRangeList[i].max >= value) {
+                        idx = i;
+                        break;
+                    }
+                }
             }
             if (this._selectedMap[idx]) {
                 return this._colorList[idx];
@@ -1510,7 +1692,7 @@ define('echarts/chart/scatter', [
             PolygonShape.prototype.buildPath(ctx, style);
         },
         isCover: function (x, y) {
-            var originPos = this.getTansform(x, y);
+            var originPos = this.transformCoordToLocal(x, y);
             x = originPos[0];
             y = originPos[1];
             var rect = this.style.rect;

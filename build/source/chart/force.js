@@ -1,6 +1,5 @@
 define('echarts/chart/force', [
     'require',
-    '../component/base',
     './base',
     '../data/Graph',
     '../layout/Force',
@@ -16,7 +15,6 @@ define('echarts/chart/force', [
     '../chart'
 ], function (require) {
     'use strict';
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     var Graph = require('../data/Graph');
     var ForceLayout = require('../layout/Force');
@@ -25,14 +23,65 @@ define('echarts/chart/force', [
     var ImageShape = require('zrender/shape/Image');
     var IconShape = require('../util/shape/Icon');
     var ecConfig = require('../config');
+    ecConfig.force = {
+        zlevel: 1,
+        z: 2,
+        center: [
+            '50%',
+            '50%'
+        ],
+        size: '100%',
+        preventOverlap: false,
+        coolDown: 0.99,
+        minRadius: 10,
+        maxRadius: 20,
+        ratioScaling: false,
+        large: false,
+        useWorker: false,
+        steps: 1,
+        scaling: 1,
+        gravity: 1,
+        symbol: 'circle',
+        symbolSize: 0,
+        linkSymbol: null,
+        linkSymbolSize: [
+            10,
+            15
+        ],
+        draggable: true,
+        clickable: true,
+        roam: false,
+        itemStyle: {
+            normal: {
+                label: {
+                    show: false,
+                    position: 'inside'
+                },
+                nodeStyle: {
+                    brushType: 'both',
+                    borderColor: '#5182ab',
+                    borderWidth: 1
+                },
+                linkStyle: {
+                    color: '#5182ab',
+                    width: 1,
+                    type: 'line'
+                }
+            },
+            emphasis: {
+                label: { show: false },
+                nodeStyle: {},
+                linkStyle: { opacity: 0 }
+            }
+        }
+    };
     var ecData = require('../util/ecData');
     var zrUtil = require('zrender/tool/util');
     var zrConfig = require('zrender/config');
     var vec2 = require('zrender/tool/vector');
     function Force(ecTheme, messageCenter, zr, option, myChart) {
         var self = this;
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         this.__nodePositionMap = {};
         this._graph = new Graph(true);
         this._layout = new ForceLayout();
@@ -60,6 +109,7 @@ define('echarts/chart/force', [
         constructor: Force,
         type: ecConfig.CHART_TYPE_FORCE,
         _init: function () {
+            this.selectedMap = {};
             var legend = this.component.legend;
             var series = this.series;
             var serieName;
@@ -78,6 +128,7 @@ define('echarts/chart/force', [
                     break;
                 }
             }
+            this.animationEffect();
         },
         _getNodeCategory: function (serie, node) {
             return serie.categories && serie.categories[node.category || 0];
@@ -100,17 +151,25 @@ define('echarts/chart/force', [
         },
         _initSerie: function (serie, serieIdx) {
             this._temperature = 1;
-            if (serie.data) {
+            if (serie.matrix) {
                 this._graph = this._getSerieGraphFromDataMatrix(serie);
-            } else {
+            } else if (serie.links) {
                 this._graph = this._getSerieGraphFromNodeLinks(serie);
             }
             this._buildLinkShapes(serie, serieIdx);
             this._buildNodeShapes(serie, serieIdx);
+            var panable = serie.roam === true || serie.roam === 'move';
+            var zoomable = serie.roam === true || serie.roam === 'scale';
             this.zr.modLayer(this.getZlevelBase(), {
-                panable: serie.roam === true || serie.roam === 'move',
-                zoomable: serie.roam === true || serie.roam === 'scale'
+                panable: panable,
+                zoomable: zoomable
             });
+            if (this.query('markPoint.effect.show') || this.query('markLine.effect.show')) {
+                this.zr.modLayer(ecConfig.EFFECT_ZLEVEL, {
+                    panable: panable,
+                    zoomable: zoomable
+                });
+            }
             this._initLayout(serie);
             this._step();
         },
@@ -219,17 +278,18 @@ define('echarts/chart/force', [
             var minRadius = this.query(serie, 'minRadius');
             var maxRadius = this.query(serie, 'maxRadius');
             this._steps = serie.steps || 1;
-            this._layout.center = this.parseCenter(this.zr, serie.center);
-            this._layout.width = this.parsePercent(serie.size, this.zr.getWidth());
-            this._layout.height = this.parsePercent(serie.size, this.zr.getHeight());
-            this._layout.large = serie.large;
-            this._layout.scaling = serie.scaling;
-            this._layout.ratioScaling = serie.ratioScaling;
-            this._layout.gravity = serie.gravity;
-            this._layout.temperature = 1;
-            this._layout.coolDown = serie.coolDown;
-            this._layout.preventNodeEdgeOverlap = serie.preventOverlap;
-            this._layout.preventNodeOverlap = serie.preventOverlap;
+            var layout = this._layout;
+            layout.center = this.parseCenter(this.zr, serie.center);
+            layout.width = this.parsePercent(serie.size, this.zr.getWidth());
+            layout.height = this.parsePercent(serie.size, this.zr.getHeight());
+            layout.large = serie.large;
+            layout.scaling = serie.scaling;
+            layout.ratioScaling = serie.ratioScaling;
+            layout.gravity = serie.gravity;
+            layout.temperature = 1;
+            layout.coolDown = serie.coolDown;
+            layout.preventNodeEdgeOverlap = serie.preventOverlap;
+            layout.preventNodeOverlap = serie.preventOverlap;
             var min = Infinity;
             var max = -Infinity;
             for (var i = 0; i < len; i++) {
@@ -305,24 +365,35 @@ define('echarts/chart/force', [
                         lineWidth: this.deepQuery(styleQueryTarget, 'lineWidth') || this.deepQuery(styleQueryTarget, 'borderWidth')
                     },
                     highlightStyle: {
-                        color: this.deepQuery(emphasisStyleQueryTarget, 'color', 'emphasis'),
-                        strokeColor: this.deepQuery(emphasisStyleQueryTarget, 'strokeColor', 'emphasis') || this.deepQuery(emphasisStyleQueryTarget, 'borderColor', 'emphasis'),
-                        lineWidth: this.deepQuery(emphasisStyleQueryTarget, 'lineWidth', 'emphasis') || this.deepQuery(emphasisStyleQueryTarget, 'borderWidth', 'emphasis')
+                        color: this.deepQuery(emphasisStyleQueryTarget, 'color'),
+                        strokeColor: this.deepQuery(emphasisStyleQueryTarget, 'strokeColor') || this.deepQuery(emphasisStyleQueryTarget, 'borderColor'),
+                        lineWidth: this.deepQuery(emphasisStyleQueryTarget, 'lineWidth') || this.deepQuery(emphasisStyleQueryTarget, 'borderWidth')
                     },
                     clickable: serie.clickable,
-                    zlevel: this.getZlevelBase()
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase()
                 });
                 if (!shape.style.color) {
                     shape.style.color = category ? this.getColor(category.name) : this.getColor(node.id);
                 }
                 shape.style.iconType = this.deepQuery(queryTarget, 'symbol');
-                shape.style.width = shape.style.height = (this.deepQuery(queryTarget, 'symbolSize') || 0) * 2;
+                var symbolSize = this.deepQuery(queryTarget, 'symbolSize') || 0;
+                if (typeof symbolSize === 'number') {
+                    symbolSize = [
+                        symbolSize,
+                        symbolSize
+                    ];
+                }
+                shape.style.width = symbolSize[0] * 2;
+                shape.style.height = symbolSize[1] * 2;
                 if (shape.style.iconType.match('image')) {
                     shape.style.image = shape.style.iconType.replace(new RegExp('^image:\\/\\/'), '');
                     shape = new ImageShape({
                         style: shape.style,
                         highlightStyle: shape.highlightStyle,
-                        clickable: shape.clickable
+                        clickable: shape.clickable,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase()
                     });
                 }
                 if (this.deepQuery(queryTarget, 'itemStyle.normal.label.show')) {
@@ -362,7 +433,8 @@ define('echarts/chart/force', [
                 var link = gEdge.data;
                 var source = gEdge.node1;
                 var target = gEdge.node2;
-                var queryTarget = this._getEdgeQueryTarget(serie, gEdge);
+                var otherEdge = graph.getEdge(target, source);
+                var queryTarget = this._getEdgeQueryTarget(serie, link);
                 var linkType = this.deepQuery(queryTarget, 'type');
                 if (serie.linkSymbol && serie.linkSymbol !== 'none') {
                     linkType = 'line';
@@ -373,13 +445,17 @@ define('echarts/chart/force', [
                         xStart: 0,
                         yStart: 0,
                         xEnd: 0,
-                        yEnd: 0,
-                        lineWidth: 1
+                        yEnd: 0
                     },
                     clickable: this.query(serie, 'clickable'),
                     highlightStyle: {},
-                    zlevel: this.getZlevelBase()
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase()
                 });
+                if (otherEdge && otherEdge.shape) {
+                    linkShape.style.offset = 4;
+                    otherEdge.shape.style.offset = 4;
+                }
                 zrUtil.merge(linkShape.style, this.query(serie, 'itemStyle.normal.linkStyle'), true);
                 zrUtil.merge(linkShape.highlightStyle, this.query(serie, 'itemStyle.emphasis.linkStyle'), true);
                 if (typeof link.itemStyle !== 'undefined') {
@@ -407,19 +483,16 @@ define('echarts/chart/force', [
                             height: serie.linkSymbolSize[1],
                             iconType: serie.linkSymbol,
                             brushType: 'fill',
-                            color: linkShape.style.strokeColor,
-                            opacity: linkShape.style.opacity,
-                            shadowBlur: linkShape.style.shadowBlur,
-                            shadowColor: linkShape.style.shadowColor,
-                            shadowOffsetX: linkShape.style.shadowOffsetX,
-                            shadowOffsetY: linkShape.style.shadowOffsetY
+                            color: linkShape.style.strokeColor
                         },
                         highlightStyle: { brushType: 'fill' },
                         position: [
                             0,
                             0
                         ],
-                        rotation: 0
+                        rotation: 0,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase()
                     });
                     linkShape._symbolShape = symbolShape;
                     this.shapeList.push(symbolShape);
@@ -429,27 +502,36 @@ define('echarts/chart/force', [
         },
         _updateLinkShapes: function () {
             var v = vec2.create();
+            var n = vec2.create();
+            var p1 = vec2.create();
+            var p2 = vec2.create();
             var edges = this._graph.edges;
             for (var i = 0, len = edges.length; i < len; i++) {
                 var edge = edges[i];
                 var sourceShape = edge.node1.shape;
                 var targetShape = edge.node2.shape;
-                var p1 = sourceShape.position;
-                var p2 = targetShape.position;
-                edge.shape.style.xStart = p1[0];
-                edge.shape.style.yStart = p1[1];
-                edge.shape.style.xEnd = p2[0];
-                edge.shape.style.yEnd = p2[1];
-                if (edge.shape.type === 'bezier-curve') {
-                    edge.shape.style.cpX1 = (p1[0] + p2[0]) / 2 - (p2[1] - p1[1]) / 4;
-                    edge.shape.style.cpY1 = (p1[1] + p2[1]) / 2 - (p1[0] - p2[0]) / 4;
+                vec2.copy(p1, sourceShape.position);
+                vec2.copy(p2, targetShape.position);
+                var edgeShapeStyle = edge.shape.style;
+                vec2.sub(v, p1, p2);
+                vec2.normalize(v, v);
+                if (edgeShapeStyle.offset) {
+                    n[0] = v[1];
+                    n[1] = -v[0];
+                    vec2.scaleAndAdd(p1, p1, n, edgeShapeStyle.offset);
+                    vec2.scaleAndAdd(p2, p2, n, edgeShapeStyle.offset);
+                } else if (edge.shape.type === 'bezier-curve') {
+                    edgeShapeStyle.cpX1 = (p1[0] + p2[0]) / 2 - (p2[1] - p1[1]) / 4;
+                    edgeShapeStyle.cpY1 = (p1[1] + p2[1]) / 2 - (p1[0] - p2[0]) / 4;
                 }
+                edgeShapeStyle.xStart = p1[0];
+                edgeShapeStyle.yStart = p1[1];
+                edgeShapeStyle.xEnd = p2[0];
+                edgeShapeStyle.yEnd = p2[1];
                 edge.shape.modSelf();
                 if (edge.shape._symbolShape) {
                     var symbolShape = edge.shape._symbolShape;
-                    vec2.copy(symbolShape.position, targetShape.position);
-                    vec2.sub(v, sourceShape.position, targetShape.position);
-                    vec2.normalize(v, v);
+                    vec2.copy(symbolShape.position, p2);
                     vec2.scaleAndAdd(symbolShape.position, symbolShape.position, v, targetShape.style.width / 2 + 2);
                     var angle = Math.atan2(v[1], v[0]);
                     symbolShape.rotation = Math.PI / 2 - angle;
@@ -464,30 +546,21 @@ define('echarts/chart/force', [
                 var position = gNode.layout.position;
                 var node = gNode.data;
                 var shape = gNode.shape;
-                if (shape.fixed || node.fixX && node.fixY) {
-                    vec2.copy(position, shape.position);
-                } else if (node.fixX) {
-                    position[0] = shape.position[0];
-                    shape.position[1] = position[1];
-                } else if (node.fixY) {
-                    position[1] = shape.position[1];
-                    shape.position[0] = position[0];
-                } else if (isNaN(node.fixX - 0) == false && isNaN(node.fixY - 0) == false) {
-                    shape.position[0] += (position[0] - shape.position[0]) * node.fixX;
-                    position[0] = shape.position[0];
-                    shape.position[1] += (position[1] - shape.position[1]) * node.fixY;
-                    position[1] = shape.position[1];
-                } else if (isNaN(node.fixX - 0) == false) {
-                    shape.position[0] += (position[0] - shape.position[0]) * node.fixX;
-                    position[0] = shape.position[0];
-                    shape.position[1] = position[1];
-                } else if (isNaN(node.fixY - 0) == false) {
-                    shape.position[1] += (position[1] - shape.position[1]) * node.fixY;
-                    position[1] = shape.position[1];
-                    shape.position[0] = position[0];
-                } else {
-                    vec2.copy(shape.position, position);
+                var fixX = shape.fixed || node.fixX;
+                var fixY = shape.fixed || node.fixY;
+                if (fixX === true) {
+                    fixX = 1;
+                } else if (isNaN(fixX)) {
+                    fixX = 0;
                 }
+                if (fixY === true) {
+                    fixY = 1;
+                } else if (isNaN(fixY)) {
+                    fixY = 0;
+                }
+                shape.position[0] += (position[0] - shape.position[0]) * (1 - fixX);
+                shape.position[1] += (position[1] - shape.position[1]) * (1 - fixY);
+                vec2.copy(position, shape.position);
                 var nodeName = node.name;
                 if (nodeName) {
                     var gPos = this.__nodePositionMap[nodeName];
@@ -592,7 +665,6 @@ define('echarts/chart/force', [
         return v;
     }
     zrUtil.inherits(Force, ChartBase);
-    zrUtil.inherits(Force, ComponentBase);
     require('../chart').define('force', Force);
     return Force;
 });define('echarts/data/Graph', [
@@ -673,9 +745,9 @@ define('echarts/chart/force', [
             n2 = n2.id;
         }
         if (this._directed) {
-            return this._edgesMap[n1 + '-' + n2] || this._edgesMap[n2 + '-' + n1];
-        } else {
             return this._edgesMap[n1 + '-' + n2];
+        } else {
+            return this._edgesMap[n1 + '-' + n2] || this._edgesMap[n2 + '-' + n1];
         }
     };
     Graph.prototype.removeNode = function (node) {
@@ -867,9 +939,6 @@ define('echarts/chart/force', [
     };
     var ArrayCtor = typeof Float32Array == 'undefined' ? Array : Float32Array;
     var workerUrl;
-    function getToken() {
-        return Math.round(new Date().getTime() / 100) % 10000000;
-    }
     function createWorkerUrl() {
         if (typeof Worker !== 'undefined' && typeof Blob !== 'undefined') {
             try {
@@ -905,7 +974,6 @@ define('echarts/chart/force', [
         this.coolDown = opts.coolDown || 0.99;
         this._layout = null;
         this._layoutWorker = null;
-        this._token = 0;
         var self = this;
         var _$onupdate = this._$onupdate;
         this._$onupdate = function (e) {
@@ -939,6 +1007,10 @@ define('echarts/chart/force', [
         }
     };
     ForceLayout.prototype.init = function (graph, useWorker) {
+        if (this._layoutWorker) {
+            this._layoutWorker.terminate();
+            this._layoutWorker = null;
+        }
         if (workerUrl && useWorker) {
             try {
                 if (!this._layoutWorker) {
@@ -955,10 +1027,6 @@ define('echarts/chart/force', [
         } else {
             if (!this._layout) {
                 this._layout = new ForceLayoutWorker();
-            }
-            if (this._layoutWorker) {
-                this._layoutWorker.terminate();
-                this._layoutWorker = null;
             }
         }
         this.temperature = 1;
@@ -984,7 +1052,6 @@ define('echarts/chart/force', [
             edgeArr[i * 2 + 1] = edge.node2.layout.__index;
             edgeWeightArr[i] = edge.layout.weight || 1;
         }
-        this._token = getToken();
         if (this._layoutWorker) {
             this._layoutWorker.postMessage({
                 cmd: 'init',
@@ -992,11 +1059,9 @@ define('echarts/chart/force', [
                 nodesMass: massArr,
                 nodesSize: sizeArr,
                 edges: edgeArr,
-                edgesWeight: edgeWeightArr,
-                token: this._token
+                edgesWeight: edgeWeightArr
             });
         } else {
-            this._layout.setToken(this._token);
             this._layout.initNodes(positionArr, massArr, sizeArr);
             this._layout.initEdges(edgeArr, edgeWeightArr);
         }
@@ -1005,11 +1070,11 @@ define('echarts/chart/force', [
     ForceLayout.prototype.step = function (steps) {
         var nodes = this.graph.nodes;
         if (this._layoutWorker) {
-            var positionArr = new ArrayCtor(nodes.length * 2 + 1);
+            var positionArr = new ArrayCtor(nodes.length * 2);
             for (var i = 0; i < nodes.length; i++) {
                 var n = nodes[i];
-                positionArr[i * 2 + 1] = n.layout.position[0];
-                positionArr[i * 2 + 2] = n.layout.position[1];
+                positionArr[i * 2] = n.layout.position[0];
+                positionArr[i * 2 + 1] = n.layout.position[1];
             }
             this._layoutWorker.postMessage(positionArr.buffer, [positionArr.buffer]);
             this._layoutWorker.postMessage({
@@ -1037,23 +1102,18 @@ define('echarts/chart/force', [
     ForceLayout.prototype._$onupdate = function (e) {
         if (this._layoutWorker) {
             var positionArr = new Float32Array(e.data);
-            var token = positionArr[0];
-            if (token === this._token) {
-                for (var i = 0; i < this.graph.nodes.length; i++) {
-                    var n = this.graph.nodes[i];
-                    n.layout.position[0] = positionArr[i * 2 + 1];
-                    n.layout.position[1] = positionArr[i * 2 + 2];
-                }
-                this.onupdate && this.onupdate();
+            for (var i = 0; i < this.graph.nodes.length; i++) {
+                var n = this.graph.nodes[i];
+                n.layout.position[0] = positionArr[i * 2];
+                n.layout.position[1] = positionArr[i * 2 + 1];
             }
+            this.onupdate && this.onupdate();
         } else if (this._layout) {
-            if (this._layout.tokenMatch(this._token)) {
-                for (var i = 0; i < this.graph.nodes.length; i++) {
-                    var n = this.graph.nodes[i];
-                    vec2.copy(n.layout.position, this._layout.nodes[i].position);
-                }
-                this.onupdate && this.onupdate();
+            for (var i = 0; i < this.graph.nodes.length; i++) {
+                var n = this.graph.nodes[i];
+                vec2.copy(n.layout.position, this._layout.nodes[i].position);
             }
+            this.onupdate && this.onupdate();
         }
     };
     ForceLayout.prototype.dispose = function () {
@@ -1062,59 +1122,8 @@ define('echarts/chart/force', [
         }
         this._layoutWorker = null;
         this._layout = null;
-        this._token = 0;
     };
     return ForceLayout;
-});define('zrender/shape/BezierCurve', [
-    'require',
-    './Base',
-    '../tool/util'
-], function (require) {
-    'use strict';
-    var Base = require('./Base');
-    var BezierCurve = function (options) {
-        this.brushTypeOnly = 'stroke';
-        this.textPosition = 'end';
-        Base.call(this, options);
-    };
-    BezierCurve.prototype = {
-        type: 'bezier-curve',
-        buildPath: function (ctx, style) {
-            ctx.moveTo(style.xStart, style.yStart);
-            if (typeof style.cpX2 != 'undefined' && typeof style.cpY2 != 'undefined') {
-                ctx.bezierCurveTo(style.cpX1, style.cpY1, style.cpX2, style.cpY2, style.xEnd, style.yEnd);
-            } else {
-                ctx.quadraticCurveTo(style.cpX1, style.cpY1, style.xEnd, style.yEnd);
-            }
-        },
-        getRect: function (style) {
-            if (style.__rect) {
-                return style.__rect;
-            }
-            var _minX = Math.min(style.xStart, style.xEnd, style.cpX1);
-            var _minY = Math.min(style.yStart, style.yEnd, style.cpY1);
-            var _maxX = Math.max(style.xStart, style.xEnd, style.cpX1);
-            var _maxY = Math.max(style.yStart, style.yEnd, style.cpY1);
-            var _x2 = style.cpX2;
-            var _y2 = style.cpY2;
-            if (typeof _x2 != 'undefined' && typeof _y2 != 'undefined') {
-                _minX = Math.min(_minX, _x2);
-                _minY = Math.min(_minY, _y2);
-                _maxX = Math.max(_maxX, _x2);
-                _maxY = Math.max(_maxY, _y2);
-            }
-            var lineWidth = style.lineWidth || 1;
-            style.__rect = {
-                x: _minX - lineWidth,
-                y: _minY - lineWidth,
-                width: _maxX - _minX + lineWidth,
-                height: _maxY - _minY + lineWidth
-            };
-            return style.__rect;
-        }
-    };
-    require('../tool/util').inherits(BezierCurve, Base);
-    return BezierCurve;
 });define('echarts/layout/forceLayoutWorker', [
     'require',
     'zrender/tool/vector'
@@ -1630,12 +1639,6 @@ define('echarts/chart/force', [
         var str = __echartsForceLayoutWorker.toString();
         return str.slice(str.indexOf('{') + 1, str.lastIndexOf('return'));
     };
-    ForceLayout.prototype.setToken = function (token) {
-        this._token = token;
-    };
-    ForceLayout.prototype.tokenMatch = function (token) {
-        return token === this._token;
-    };
     if (inWorker) {
         var forceLayout = null;
         self.onmessage = function (e) {
@@ -1643,11 +1646,11 @@ define('echarts/chart/force', [
                 if (!forceLayout)
                     return;
                 var positionArr = new Float32Array(e.data);
-                var nNodes = (positionArr.length - 1) / 2;
+                var nNodes = positionArr.length / 2;
                 for (var i = 0; i < nNodes; i++) {
                     var node = forceLayout.nodes[i];
-                    node.position[0] = positionArr[i * 2 + 1];
-                    node.position[1] = positionArr[i * 2 + 2];
+                    node.position[0] = positionArr[i * 2];
+                    node.position[1] = positionArr[i * 2 + 1];
                 }
                 return;
             }
@@ -1658,7 +1661,6 @@ define('echarts/chart/force', [
                 }
                 forceLayout.initNodes(e.data.nodesPosition, e.data.nodesMass, e.data.nodesSize);
                 forceLayout.initEdges(e.data.edges, e.data.edgesWeight);
-                forceLayout._token = e.data.token;
                 break;
             case 'updateConfig':
                 if (forceLayout) {
@@ -1671,7 +1673,7 @@ define('echarts/chart/force', [
                 var steps = e.data.steps;
                 if (forceLayout) {
                     var nNodes = forceLayout.nodes.length;
-                    var positionArr = new Float32Array(nNodes * 2 + 1);
+                    var positionArr = new Float32Array(nNodes * 2);
                     forceLayout.temperature = e.data.temperature;
                     for (var i = 0; i < steps; i++) {
                         forceLayout.update();
@@ -1679,10 +1681,9 @@ define('echarts/chart/force', [
                     }
                     for (var i = 0; i < nNodes; i++) {
                         var node = forceLayout.nodes[i];
-                        positionArr[i * 2 + 1] = node.position[0];
-                        positionArr[i * 2 + 2] = node.position[1];
+                        positionArr[i * 2] = node.position[0];
+                        positionArr[i * 2 + 1] = node.position[1];
                     }
-                    positionArr[0] = forceLayout._token;
                     self.postMessage(positionArr.buffer, [positionArr.buffer]);
                 } else {
                     var emptyArr = new Float32Array();

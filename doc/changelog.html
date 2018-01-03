@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="./asset/ico/favicon.png">
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./asset/css/font-awesome.min.css" rel="stylesheet">
     <link href="./asset/css/bootstrap.css" rel="stylesheet">
     <link href="./asset/css/carousel.css" rel="stylesheet">
     <link href="./asset/css/echartsHome.css" rel="stylesheet">
@@ -48,6 +48,151 @@
         <span>[+]新增 [-]删除 [^]升级 [#]修复 【】重要</span>
         <div class="row-fluid">
             <div>
+                <h3>2.2.7<small> (2015-07-22) </small></h3>
+                <ul>
+                    <li>[^] 修复 map 中 heatmap 配置项不生效的 bug</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.6<small> (2015-07-15) </small></h3>
+                <ul>
+                    <li>【+】新增热力图。示例查看 <a href="./example/heatmap.html">热力图</a></li>
+                    <li>【+】新增<a href="http://echarts.baidu.com/doc/option.html">Option 查找工具</a>。</li>
+                    <li>【+】新增<a href="http://echarts.baidu.com/doc/spreadsheet.html">表格数据转换工具</a>。</li>
+                    <li>[^] 事件河流图布局优化</li>
+                    <li>[^] 修复 2.2.5 中 tooltip 联动 bug</li>
+                    <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.1.1+</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.5<small> (2015-06-30) </small></h3>
+                <ul>
+                    <li>[^] 修复树图点击事件。Fix <a href="https://github.com/ecomfe/echarts/issues/1655">#1655</a></li>
+                    <li>[^] 修复词云点击事件。Fix <a href="https://github.com/ecomfe/echarts/issues/1709">#1709</a></li>
+                    <li>[^] 树图方向支持从右往左和从下往上。详见 <a href="https://github.com/ecomfe/echarts/issues/1608">#1608</a></li>
+                    <li>[^] 地图输出数据精度默认跟输入数据精度相同。 Fix <a href="https://github.com/ecomfe/echarts/issues/1670">#1670</a>, <a href="https://github.com/ecomfe/echarts/issues/1713">#1713</a></li>
+                    <li>[^] 修复地图 selected 状态维持的 bug。详见 <a href="https://github.com/ecomfe/echarts/issues/1720">#1720</a></li>
+                    <li>[^] 修复 tooltip 的 dom 也会触发图形的事件的 bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1686">#1686</a></li>
+                    <li>[^] 修复 treemap 中 childBorderWidth 无法配置成 0 的bug。 详见 <a href="https://github.com/ecomfe/echarts/issues/1674">#1674</a></li>
+                    <li>[^] 优化地图扩展对 legend 和 dataRange 的支持</li>
+                    <li>[^] 支持每个图表系列单独配置 z, zlevel。详见 <a href="https://github.com/ecomfe/echarts/issues/1648">#1648</a></li>
+                    <li>[^] 韦恩图优化</li>
+                    <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.1.0+</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.4<small> (2015-06-17) </small></h3>
+                <ul>
+                    <li>[^] 修复chord label设置textStyle color失效, Fix <a href="https://github.com/ecomfe/echarts/issues/1649">#1649 »</a></li>
+                    <li>[^] 修复setOption中notMerge为true时timeline不销毁的bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1601">#1601 »</a></li>
+                    <li>[^] 矩形树图加入 root 配置项</li>
+                    <li>[^] 修复力导向中拖拽和缩放时，箭头不会跟着拖动和缩放的bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1604">#1604 »</a></li>
+                    <li>[^]修复 addData 在只有一个系列的时候的动画bug</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.3<small> (2015-06-01) </small></h3>
+                <ul>
+                    <li>【+】 新增词云（Word Cloud），示例查看 <a href="./example/wordCloud.html">Google Trends</a></li>
+                    <li>【+】 新增树图（Tree），示例查看 <a href="./example/tree2.html">冰桶挑战</a></li>
+                    <li>【+】 发布 <a href="http://ecomfe.github.io/echarts-map-tool/">地图数据在线生成工具</a></li>
+                    <li>[^] Treemap 改进，加入子层级轮廓，内置数据下钻以及面包屑导航。示例查看 <a href="./example/treemap1.html">手机占有率</a></li>
+                    <li>[^] dataRange 改进。加入 splitList 自定义不等距分割。示例查看 <a href="./example/dataRange2.html">dataRange2.html</a></li>
+                    <li>[^] 修复rcOption未定义bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1554">#1554 »</a></li>
+                    <li>[^] 外部事件分发改为同步。Fix <a href="https://github.com/ecomfe/echarts/issues/1528">#1528 »</a></li>
+                    <li>[^] 修复地图 Timeline 点击 bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1515">#1515 »</a></li>
+                    <li>[^] 修复仪表盘不能添加 markLine 的 bug。</li>
+                    <li>[^] 修复地图的 tooltip 不能自定义样式的 bug</li>
+                    <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.0.9+</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.2<small> (2015-04-30) </small></h3>
+                <ul>
+                    <li>【+】 新增韦恩图(venn)，示例查看 <a href="./example/venn.html">韦恩图</a></li>
+                    <li>【+】 新增 Treemap，示例查看 <a href="./example/treemap.html">手机占有率</a></li>
+                    <li>【+】 新增对数轴，示例查看 <a href="./example/line9.html">对数轴示例</a></li>
+                    <li>【+】 发布 <a href="http://ecomfe.github.io/echarts-builder-web/">ECharts 在线构建工具</a></li>
+                    <li>[^] 大规模折线图添加数据抽希策略配置。详见 <a href="https://github.com/ecomfe/echarts/issues/1370">#1370 »</a></li>
+                    <li>[^] symbolSize 支持通过数组分别设置宽高</li>
+                    <li>[^] 修复 <a href="https://github.com/ecomfe/echarts/issues/1308">#1308 »</a></li>
+                    <li>[^] 支持 z, zlevel 的配置</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.1<small> (2015-03-11) </small></h3>
+                <ul>
+                    <li>【^】 [markLine] 曲线优化改用贝塞尔曲线绘制，smoothRadian 配置名改为 smoothness </li>
+                    <li>【^】 [markLine] 支持使用 large 配置项启用大规模标线优化，示例查看 <a href="./example/map22.html">百度迁徙2015</a></li>
+                    <li>【^】 [markLine] 支持边捆绑, bundling，示例查看 <a href="./example/map22.html">百度迁徙2015</a></li>
+                    <li>【^】 dataView 个性化配置增强, 详见 <a href="https://github.com/ecomfe/echarts/issues/1316">#1316 »</a></li>
+                    <li>[^] [force] 双向边偏移防止重叠，support <a href="https://github.com/ecomfe/echarts/issues/1344">#1344 »</a></li>
+                    <li>[^] [eventRiver] eventList 配置项名统一为 data。 </li>
+                    <li>[#] [funnel] 修复 min/max size bug。</li>
+                    <li>[-] [gauge] 去掉 precision 配置项。</li>
+                    <li>[^] symbol 颜色配置优化。</li>
+                    <li>[#] 修复横纵坐标轴互换时使用 dataZoom 报错。Fix <a href="https://github.com/ecomfe/echarts/issues/1320">#1320 »</a></li>
+                    <li>[^] [k] K线图支持 label 配置项</li>
+                    <li>[#] [force] 修复使用 worker 时切换 legend 报错。Fix <a href="https://github.com/ecomfe/echarts/issues/1319">#1319 »</a></li>
+                    <li>[#] [bar] 修复柱状图设置 position 为 insideTop 时鼠标移过文字消失 bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1257">#1257 »</a></li>
+                    <li>[#] 修复 noDataLoadingOption 配置不生效 bug。Fix <a href="https://github.com/ecomfe/echarts/issues/1269">#1269 »</a></li>
+                    <li>[^] 极坐标(polar) 标签支持 formatter</li>
+                    <li>[^] 雷达图 smartSteps 增加最大最小参数 </li>
+                    <li>[^] tooltip 增加 enterable 配置项</li>
+                    <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.0.8+</li>
+                </ul>
+            </div>
+            <div>
+                <h3>2.2.0<small>（2015-01-30）</small></h3>
+                <img src="./asset/img/why-echarts-m-cn.png"  alt="Why Echarts?" style="float:right;width:180px;margin-right:30px;"/>
+                <ul>
+                    <li>【+】 ECharts-m ( ECharts Mobile ) 1.0.0 发布</li>
+                    <li>【^】 层叠控制由多层zlevel转单层z，zleve和z主题可控，可自定义层叠控制</li>
+                    <li>【^】 mobile设备优化，touch事件优化</li>
+                    <li>【^】 [markLine]支持双向弧度配置，smoothRadian，查看 <a href="./example/map21.html" target="_blank">this »</a></li>
+                    <li>【^】 统一文本（label）格式化（formatter）函数回调参数为对象，披露更多内容，格式同tooltip</li>
+                    <li>[+] 无数据自动判断，支持配置noDataText和noDataEffect自动显示，support <a href="https://github.com/ecomfe/echarts/issues/1040" target="_blank">#1040 »</a></li>
+                    <li>[+] [tooltip]详情dom上增加css类定义'echarts-tooltip'，可通过css附加样式</li>
+                    <li>[+] 新增过渡动画时效控制animationDurationUpdate，support <a href="https://github.com/ecomfe/echarts/issues/1126" target="_blank">#1126 »</a></li>
+                    <li>[+] [markPoint]支持symbol为pin特效，新增跳动效果，effect.type = 'bounce'，详见文档</li>
+                    <li>[+] [k]新增hoverable控制</li>
+                    <li>[^] [markLine]均值标线支持precision</li>
+                    <li>[^] [dataZoom]纵向dataZoom交互一致性优化，support <a href="https://github.com/ecomfe/echarts/issues/1124" target="_blank">#1124 »</a></li>
+                    <li>[^] [categoryAxis]间隔支持函数回调，support <a href="https://github.com/ecomfe/echarts/issues/1093" target="_blank">#1093 »</a></li>
+                    <li>[^] [dataRange][dataZoom][timeline]增加组件大小配置</li>
+                    <li>[^] [extension][BMap]增加百度地图初始化参数传入，修复动态addMark坐标转换问题。</li>
+                    <li>[^] [pie]图形内文本位置增加distance配置，support <a href="https://github.com/ecomfe/echarts/issues/1122" target="_blank">#1122 »</a></li>
+                    <li>[^] [chord][tooltip]详情显示默认从大端到小端</li>
+                    <li>[#] 修复legendHoverLink在动画过渡时显示问题，fix <a href="https://github.com/ecomfe/echarts/issues/896" target="_blank">#896 »</a>，<a href="https://github.com/ecomfe/echarts/issues/974" target="_blank">#974 »</a></li>
+                    <li>[#] [scatter][radar][k]data级数据为对象时读取value异常，fix <a href="https://github.com/ecomfe/echarts/issues/1031" target="_blank">#1031 »</a></li>
+                    <li>[#] [force]修复line宽度设置</li>
+                    <li>[#] [bar]多维度堆积下类目间隔优化</li>
+                    <li>[#] [tooltip][markLine]修复多级控制无效</li>
+                    <li>[#] [valueAxis]数值间隔自动调整算法优化，
+                        fix <a href="https://github.com/ecomfe/echarts/issues/1012" target="_blank">#1012 »</a>,
+                        <a href="https://github.com/ecomfe/echarts/issues/1021" target="_blank">#1021 »</a>
+                    </li>
+                    <li>[#] 若干issues，fix
+                        <a href="https://github.com/ecomfe/echarts/issues/1045" target="_blank">#1045（dataRange开关）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1051" target="_blank">#1051（yAxis间隔线虚线样式）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1076" target="_blank">#1076（dataRange指示器formatter）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1078" target="_blank">#1079（dataZoom取值错误）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1079" target="_blank">#1079（bar填充亚像素优化）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1089" target="_blank">#1089（showTip接口异常）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1129" target="_blank">#1129（堆积空值异常）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1130" target="_blank">#1130（IE11下多图表异常）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1141" target="_blank">#1141（tooltip亚像素优化）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1142" target="_blank">#1142（tooltip位置缓存错误）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1146" target="_blank">#1146（多行Legend定位计算错误）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1150" target="_blank">#1150（dataZoom回调star和end参数不该取整）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1176" target="_blank">#1176（gauge可点击修复）»</a>
+                        <a href="https://github.com/ecomfe/echarts/issues/1218" target="_blank">#1218（标签布局算法对labelLine依赖错误）»</a>
+                    </li>
+                    <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.0.7+</li>
+                </ul>
+            </div>
+
+            <div>
                 <h3>2.1.9<small>（2014-12-08）</small></h3>
                 <ul>
                     <li>[+] [force][chord]节点加入label属性， support <a href="https://github.com/ecomfe/echarts/issues/963" target="_blank">#963 »</a></li>
@@ -67,7 +212,7 @@
                     <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.0.6+</li>
                 </ul>
             </div>
-            
+
             <div>
                 <h3>2.1.8<small>（2014-11-07）</small></h3>
                 <ul>
@@ -89,7 +234,7 @@
                     <li>【+】 [chord]和弦图通过ribbonType配置项支持两种绘制形态</li>
                     <li>【+】 [timeAxis]新增时间类型坐标轴（beta）</li>
                     <li>【^】 [valueAxis]数值间隔自动调整算法优化，splitNumber默认自动调整，废除power、precision，by <a href="https://github.com/i6ma" target="_blank">谢世威</a>。</li>
-                    <li>【^】 [pie]优化饼图标签布局算法， fix 
+                    <li>【^】 [pie]优化饼图标签布局算法， fix
                         <a href="https://github.com/ecomfe/echarts/issues/326" target="_blank">#326 »</a>,
                         <a href="https://github.com/ecomfe/echarts/issues/405" target="_blank">#405 »</a>,
                         <a href="https://github.com/ecomfe/echarts/issues/290" target="_blank">#290 »</a>
@@ -134,10 +279,10 @@
                 <h3>2.0.4<small>（2014-09-23）</small></h3>
                 <ul>
                     <li>【+】 [force]力导向布局图节点支持图片，格式同symbol</li>
-                    <li>【#】 [line]平滑曲线出现负值， fix 
-                        <a href="https://github.com/ecomfe/echarts/issues/191" target="_blank">#191 »</a>, 
-                        <a href="https://github.com/ecomfe/echarts/issues/227" target="_blank">#227 »</a>, 
-                        <a href="https://github.com/ecomfe/echarts/issues/457" target="_blank">#457 »</a>, 
+                    <li>【#】 [line]平滑曲线出现负值， fix
+                        <a href="https://github.com/ecomfe/echarts/issues/191" target="_blank">#191 »</a>,
+                        <a href="https://github.com/ecomfe/echarts/issues/227" target="_blank">#227 »</a>,
+                        <a href="https://github.com/ecomfe/echarts/issues/457" target="_blank">#457 »</a>,
                         <a href="https://github.com/ecomfe/echarts/issues/521" target="_blank">#521 »</a>
                     </li>
                     <li>【#】 IE8图片无法显示，fix <a href="https://github.com/ecomfe/echarts/issues/691" target="_blank">#691 »</a></li>
@@ -176,7 +321,7 @@
                         <a href="https://github.com/ecomfe/echarts/issues/616" target="_blank">#616（直角坐标计算临界点错误）»</a>
                         <a href="https://github.com/ecomfe/echarts/issues/617" target="_blank">#617（雷达图虚线显示）»</a>
                         <a href="https://github.com/ecomfe/echarts/issues/644" target="_blank">#644（dom宽高为0时死循环）»</a>
-                        <a href="https://github.com/ecomfe/echarts/issues/650" target="_blank">#650（标注标线区域缩放后无法再显示）»</a>  
+                        <a href="https://github.com/ecomfe/echarts/issues/650" target="_blank">#650（标注标线区域缩放后无法再显示）»</a>
                     </li>
                     <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.0.3+</li>
                 </ul>
@@ -254,7 +399,7 @@
                         <a href="#" target="_blank">折线与坐标轴间1px位移 »</a>
                         <a href="https://github.com/ecomfe/echarts/issues/294" target="_blank">#294 »</a>
                         <a href="https://github.com/ecomfe/echarts/issues/303" target="_blank">#303 »</a>
-                        <a href="https://github.com/ecomfe/echarts/issues/364" target="_blank">#364 »</a> 
+                        <a href="https://github.com/ecomfe/echarts/issues/364" target="_blank">#364 »</a>
                     </li>
                     <li>[?] 依赖升级，<a href="http://ecomfe.github.io/zrender/" target="_blank">ZRender</a> 2.0.0+</li>
                 </ul>
@@ -340,8 +485,8 @@
                     <li>[^] IE8-文本清晰度优化</li>
                     <li>[#] [toolbox]修复动态类型可能造成的冲突样式污染</li>
                     <li>[#] 修复borderWidth设为0时被转换为1的错误</li>
-                    <li>[#] 若干issues，fix 
-                        <a href="https://github.com/ecomfe/echarts/issues/189" target="_blank">#189 »</a> 
+                    <li>[#] 若干issues，fix
+                        <a href="https://github.com/ecomfe/echarts/issues/189" target="_blank">#189 »</a>
                         <a href="https://github.com/ecomfe/echarts/issues/190" target="_blank">#190 »</a>
                         <a href="https://github.com/ecomfe/echarts/issues/193" target="_blank">#193 »</a>
                         <a href="http://www.oschina.net/question/1384706_141045" target="_blank">#IE8-红色背景 »</a>

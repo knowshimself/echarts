@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="../asset/ico/favicon.png">
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../asset/css/font-awesome.min.css" rel="stylesheet">
     <link href="../asset/css/bootstrap.css" rel="stylesheet">
     <link href="../asset/css/carousel.css" rel="stylesheet">
     <link href="../asset/css/echartsHome.css" rel="stylesheet">
@@ -162,8 +162,8 @@ option = {
                         label : {
                             show:true,
                             position:'top',
-                            formatter: function (a,b,v) {
-                                return Math.round(v/10000) + ' 万'
+                            formatter: function (param) {
+                                return Math.round(param.value/10000) + ' 万'
                             }
                         }
                     }
@@ -180,8 +180,8 @@ option = {
                         color:'#1e90ff',
                         label : {
                             show:true,
-                            formatter: function (a,b,v) {
-                                return Math.round(v/10000) + ' 万'
+                            formatter: function (param) {
+                                return Math.round(param.value/10000) + ' 万'
                             }
                         }
                     }

@@ -7,13 +7,71 @@
  */
 define(function (require) {
     var Base = require('./base');
-    
+
     // 图形依赖
     var TextShape = require('zrender/shape/Text');
     var LineShape = require('zrender/shape/Line');
     var RectangleShape = require('zrender/shape/Rectangle');
-    
+
     var ecConfig = require('../config');
+    // 数值型坐标轴默认参数
+    ecConfig.valueAxis = {
+        zlevel: 0,                  // 一级层叠
+        z: 0,                       // 二级层叠
+        show: true,
+        position: 'left',      // 位置
+        name: '',              // 坐标轴名字，默认为空
+        nameLocation: 'end',   // 坐标轴名字位置，支持'start' | 'end'
+        nameTextStyle: {},     // 坐标轴文字样式，默认取全局样式
+        boundaryGap: [0, 0],   // 数值起始和结束两端空白策略
+        // min: null,          // 最小值
+        // max: null,          // 最大值
+        // scale: false,       // 脱离0值比例，放大聚焦到最终_min，_max区间
+        // splitNumber: 5,        // 分割段数，默认为5
+        axisLine: {            // 坐标轴线
+            show: true,        // 默认显示，属性show控制显示与否
+            onZero: true,
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: '#48b',
+                width: 2,
+                type: 'solid'
+            }
+        },
+        axisTick: {            // 坐标轴小标记
+            show: false,       // 属性show控制显示与否，默认不显示
+            inside: false,     // 控制小标记是否在grid里
+            length :5,         // 属性length控制线长
+            lineStyle: {       // 属性lineStyle控制线条样式
+                color: '#333',
+                width: 1
+            }
+        },
+        axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+            show: true,
+            rotate: 0,
+            margin: 8,
+            // clickable: false,
+            // formatter: null,
+            textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                color: '#333'
+            }
+        },
+        splitLine: {           // 分隔线
+            show: true,        // 默认显示，属性show控制显示与否
+            lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                color: ['#ccc'],
+                width: 1,
+                type: 'solid'
+            }
+        },
+        splitArea: {           // 分隔区域
+            show: false,       // 默认不显示，属性show控制显示与否
+            areaStyle: {       // 属性areaStyle（详见areaStyle）控制区域样式
+                color: ['rgba(250,250,250,0.3)','rgba(200,200,200,0.3)']
+            }
+        }
+    };
+
     var ecDate = require('../util/date');
     var zrUtil = require('zrender/tool/util');
 
@@ -30,29 +88,29 @@ define(function (require) {
             console.err('option.series.length == 0.');
             return;
         }
-        
+
         Base.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         this.series = series;
         this.grid = this.component.grid;
-        
+
         for (var method in axisBase) {
             this[method] = axisBase[method];
         }
-        
+
         this.refresh(option, series);
     }
-    
+
     ValueAxis.prototype = {
         type: ecConfig.COMPONENT_TYPE_AXIS_VALUE,
-        
+
         _buildShape: function () {
             this._hasData = false;
             this._calculateValue();
             if (!this._hasData || !this.option.show) {
                 return;
             }
-            
+
             this.option.splitArea.show && this._buildSplitArea();
             this.option.splitLine.show && this._buildSplitLine();
             this.option.axisLine.show && this._buildAxisLine();
@@ -77,9 +135,9 @@ define(function (require) {
             if (this.isHorizontal()) {
                 // 横向
                 var yPosition = this.option.position === 'bottom'
-                        ? (tickOption.inside 
+                        ? (tickOption.inside
                            ? (this.grid.getYend() - length - 1) : (this.grid.getYend()) + 1)
-                        : (tickOption.inside 
+                        : (tickOption.inside
                            ? (this.grid.getY() + 1) : (this.grid.getY() - length - 1));
                 var x;
                 for (var i = 0; i < dataLength; i++) {
@@ -87,7 +145,8 @@ define(function (require) {
                     x = this.subPixelOptimize(this.getCoord(data[i]), lineWidth);
                     axShape = {
                         _axisShape: 'axisTick',
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase(),
                         hoverable: false,
                         style: {
                             xStart: x,
@@ -104,9 +163,9 @@ define(function (require) {
             else {
                 // 纵向
                 var xPosition = this.option.position === 'left'
-                    ? (tickOption.inside 
+                    ? (tickOption.inside
                        ? (this.grid.getX() + 1) : (this.grid.getX() - length - 1))
-                    : (tickOption.inside 
+                    : (tickOption.inside
                        ? (this.grid.getXend() - length - 1) : (this.grid.getXend() + 1));
 
                 var y;
@@ -115,7 +174,8 @@ define(function (require) {
                     y = this.subPixelOptimize(this.getCoord(data[i]), lineWidth);
                     axShape = {
                         _axisShape: 'axisTick',
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase(),
                         hoverable: false,
                         style: {
                             xStart: xPosition,
@@ -156,7 +216,8 @@ define(function (require) {
 
                 for (var i = 0; i < dataLength; i++) {
                     axShape = {
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase() +3,
                         hoverable: false,
                         style: {
                             x: this.getCoord(data[i]),
@@ -201,7 +262,8 @@ define(function (require) {
 
                 for (var i = 0; i < dataLength; i++) {
                     axShape = {
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase() + 3,
                         hoverable: false,
                         style: {
                             x: xPosition,
@@ -211,16 +273,15 @@ define(function (require) {
                             text: this._valueLabel[i],
                             textFont: this.getFont(textStyle),
                             textAlign: textStyle.align || align,
-                            textBaseline: textStyle.baseline 
-                                          || (i === 0 && this.option.name !== '')
+                            textBaseline: textStyle.baseline
+                                          || (
+                                              (i === 0 && this.option.name !== '')
                                               ? 'bottom'
-                                              : (i === (dataLength - 1) 
-                                                 && this.option.name !== '')
-                                                ? 'top'
-                                                : 'middle'
+                                                : (i === dataLength - 1 && this.option.name !== '') ? 'top' : 'middle'
+                                          )
                         }
                     };
-                    
+
                     if (rotate) {
                         axShape.rotation = [
                             rotate * Math.PI / 180,
@@ -256,7 +317,8 @@ define(function (require) {
                     // 亚像素优化
                     x = this.subPixelOptimize(this.getCoord(data[i]), lineWidth);
                     axShape = {
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase(),
                         hoverable: false,
                         style: {
                             xStart: x,
@@ -282,7 +344,8 @@ define(function (require) {
                     // 亚像素优化
                     y = this.subPixelOptimize(this.getCoord(data[i]), lineWidth);
                     axShape = {
-                        zlevel: this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase(),
                         hoverable: false,
                         style: {
                             xStart: sx,
@@ -306,7 +369,8 @@ define(function (require) {
             if (!(color instanceof Array)) {
                 // 非数组一律认为是单一颜色的字符串，单一颜色则用一个背景，颜色错误不负责啊！！！
                 axShape = {
-                    zlevel: this._zlevelBase,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     hoverable: false,
                     style: {
                         x: this.grid.getX(),
@@ -337,7 +401,8 @@ define(function (require) {
                                ? this.getCoord(data[i])
                                : this.grid.getXend();
                         axShape = {
-                            zlevel: this._zlevelBase,
+                            zlevel: this.getZlevelBase(),
+                            z: this.getZBase(),
                             hoverable: false,
                             style: {
                                 x: lastX,
@@ -364,7 +429,8 @@ define(function (require) {
                                ? this.getCoord(data[i])
                                : this.grid.getY();
                         axShape = {
-                            zlevel: this._zlevelBase,
+                            zlevel: this.getZlevelBase(),
+                            z: this.getZBase(),
                             hoverable: false,
                             style: {
                                 x: x,
@@ -417,10 +483,10 @@ define(function (require) {
                         // 不是自己的数据不计算极值
                         continue;
                     }
-                    
+
                     this._calculSum(data, i);
                 }
-                
+
                 // 找极值
                 var oriData;            // 原始数据
                 for (var i in data){
@@ -446,15 +512,17 @@ define(function (require) {
                         }
                     }
                 }
-                
+
                 // console.log(this._min,this._max,'vvvvv111111',this.option.type)
+                // log情况暂时禁用boundaryGap。
+                var boundaryGap = this.option.type !== 'log' ? this.option.boundaryGap : [0, 0];
                 var gap = Math.abs(this._max - this._min);
                 this._min = isNaN(this.option.min - 0)
-                       ? (this._min - Math.abs(gap * this.option.boundaryGap[0]))
+                       ? (this._min - Math.abs(gap * boundaryGap[0]))
                        : (this.option.min - 0);    // 指定min忽略boundaryGay[0]
-    
+
                 this._max = isNaN(this.option.max - 0)
-                       ? (this._max + Math.abs(gap * this.option.boundaryGap[1]))
+                       ? (this._max + Math.abs(gap * boundaryGap[1]))
                        : (this.option.max - 0);    // 指定max忽略boundaryGay[1]
                 if (this._min === this._max) {
                     if (this._max === 0) {
@@ -469,18 +537,32 @@ define(function (require) {
                         this._max = this._max / this.option.splitNumber != null ? this.option.splitNumber : 5;
                     }
                 }
-                this.option.type != 'time' 
-                    ? this._reformValue(this.option.scale)
-                    : this._reformTimeValue();
+
+                if (this.option.type === 'time') {
+                    this._reformTimeValue();
+                }
+                else if (this.option.type === 'log') {
+                    this._reformLogValue();
+                }
+                else {
+                    this._reformValue(this.option.scale);
+                }
             }
             else {
                 this._hasData = true;
                 // 用户指定min max就不多管闲事了
                 this._min = this.option.min - 0;    // 指定min忽略boundaryGay[0]
                 this._max = this.option.max - 0;    // 指定max忽略boundaryGay[1]
-                this.option.type != 'time' 
-                    ? this._customerValue()
-                    : this._reformTimeValue();
+
+                if (this.option.type === 'time') {
+                    this._reformTimeValue();
+                }
+                else if (this.option.type === 'log') {
+                    this._reformLogValue();
+                }
+                else {
+                    this._customerValue();
+                }
             }
         },
 
@@ -496,9 +578,7 @@ define(function (require) {
                 if (this.series[i].type != ecConfig.CHART_TYPE_EVENTRIVER) {
                     oriData = this.series[i].data;
                     for (var j = 0, k = oriData.length; j < k; j++) {
-                        value = oriData[j].value != null
-                                ? oriData[j].value
-                                : oriData[j];
+                        value = this.getDataFromOption(oriData[j]);
                         if (this.series[i].type === ecConfig.CHART_TYPE_K) {
                             data[key].push(value[0]);
                             data[key].push(value[1]);
@@ -527,7 +607,7 @@ define(function (require) {
                 }
                 else {
                     // eventRiver
-                    oriData = this.series[i].eventList;
+                    oriData = this.series[i].data;
                     for (var j = 0, k = oriData.length; j < k; j++) {
                         var evolution = oriData[j].evolution;
                         for (var m = 0, n = evolution.length; m < n; m++) {
@@ -545,9 +625,7 @@ define(function (require) {
                 data[key] = data[key] || [];  // scale下还需要记录每一个量
                 oriData = this.series[i].data;
                 for (var j = 0, k = oriData.length; j < k; j++) {
-                    value = oriData[j].value != null
-                            ? oriData[j].value
-                            : oriData[j];
+                    value = this.getDataFromOption(oriData[j]);
                     if (value === '-') {
                         continue;
                     }
@@ -574,7 +652,7 @@ define(function (require) {
                 }
             }
         },
-        
+
         /**
          * 找到原始数据的极值后根据选项整形最终 this._min / this._max / this._valueList
          * 如果你不知道这个“整形”的用义，请不要试图去理解和修改这个方法！找我也没用，我相信我已经记不起来！
@@ -588,7 +666,7 @@ define(function (require) {
         _reformValue: function (scale) {
             var smartSteps = require('../util/smartSteps');
             var splitNumber = this.option.splitNumber;
-            
+
             // 非scale下双正，修正最小值为0
             if (!scale && this._min >= 0 && this._max >= 0) {
                 this._min = 0;
@@ -597,28 +675,28 @@ define(function (require) {
             if (!scale && this._min <= 0 && this._max <= 0) {
                 this._max = 0;
             }
-            
+
             var stepOpt = smartSteps(this._min, this._max, splitNumber);
             splitNumber = splitNumber != null ? splitNumber : stepOpt.secs;
-            this.option.splitNumber = splitNumber;
+            //this.option.splitNumber = splitNumber;
             this._min = stepOpt.min;
             this._max = stepOpt.max;
             this._valueList = stepOpt.pnts;
             this._reformLabelData();
         },
-        
+
         /**
-         * 格式化时间值 
+         * 格式化时间值
          */
         _reformTimeValue : function() {
             var splitNumber = this.option.splitNumber != null ? this.option.splitNumber : 5;
-            
+
             // 最优解
             var curValue = ecDate.getAutoFormatter(this._min, this._max, splitNumber);
             // 目标
             var formatter = curValue.formatter;
             var gapValue = curValue.gapValue;
-            
+
             this._valueList = [ecDate.getNewDate(this._min)];
             var startGap;
             switch (formatter) {
@@ -650,17 +728,17 @@ define(function (require) {
                     }
                     break;
             }
-            
+
             if (startGap - this._min < gapValue / 2) {
                 startGap -= -gapValue;
             }
-            
+
             // console.log(startGap,gapValue,this._min, this._max,formatter)
             curValue = ecDate.getNewDate(startGap);
             splitNumber *= 1.5;
             while (splitNumber-- >= 0) {
-                if (formatter == 'month' 
-                    || formatter == 'quarter' 
+                if (formatter == 'month'
+                    || formatter == 'quarter'
                     || formatter == 'half-year'
                     || formatter == 'year'
                 ) {
@@ -674,14 +752,18 @@ define(function (require) {
             }
             this._valueList.push(ecDate.getNewDate(this._max));
 
-            this._reformLabelData(formatter);
+            this._reformLabelData((function (formatterStr) {
+                return function (value) {
+                    return ecDate.format(formatterStr, value);
+                };
+            })(formatter));
         },
-        
+
         _customerValue: function () {
             var accMath = require('../util/accMath');
             var splitNumber = this.option.splitNumber != null ? this.option.splitNumber : 5;
             var splitGap = (this._max - this._min) / splitNumber;
-            
+
             this._valueList = [];
             for (var i = 0; i <= splitNumber; i++) {
                 this._valueList.push(accMath.accAdd(this._min, accMath.accMul(splitGap, i)));
@@ -689,45 +771,66 @@ define(function (require) {
             this._reformLabelData();
         },
 
-        _reformLabelData: function (timeFormatter) {
+        _reformLogValue: function() {
+            // log数轴本质就是缩放，相当于默认this.option.scale === true，所以不修正_min和_max到0。
+            var thisOption = this.option;
+            var result = require('../util/smartLogSteps')({
+                dataMin: this._min,
+                dataMax: this._max,
+                logPositive: thisOption.logPositive,
+                logLabelBase: thisOption.logLabelBase,
+                splitNumber: thisOption.splitNumber
+            });
+
+            this._min = result.dataMin;
+            this._max = result.dataMax;
+            this._valueList = result.tickList;
+            // {value2Coord: {Function}, coord2Value: {Function}}
+            this._dataMappingMethods = result.dataMappingMethods;
+
+            this._reformLabelData(result.labelFormatter);
+        },
+
+        _reformLabelData: function (innerFormatter) {
             this._valueLabel = [];
             var formatter = this.option.axisLabel.formatter;
             if (formatter) {
                 for (var i = 0, l = this._valueList.length; i < l; i++) {
                     if (typeof formatter === 'function') {
                         this._valueLabel.push(
-                            timeFormatter
-                                ? formatter.call(this.myChart, this._valueList[i], timeFormatter)
+                            innerFormatter
+                                ? formatter.call(this.myChart, this._valueList[i], innerFormatter)
                                 : formatter.call(this.myChart, this._valueList[i])
                         );
                     }
                     else if (typeof formatter === 'string') {
                         this._valueLabel.push(
-                            timeFormatter 
+                            innerFormatter
                                 ? ecDate.format(formatter, this._valueList[i])
                                 : formatter.replace('{value}',this._valueList[i])
                         );
                     }
                 }
             }
-            else if (timeFormatter) {
-                for (var i = 0, l = this._valueList.length; i < l; i++) {
-                    this._valueLabel.push(ecDate.format(timeFormatter, this._valueList[i]));
-                }
-            }
             else {
-                // 每三位默认加,格式化
                 for (var i = 0, l = this._valueList.length; i < l; i++) {
-                    this._valueLabel.push(this.numAddCommas(this._valueList[i]));
+                    this._valueLabel.push(
+                        innerFormatter
+                            ? innerFormatter(this._valueList[i])
+                            : this.numAddCommas(this._valueList[i]) // 每三位默认加,格式化
+                    );
                 }
             }
         },
-        
+
         getExtremum: function () {
             this._calculateValue();
+            var dataMappingMethods = this._dataMappingMethods;
             return {
                 min: this._min,
-                max: this._max
+                max: this._max,
+                dataMappingMethods: dataMappingMethods
+                    ? zrUtil.merge({}, dataMappingMethods) : null
             };
         },
 
@@ -752,22 +855,26 @@ define(function (require) {
 
         // 根据值换算位置
         getCoord: function (value) {
+            if (this._dataMappingMethods) {
+                value = this._dataMappingMethods.value2Coord(value);
+            }
+
             value = value < this._min ? this._min : value;
             value = value > this._max ? this._max : value;
 
             var result;
             if (!this.isHorizontal()) {
                 // 纵向
-                result = this.grid.getYend() 
-                         - (value - this._min) 
-                           / (this._max - this._min) 
+                result = this.grid.getYend()
+                         - (value - this._min)
+                           / (this._max - this._min)
                            * this.grid.getHeight();
             }
             else {
                 // 横向
-                result = this.grid.getX() 
-                         + (value - this._min) 
-                           / (this._max - this._min) 
+                result = this.grid.getX()
+                         + (value - this._min)
+                           / (this._max - this._min)
                            * this.grid.getWidth();
             }
 
@@ -779,7 +886,7 @@ define(function (require) {
                    : Math.floor(result);
             */
         },
-        
+
         // 根据值换算绝对大小
         getCoordSize: function (value) {
             if (!this.isHorizontal()) {
@@ -791,32 +898,37 @@ define(function (require) {
                 return Math.abs(value / (this._max - this._min) * this.grid.getWidth());
             }
         },
-        
+
         // 根据位置换算值
         getValueFromCoord: function(coord) {
             var result;
+
             if (!this.isHorizontal()) {
                 // 纵向
                 coord = coord < this.grid.getY() ? this.grid.getY() : coord;
                 coord = coord > this.grid.getYend() ? this.grid.getYend() : coord;
-                result = this._max 
-                         - (coord - this.grid.getY()) 
-                           / this.grid.getHeight() 
+                result = this._max
+                         - (coord - this.grid.getY())
+                           / this.grid.getHeight()
                            * (this._max - this._min);
             }
             else {
                 // 横向
                 coord = coord < this.grid.getX() ? this.grid.getX() : coord;
                 coord = coord > this.grid.getXend() ? this.grid.getXend() : coord;
-                result = this._min 
-                         + (coord - this.grid.getX()) 
-                           / this.grid.getWidth() 
+                result = this._min
+                         + (coord - this.grid.getX())
+                           / this.grid.getWidth()
                            * (this._max - this._min);
             }
-            
+
+            if (this._dataMappingMethods) {
+                result = this._dataMappingMethods.coord2Value(result);
+            }
+
             return result.toFixed(2) - 0;
         },
-        
+
         isMaindAxis : function (value) {
             for (var i = 0, l = this._valueList.length; i < l; i++) {
                 if (this._valueList[i] === value) {
@@ -828,9 +940,9 @@ define(function (require) {
     };
 
     zrUtil.inherits(ValueAxis, Base);
-    
+
     require('../component').define('valueAxis', ValueAxis);
-    
+
     return ValueAxis;
 });
 

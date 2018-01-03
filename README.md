@@ -1,5 +1,7 @@
 ECharts
 =======
+
+[![Join the chat at https://gitter.im/echarts_lea/Lobby](https://badges.gitter.im/echarts_lea/Lobby.svg)](https://gitter.im/echarts_lea/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 http://echarts.baidu.com
 
 基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据可视化图表。创新的拖拽重计算、数据视图、值域漫游等特性大大增强了用户体验，赋予了用户对数据进行挖掘、整合的能力。

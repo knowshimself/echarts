@@ -28,9 +28,6 @@ if (developMode) {
         function loadedListener() {
             // for develop
             require.config({
-                paths : {
-                    webkitDep : '../../doc/example/webkit-dep'
-                },
                 packages: [
                     {
                         name: 'echarts',
@@ -53,8 +50,7 @@ else {
     // for echarts online home page
     require.config({
         paths:{ 
-            echarts: '../../doc/example/www/js',
-            webkitDep : '../../doc/example/webkit-dep'
+            echarts: '../../doc/example/www/js'
         }
     });
     launchExample();
@@ -93,12 +89,30 @@ function launchExample() {
         return;
     }
 
+    var http = function (url, onsuccess, onerror) {
+        var xhr = window.XMLHttpRequest
+            ? new XMLHttpRequest()
+            : new ActiveXObject('Microsoft.XMLHTTP');
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                    onsuccess && onsuccess(xhr.responseText);
+                } else {
+                    onerror && onerror();
+                }
+                xhr.onreadystatechange = new Function();
+                xhr = null;
+            }
+        };
+        xhr.send(null);
+    }
+
     // 按需加载
     isExampleLaunched = 1;
     require(
         [
             'echarts',
-            'webkitDep',
             'echarts/chart/line',
             'echarts/chart/bar',
             'echarts/chart/scatter',
@@ -111,31 +125,40 @@ function launchExample() {
             'echarts/chart/gauge',
             'echarts/chart/funnel'
         ],
-        function (ec, wd) {
+        function (ec) {
             echarts = ec;
-            webkitDepData = wd;
-            webkitDepData.minRadius = 5;
-            webkitDepData.maxRadius = 8;
-            webkitDepData.density = 1.1;
-            webkitDepData.attractiveness = 1.3;
-            webkitDepData.itemStyle = {
-                normal : {
-                    linkStyle : {
-                        opacity : 0.6
+
+            http('../../doc/example/data/webkit-dep.json', function (data) {
+                data = JSON.parse(data);
+
+                optionMap.force2.series[0] = {
+                    minRadius: 5,
+                    maxRadius: 8,
+                    gravity: 1.1,
+                    scaling: 1.1,
+                    coolDown: 0.999,
+                    categories: data.categories,
+                    nodes: data.nodes,
+                    links: data.links,
+                    itemStyle: {
+                        normal : {
+                            linkStyle : {
+                                opacity : 0.6
+                            }
+                        }
                     }
+                };
+                optionMap.force2.color = ['#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
+                        '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
+                        '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
+                        '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'];
+                if (typeof curEvent != 'undefined') {
+                    clearTimeout(showChartTimer);
+                    getCurParams();
+                    showChart()
+                    //showChartTimer = setTimeout(showChart, 500);
                 }
-            }
-            optionMap.force2.series[0] = webkitDepData;
-            optionMap.force2.color = ['#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
-                    '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
-                    '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
-                    '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'];
-            if (typeof curEvent != 'undefined') {
-                clearTimeout(showChartTimer);
-                getCurParams();
-                showChart()
-                //showChartTimer = setTimeout(showChart, 500);
-            }
+            });
         }
     );
 }
@@ -545,7 +568,9 @@ var optionMap = {
         var labelFromatter = {
             normal : {
                 label : {
-                    formatter : function (a,b,c){return 100 - c + '%'},
+                    formatter : function (params){
+                        return 100 - params.value + '%'
+                    },
                     textStyle: {
                         baseline : 'top'
                     }
@@ -596,7 +621,9 @@ var optionMap = {
                                 itemStyle : {
                                     normal : {
                                         label : {
-                                            formatter : function (a,b,c){return 'other\n' + c + '%\n'},
+                                            formatter : function (params){
+                                                return 'other\n' + params.value + '%\n'
+                                            },
                                             textStyle: {
                                                 baseline : 'middle'
                                             }
@@ -840,11 +867,11 @@ var optionMap = {
         ],
         yAxis : [
             {
-                type : 'value',
-                scale:true,
+                type: 'value',
+                scale: true,
                 splitNumber: 9,
                 boundaryGap: [0.05, 0.05],
-                splitArea : {show : true}
+                splitArea: {show : true}
             },
             {
                 type : 'value',
@@ -898,8 +925,8 @@ var optionMap = {
                             label : {
                                 show:true,
                                 position:'top',
-                                formatter: function (a,b,v) {
-                                    return Math.round(v/10000) + ' 万'
+                                formatter: function (params) {
+                                    return Math.round(params.value/10000) + ' 万'
                                 }
                             }
                         }
@@ -916,8 +943,8 @@ var optionMap = {
                             color:'#1e90ff',
                             label : {
                                 show:true,
-                                formatter: function (a,b,v) {
-                                    return Math.round(v/10000) + ' 万'
+                                formatter: function (params) {
+                                    return Math.round(params.value/10000) + ' 万'
                                 }
                             }
                         }
@@ -3606,4 +3633,8 @@ var optionMap = {
         };
     })(),
     adddddd : {}
+}
+if (document.location.href.indexOf('local') == -1) {
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fb78830c9a5dad062d08b90b2bc0cf5da' type='text/javascript'%3E%3C/script%3E"));   
 }

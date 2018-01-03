@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="../asset/ico/favicon.png">
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../asset/css/font-awesome.min.css" rel="stylesheet">
     <link href="../asset/css/bootstrap.css" rel="stylesheet">
     <link href="../asset/css/carousel.css" rel="stylesheet">
     <link href="../asset/css/echartsHome.css" rel="stylesheet">
@@ -57,7 +57,9 @@ var labelTop = {
 var labelFromatter = {
     normal : {
         label : {
-            formatter : function (a,b,c){return 100 - c + '%'},
+            formatter : function (params){
+                return 100 - params.value + '%'
+            },
             textStyle: {
                 baseline : 'top'
             }
@@ -108,7 +110,9 @@ option = {
                         itemStyle : {
                             normal : {
                                 label : {
-                                    formatter : function (a,b,c){return 'other\n' + c + '%\n'},
+                                    formatter : function (params){
+                                        return 'other\n' + params.value + '%\n'
+                                    },
                                     textStyle: {
                                         baseline : 'middle'
                                     }
