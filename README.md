@@ -1,54 +1,8 @@
-# ECharts
-
-[![NPM version][npm-badge]][npm] [![Gitter][gitter-badge]][gitter]
-
-[![Dependency Status][deps-badge]][deps]
-[![devDependency Status][dev-deps-badge]][dev-deps]
-[![peerDependency Status][peer-deps-badge]][peer-deps]
-
-[npm-badge]: https://img.shields.io/npm/v/echarts.svg?style=flat-square
-[npm]: http://badge.fury.io/js/echarts
-
-[gitter-badge]: https://img.shields.io/badge/gitter-join%20chat-f81a65.svg?style=flat-square
-[gitter]: https://gitter.im/uooo/echarts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-
-[deps-badge]: https://david-dm.org/uooo/echarts.svg
-[deps]: https://david-dm.org/uooo/echarts
-
-[dev-deps-badge]: https://david-dm.org/uooo/echarts/dev-status.svg
-[dev-deps]: https://david-dm.org/uooo/echarts#info=devDependencies
-
-[peer-deps-badge]: https://david-dm.org/uooo/echarts/peer-status.svg
-[peer-deps]: https://david-dm.org/uooo/echarts#info=peerDependencies 
-
-## Echarts with [webpack](https://github.com/webpack/webpack)
-
-```sh
-npm install echarts@2.2.7-webpack
-```
-
-```js
-import echarts from 'echarts/src/echarts';
-import 'echarts/src/chart/wordCloud';
-
-let mychart = echarts.init(dom);
-let charCloudOption = {...};
-mychart.setOption(charCloudOption);
-```
-
+ECharts
 =======
-## Introduction
 
-百度 (中文) : http://echarts.baidu.com
-
-在线视频教程：http://study.163.com/course/courseMain.htm?courseId=1016007
-
-Why ECharts (中文) : http://echarts.baidu.com/doc/slide/whyEcharts.html
-
-Github pages (English) : http://ecomfe.github.io/echarts/index-en.html
-
-Why ECharts (English) : http://ecomfe.github.io/echarts/doc/slide/whyEcharts-en.html
-
+[![Join the chat at https://gitter.im/echarts_lea/Lobby](https://badges.gitter.im/echarts_lea/Lobby.svg)](https://gitter.im/echarts_lea/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+http://echarts.baidu.com
 
 基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据可视化图表。创新的拖拽重计算、数据视图、值域漫游等特性大大增强了用户体验，赋予了用户对数据进行挖掘、整合的能力。
 
